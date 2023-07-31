@@ -1,0 +1,132 @@
+{% extends "admin/layout.html" %} {% block content %}
+
+<div class="container-fluid">
+  <div class="row page-titles mx-0">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">User Management</a></li>
+      <li class="breadcrumb-item active"><a href="javascript:void(0)">List Data</a></li>
+    </ol>
+  </div>
+  <div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title"><i class="la la-users fs-2"></i> User Management</h4>
+                <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" id="add_user"
+                data-bs-toggle="modal" data-bs-target="#modal_add_user"><i class="la la-plus"></i>
+                  Add User</button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                  <table id="all-user">
+                    <thead>
+                      <tr>
+                        <th>#No</th>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Tanggal</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modal_add_user" data-bs-backdrop="static">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title"><i class="bi bi-person-plus fs-2 me-2"></i> <wrd>Tambah</wrd> Data Pengguna</h5>
+
+              <!--begin::Close-->
+              <a class="btn btn-icon" data-bs-dismiss="modal" aria-label="Close">
+                  <span class="la la-times"></span>
+              </a>
+              <!--end::Close-->
+          </div>
+
+          <form action="adduser" method="POST">
+            <input type="hidden" name="id" id="id" />
+            <div class="modal-body">
+
+              <fieldset>
+                <div class="form-group">
+                  <h5>Nama Lengkap</h5>
+                  <div class="input-group">
+                    <div class="col-xl m-b30">
+											<input type="text" class="form-control" placeholder="Masukan Nama Lengkap" name="name" required>
+										</div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <div class="form-group">
+                  <h5>Email</h5>
+                  <div class="input-group">
+                    <div class="col-xl m-b30">
+											<input type="text" class="form-control" placeholder="Masukan Email" name="email" required>
+										</div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <div class="form-group">
+                  <h5>Username</h5>
+                  <div class="input-group">
+                    <div class="col-xl m-b30">
+											<input type="text" class="form-control" placeholder="Masukan Nama Username" name="username" required>
+										</div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <div class="form-group">
+                  <h5>Password</h5>
+                  <div class="input-group">
+                    <div class="col-xl m-b30">
+											<input type="password" class="form-control" placeholder="Masukan Password" name="password" required>
+										</div>
+                  </div>
+                </div>
+              </fieldset>
+              
+              <fieldset>
+                <div class="form-group">
+                  <h5>Role</h5>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" name="id_role" id="id_role"><i class="la la-users"></i></span>
+                    </div>
+                    <select class="form-select" name="id_role" id="id_role">
+                      <option value="0">Role...</option>
+                      <option value="1">Superadmin</option>
+                      <option value="2">Admin</option>
+                      <!-- {% for role in data_role %}
+                      <option value="{{role.id}} required">{{role.role}}</option>
+                      {% endfor %} -->
+                  </select>
+                  </div>
+                </div>
+              </fieldset>
+              
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary btn-sm mr-1 mb-1 " data-bs-dismiss="modal"><i class="la la-times"></i> Batal</button>
+              <button type="submit" class="btn btn-success btn-sm mr-1 mb-1 "><i class="la la-check"></i> Simpan</button>
+            </div>
+          </form>
+      </div>
+  </div>
+</div>
+{% endblock %}

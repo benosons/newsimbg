@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" data-style-switcher-options="{'changeLogo': false, 'borderRadius': 0, 'colorPrimary': '#099CF4', 'colorSecondary': '#0C61E0', 'colorTertiary': '#2baab1', 'colorQuaternary': '#383f48'}">
+  <head>
+    <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>Porto - Multipurpose Website Template</title>	
+
+		<meta name="keywords" content="WebSite Template" />
+		<meta name="description" content="Porto - Multipurpose Website Template">
+		<meta name="author" content="okler.net">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+
+    {% include "front/layout/css.html" %} 
+    {% include "front/layout/style.html"%}
+  </head>
+
+	<body data-plugin-page-transition>
+    <div class="body">
+      {% include "front/layout/header.html"%} 
+      <div role="main" class="main">
+        {% block content %} {% endblock %}
+      </div>
+      {% include "front/layout/footer.html"%} 
+    </div>
+    {% include "front/layout/scripts.html" %}
+  </body>
+</html>
