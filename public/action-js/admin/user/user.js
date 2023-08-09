@@ -68,10 +68,14 @@ function loadusers() {
               },
                 {
                 mRender: function (data, type, row) {
-                    var elem = '<div class="btn-group" role="group" aria-label="Basic example">'
-                        elem += `<button class="btn btn-icon btn-info btn-sm" onclick="action('update', ${row.id})"><i class="la la-edit"></i></button>`
-                        elem += `<button class="btn btn-icon btn-danger btn-sm" onclick="action('delete', ${row.id}, '${row.username}')"><i class="la la-trash"></i></button>`
-                        elem += '</div>'
+                  var elem = `<div class="btn-group" role="group" aria-label="First group">
+                                <button type="button" class="btn btn-primary btn-sm btn-icon"><i class="bx bx-edit me-0 fs-6"></i></button>
+                                <button type="button" class="btn btn-danger btn-sm btn-icon"><i class="bx bx-trash me-0 fs-6"></i></button>
+                              </div>`
+                    // var elem = '<div class="btn-group" role="group" aria-label="Basic example">'
+                    //     elem += `<button class="btn btn-icon btn-info btn-sm" onclick="action('update', ${row.id})"><i class="la la-edit"></i></button>`
+                    //     elem += `<button class="btn btn-icon btn-danger btn-sm" onclick="action('delete', ${row.id}, '${row.username}')"><i class="la la-trash"></i></button>`
+                    //     elem += '</div>'
                         return elem ;
                 },
                 aTargets: [7],
