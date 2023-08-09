@@ -60,7 +60,7 @@ if (file_exists(BASEPATH . 'Config/Routes.php')) {
  * only routes that have been defined here will be available.
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Front');
+$routes->setDefaultController('View');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -79,7 +79,7 @@ $routes->setAutoRoute(false);
 // route since we don't have to scan directories.
 
 // FRONT END
-$routes->add('/', 'Front::index');
+$routes->add('/', 'View::index');
 $routes->add('layanan_informasi_mahasiswa', 'View::layanan_informasi_mahasiswa');
 $routes->add('layanan_informasi_dosen', 'View::layanan_informasi_dosen');
 $routes->add('layanan_informasi_buku', 'View::layanan_informasi_buku');
@@ -94,6 +94,7 @@ $routes->add('detailagenda/(:any)', 'View::detail_agenda');
 
 // LOGIN
 $routes->add('login', 'View::login');
+$routes->add('register', 'View::register');
 
 // BACKEND
 $routes->add('dashboard', 'View::dashboard');
@@ -145,6 +146,7 @@ $routes->add('logout', 'Auth::logout');
 $routes->post('getalluser', 'Jsondata::getalluser');
 $routes->post('getuser', 'Jsondata::getuser');
 $routes->post('adduser', 'Jsondata::adduser');
+$routes->post('addrole', 'Jsondata::addrole');
 $routes->post('deleteuser', 'Jsondata::deleteuser');
 
 $routes->post('getallDealerData', 'Jsondata::getallDealerData');

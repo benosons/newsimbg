@@ -15,16 +15,8 @@
         </nav>
       </div>
       <div class="ms-auto">
-        <div class="btn-group">
-          <button type="button" class="btn btn-primary">Settings</button>
-          <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">	<span class="visually-hidden">Toggle Dropdown</span>
-          </button>
-          <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">	<a class="dropdown-item" href="javascript:;">Action</a>
-            <a class="dropdown-item" href="javascript:;">Another action</a>
-            <a class="dropdown-item" href="javascript:;">Something else here</a>
-            <div class="dropdown-divider"></div>	<a class="dropdown-item" href="javascript:;">Separated link</a>
-          </div>
-        </div>
+          <button type="button" class="btn btn-primary" id="add_user" data-bs-toggle="modal" data-bs-target="#modal_add_user"><i class="bx bx-user-plus me-0" ></i> Tambah Penguna</button>
+          <button hidden type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modal_add_role"><i class="bx bx-user-check me-0" ></i> Role Penguna</button>
       </div>
     </div>
     <!--end breadcrumb-->
@@ -53,121 +45,88 @@
   </div>
 </div>
 
-<div class="container-fluid">
-  <div class="row page-titles mx-0">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="javascript:void(0)">User Management</a></li>
-      <li class="breadcrumb-item active"><a href="javascript:void(0)">List Data</a></li>
-    </ol>
-  </div>
-  <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title"><i class="la la-users fs-2"></i> User Management</h4>
-                <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" id="add_user"
-                data-bs-toggle="modal" data-bs-target="#modal_add_user"><i class="la la-plus"></i>
-                  Add User</button>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                  <table id="all-user--">
-                    <thead>
-                      <tr>
-                        <th>#No</th>
-                        <th>Nama</th>
-                        <th>Email</th>
-                        <th>Username</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Tanggal</th>
-                        <th>Aksi</th>
-                      </tr>
-                    </thead>
-                  </table>
-                </div>
-            </div>
-        </div>
-    </div>
-  </div>
-</div>
-
 <div class="modal fade" tabindex="-1" id="modal_add_user" data-bs-backdrop="static">
   <div class="modal-dialog">
       <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title"><i class="bi bi-person-plus fs-2 me-2"></i> <wrd>Tambah</wrd> Data Pengguna</h5>
-
-              <!--begin::Close-->
-              <a class="btn btn-icon" data-bs-dismiss="modal" aria-label="Close">
-                  <span class="la la-times"></span>
-              </a>
-              <!--end::Close-->
-          </div>
+        <div class="modal-header border-pu border-bottom border-3 border-0">
+          <h5 class="modal-title"><i class="bx bx-user-plus me-0"></i> <wrd>Tambah</wrd> Data Pengguna</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
 
           <form action="adduser" method="POST">
             <input type="hidden" name="id" id="id" />
             <div class="modal-body">
 
-              <fieldset>
-                <div class="form-group">
-                  <h5>Nama Lengkap</h5>
-                  <div class="input-group">
-                    <div class="col-xl m-b30">
-											<input type="text" class="form-control" placeholder="Masukan Nama Lengkap" name="name" required>
-										</div>
+              <fieldset class="row g-3">
+                <div class="col-md-12">
+                  <label for="input13" class="form-label">Nama Lengkap</label>
+                  <div class="position-relative input-icon">
+                    <input type="text" class="form-control" name="name" placeholder="Masukan Nama Lengkap">
+                    <span class="position-absolute top-50 translate-middle-y"><i class="bx bx-user"></i></span>
                   </div>
                 </div>
-              </fieldset>
-
-              <fieldset>
-                <div class="form-group">
-                  <h5>Email</h5>
-                  <div class="input-group">
-                    <div class="col-xl m-b30">
-											<input type="text" class="form-control" placeholder="Masukan Email" name="email" required>
-										</div>
+                <div class="col-md-12">
+                  <label for="input13" class="form-label">Email</label>
+                  <div class="position-relative input-icon">
+                    <input type="email" class="form-control" name="email" placeholder="Masukan Email">
+                    <span class="position-absolute top-50 translate-middle-y"><i class="bx bx-envelope"></i></span>
                   </div>
                 </div>
-              </fieldset>
 
-              <fieldset>
-                <div class="form-group">
-                  <h5>Username</h5>
-                  <div class="input-group">
-                    <div class="col-xl m-b30">
-											<input type="text" class="form-control" placeholder="Masukan Nama Username" name="username" required>
-										</div>
+                <div class="col-md-12">
+                  <label for="input13" class="form-label">Username</label>
+                  <div class="position-relative input-icon">
+                    <input type="text" class="form-control" name="username" placeholder="Masukan Username">
+                    <span class="position-absolute top-50 translate-middle-y"><i class="bx bx-user"></i></span>
                   </div>
                 </div>
-              </fieldset>
 
-              <fieldset>
-                <div class="form-group">
-                  <h5>Password</h5>
-                  <div class="input-group">
-                    <div class="col-xl m-b30">
-											<input type="password" class="form-control" placeholder="Masukan Password" name="password" required>
-										</div>
+                <div class="col-md-12">
+                  <label for="input13" class="form-label">Password</label>
+                  <div class="position-relative input-icon">
+                    <input type="password" class="form-control" name="password" placeholder="Masukan Password">
+                    <span class="position-absolute top-50 translate-middle-y"><i class="bx bx-lock-alt"></i></span>
                   </div>
+                </div>
+                <div class="col-md-12">
+                  <label for="id_role" class="form-label">Role</label>
+                  <select class="form-select" name="id_role" id="id_role">
+                    <option value="0" selected="">Pilih...</option>
+                    {% for role in data_role %}
+                    <option value="{{role.role_id}}">{{role.role}}</option>
+                    {% endfor %}
+                  </select>
                 </div>
               </fieldset>
               
-              <fieldset>
-                <div class="form-group">
-                  <h5>Role</h5>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" name="id_role" id="id_role"><i class="la la-users"></i></span>
-                    </div>
-                    <select class="form-select" name="id_role" id="id_role">
-                      <option value="0">Role...</option>
-                      <option value="1">Superadmin</option>
-                      <option value="2">Admin</option>
-                      <!-- {% for role in data_role %}
-                      <option value="{{role.id}} required">{{role.role}}</option>
-                      {% endfor %} -->
-                  </select>
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary me-0" data-bs-dismiss="modal"><i class="bx bx-x"></i> Batal</button>
+              <button type="submit" class="btn btn-success me-0 "><i class="bx bx-check"></i> Simpan</button>
+            </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modal_add_role" data-bs-backdrop="static">
+  <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header border-warning border-bottom border-3 border-0">
+          <h5 class="modal-title"><i class="bx bx-user-plus me-0"></i> <wrd>Tambah</wrd> Role Pengguna</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+          <form action="addrole" method="POST">
+            <div class="modal-body">
+
+              <fieldset class="row g-3">
+                <div class="col-md-12">
+                  <label for="input13" class="form-label">Nama Role</label>
+                  <div class="position-relative input-icon">
+                    <input type="text" class="form-control" name="role" placeholder="Masukan Nama Role">
+                    <span class="position-absolute top-50 translate-middle-y"><i class="bx bx-user"></i></span>
                   </div>
                 </div>
               </fieldset>
@@ -175,8 +134,8 @@
             </div>
             
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary btn-sm mr-1 mb-1 " data-bs-dismiss="modal"><i class="la la-times"></i> Batal</button>
-              <button type="submit" class="btn btn-success btn-sm mr-1 mb-1 "><i class="la la-check"></i> Simpan</button>
+              <button type="button" class="btn btn-secondary me-0" data-bs-dismiss="modal"><i class="bx bx-x"></i> Batal</button>
+              <button type="submit" class="btn btn-success me-0 "><i class="bx bx-check"></i> Simpan</button>
             </div>
           </form>
       </div>

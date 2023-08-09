@@ -354,6 +354,7 @@ class Jsondata extends \CodeIgniter\Controller
 		  die($e->getMessage());
 	  }
   }
+
   public function adduser()
   {
 	try {
@@ -371,7 +372,7 @@ class Jsondata extends \CodeIgniter\Controller
 						'name' 		=> $request->getVar('name'),	
 						'email' 		=> $request->getVar('email'),	
 						'username' 		=> $request->getVar('username'),	
-						'role' 			=> $request->getVar('id_role'),
+						'id_role' 			=> $request->getVar('id_role'),
 						'status' 		=> 1,
 						'update_date' 	=> $this->now,
 						'update_by' 	=> $this->session->get('id')
@@ -396,8 +397,34 @@ class Jsondata extends \CodeIgniter\Controller
 						'create_by' 	=> $this->session->get('id'),
 						'update_by' 	=> $this->session->get('id')
 					];
+					
 					$user->insertUser($data);
 				}
+		}
+		redirect('users','refresh');
+	} catch (\Exception $e) {
+		die($e->getMessage());
+	}
+  }
+
+  public function addrole()
+  {
+	try {
+		
+		$request	= $this->request;
+		$param		= $request->getVar('param');
+		
+		$method		= $request->getMethod();
+		$user 		= new \App\Models\UserModel();
+
+		if($method == 'post'){
+				
+				
+			$data = [
+				'role' 			=> $request->getVar('role'),	
+				'status' 		=> 1,
+			];
+			$user->insertRole($data);
 		}
 		redirect('users','refresh');
 	} catch (\Exception $e) {

@@ -16,20 +16,25 @@ class Auth extends \CodeIgniter\Controller
 
 			$email = $this->request->getVar('username');
 			$password = $this->request->getVar('password');
-			$dataemail = $model->getWhereis(['username' => $email]);
+			$field = 'username';
+			if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+				$field = 'email';
+			}
+
+			$dataemail = $model->getWhereis([ $field => $email]);
 			if(!$dataemail){
 				$session->setFlashdata('msg', 'User Belum Terdaftar');
 				return redirect('login');
 			}
 			
-			$dataactive = $model->getWhere(['m_user.username' => $email, 'm_user.status' => 0])->getRow();
+			$dataactive = $model->getWhere(['m_user.'.$field => $email, 'm_user.status' => 0])->getRow();
 			
 			if($dataactive){
 				$session->setFlashdata('msg', 'User Tidak Aktif');
 				return redirect('login');
 			}
 
-			$datastatus = $model->getWhere(['m_user.username' => $email, 'm_user.status' => 1])->getRow();
+			$datastatus = $model->getWhere(['m_user.'.$field => $email, 'm_user.status' => 1])->getRow();
 			
 			if(!$datastatus){
 				$session->setFlashdata('msg', 'User Belum di Verifikasi');
