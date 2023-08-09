@@ -144,6 +144,19 @@ class Front extends \CodeIgniter\Controller
 		}
 	}
 
+	public function permohonan()
+	{
+
+		if ($this->logged) {
+			helper('form');
+			$this->data['active'] = 'permohonan';
+			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/permohonan.js';
+			return \Twig::instance()->display('admin/permohonan.html', $this->data);
+		} else {
+			return redirect('login');
+		}
+	}
+
 	// public function data_mahasiswa()
 	// {
 	// 	if ($this->logged) {

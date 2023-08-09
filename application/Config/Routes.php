@@ -97,6 +97,7 @@ $routes->add('login', 'View::login');
 
 // BACKEND
 $routes->add('dashboard', 'View::dashboard');
+$routes->add('permohonan', 'View::permohonan');
 $routes->add('data_mahasiswa', 'View::data_mahasiswa');
 $routes->add('data_dosen', 'View::data_dosen');
 $routes->add('data_kampus', 'View::data_kampus');

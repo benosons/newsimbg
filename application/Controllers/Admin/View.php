@@ -57,6 +57,27 @@ class View extends \CodeIgniter\Controller
 		}
 	}
 
+	public function permohonan()
+	{
+
+		if ($this->logged) {
+			helper('form');
+			// $statistik = new \App\Models\StatistikModel();
+		  	// $data = $statistik->getdatapiutangdashboard();
+		  	// $pembayaran = $statistik->getdatapembayarandashboard();
+		  	// $status = $statistik->getdatastatusdashboard($this->session->get('role'), $this->session->get('id_provinsi'));
+			
+			// $this->data['here'] = 'dashboard';
+			// $this->data['piutang'] = $data;
+			// $this->data['pembayaran'] = $pembayaran;
+			// $this->data['status'] = $status;
+			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/permohonan.js';
+			return \Twig::instance()->display('admin/permohonan.html', $this->data);
+		} else {
+			return redirect('login');
+		}
+	}
+
     public function login()
 	{
 		
