@@ -144,18 +144,31 @@ class Front extends \CodeIgniter\Controller
 		}
 	}
 
-	public function permohonan()
-	{
+	// public function permohonan()
+	// {
 
-		if ($this->logged) {
-			helper('form');
-			$this->data['active'] = 'permohonan';
-			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/permohonan.js';
-			return \Twig::instance()->display('admin/permohonan.html', $this->data);
-		} else {
-			return redirect('login');
-		}
-	}
+	// 	if ($this->logged) {
+	// 		helper('form');
+	// 		$this->data['active'] = 'permohonan';
+	// 		$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/permohonan.js';
+	// 		return \Twig::instance()->display('admin/permohonan.html', $this->data);
+	// 	} else {
+	// 		return redirect('login');
+	// 	}
+	// }
+
+	// public function verifikasi_dokumen()
+	// {
+
+	// 	if ($this->logged) {
+	// 		helper('form');
+	// 		$this->data['active'] = 'verifikasi_dokumen';
+	// 		$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/verifikasi_dokumen.js';
+	// 		return \Twig::instance()->display('admin/verifikasi_dokumen.html', $this->data);
+	// 	} else {
+	// 		return redirect('login');
+	// 	}
+	// }
 
 	// public function data_mahasiswa()
 	// {

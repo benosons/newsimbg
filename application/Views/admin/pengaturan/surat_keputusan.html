@@ -1,0 +1,83 @@
+{% extends "admin/layout.html" %} {% block content %}
+<div class="col-12 col-lg-12">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="mb-0">Data Surat Keputusan</h4>
+      <hr>
+      <div class="d-flex align-items-center mb-2">
+        <!-- <div>
+          <div class="input-group input-group-lg">	<span class="input-group-text bg-transparent"><i class='bx bx-search'></i></span>
+              <input type="text" class="form-control" placeholder="Search">
+          </div>
+        </div> -->
+        <div class="ms-auto mb-2">
+            <a href="javascript:;" class="btn btn-primary">+ Tambah</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table id="example2" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Nomor SK</th>
+                  <th>Jenis SK</th>
+                  <th>Tanggal Penerbitan</th>
+                  <th>Masa berlaku</th>
+                  <th>Personil</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>12345678900038512</td>
+                  <td>TPA</td>
+                  <td>2021-12-11</td>
+                  <td>2023</td>
+                  <td style="text-align: center;">
+                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-primary"><i class="bx bx-user me-0"></i></button>
+                  </td>
+                  <td style="text-align: center;">
+                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-warning"><i class="bx bx-file me-0"></i></button>
+                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-secondary"><i class="bx bx-edit me-0"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>65745464523423421</td>
+                  <td>TPT</td>
+                  <td>2021-12-13</td>
+                  <td>2023</td>
+                  <td style="text-align: center;">
+                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-primary"><i class="bx bx-user me-0"></i></button>
+                  </td>
+                  <td style="text-align: center;">
+                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-warning"><i class="bx bx-file me-0"></i></button>
+                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-secondary"><i class="bx bx-edit me-0"></i></button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>84252452453413441</td>
+                  <td>Pemilik</td>
+                  <td>2021-12-12</td>
+                  <td>2023</td>
+                  <td style="text-align: center;">
+                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-primary"><i class="bx bx-user me-0"></i></button>
+                  </td>
+                  <td style="text-align: center;">
+                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-warning"><i class="bx bx-file me-0"></i></button>
+                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-secondary"><i class="bx bx-edit me-0"></i></button>
+                  </td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+</div>
+{% endblock %}

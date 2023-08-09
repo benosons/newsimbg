@@ -1,0 +1,67 @@
+{% extends "admin/layout.html" %} {% block content %}
+<div class="col-12 col-lg-12">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="mb-0">Data TPA</h4>
+      <hr>
+      <div class="d-flex align-items-center mb-2">
+        <!-- <div>
+          <div class="input-group input-group-lg">	<span class="input-group-text bg-transparent"><i class='bx bx-search'></i></span>
+              <input type="text" class="form-control" placeholder="Search">
+          </div>
+        </div> -->
+        <div class="ms-auto mb-2">
+            <a href="javascript:;" class="btn btn-primary">+ Tambah</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table id="example2" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Nama Lengkap</th>
+                  <th>NIK</th>
+                  <th>Alamat</th>
+                  <th>No Telp</th>
+                  <th>Unsur</th>
+                  <th>Email</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Jane Doe</td>
+                  <td>12345678900038512</td>
+                  <td>Jl. Cimahi</td>
+                  <td>081311111112</td>
+                  <td>Akademisi</td>
+                  <td>janedoe@example.com</td>
+                  <td style="text-align: center;">
+                      <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-secondary"><i class="bx bx-edit me-0"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>John Doe</td>
+                  <td>12345678900038513</td>
+                  <td>Jl. Bandung</td>
+                  <td>081322222221</td>
+                  <td>Asosiasi Profesi</td>
+                  <td>johndoe@example.com</td>
+                  <td style="text-align: center;">
+                      <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-secondary"><i class="bx bx-edit me-0"></i></button>
+                  </td>
+                </tr>
+                
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+</div>
+{% endblock %}

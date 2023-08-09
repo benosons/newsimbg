@@ -1,0 +1,135 @@
+{% extends "admin/layout.html" %} {% block content %}
+<div class="col-12 col-lg-12">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="mb-0">Verifikasi Dokumen Bangunan Bertahap</h4>
+      <hr>
+      <div class="row row-cols-1 row-cols-lg-2">
+
+        <div class="col d-flex">
+          <div class="card radius-10 w-100">
+            <div class="card-header bg-transparent">
+              <div class="d-flex align-items-center">
+                <div>
+                  <h6 class="mb-0">Fungsi Bangunan</h6>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-container-1 mt-3">
+                <canvas id="chart4"></canvas>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row row-cols-1">
+            <div class="col" style="align-self: center;">
+              <div class="card radius-10 border-start border-0 border-4 border-danger">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <p class="mb-0 text-secondary">Belum Diverifikasi</p>
+                      <h4 class="my-1 text-danger">24</h4>
+                    </div>
+                    <div class="widgets-icons-2 rounded-circle bg-gradient-burning text-white ms-auto"><i class='bx bxs-bar-chart-alt-2'></i>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+         <div class="col" style="align-self: center;">
+            <div class="card radius-10 border-start border-0 border-4 border-success">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <p class="mb-0 text-secondary">Sudah Diverifikasi</p>
+                      <h4 class="my-1 text-success">36</h4>
+                    </div>
+                    <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i class='bx bxs-bar-chart-alt-2' ></i>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+          </div>
+
+        </div>
+        
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table id="example2" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Jenis Konsultasi</th>
+                  <th>No. Registrasi</th>
+                  <th>Nama Pemilik</th>
+                  <th>Lokasi BG</th>
+                  <th>Fungsi BG</th>
+                  <th>Tanggal Permohonan</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      Bangunan Kolektif Rumah Tinggal
+                    </div>
+                  </td>
+                  <td>BLA/123135432563/87967857</td>
+                  <td>John Doe</td>
+                  <td>Jl. Jakarta 10, Kota Bandung</td>
+                  <td>Hunian</td>
+                  <td>5-8-2023</td>
+                  <td><span class="badge bg-danger">Belum Diverifikasi</span></td>
+                  <td style="text-align: center;"><button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-secondary"><i class="bx bx-edit me-0"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      </div>Bangunan Gedung Eksisting
+                    </div>
+                  </td>
+                  <td>BLA/123135432563/87967857</td>
+                  <td>Jane Doe</td>
+                  <td>Jl. Jakarta 10, Kota Bandung</td>
+                  <td>Sosial & Budaya</td>
+                  <td>5-8-2023</td>
+                  <td><span class="badge bg-success">Sudah Diverifikasi</span></td>
+                  <td style="text-align: center;"><button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-secondary"><i class="bx bx-edit me-0"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      </div>Bangunan Gedung Kepentingan Umum
+                    </div>
+                  </td>
+                  <td>BLA/123135432563/87967857</td>
+                  <td>Su Doe</td>
+                  <td>Jl. Jakarta 10, Kota Bandung</td>
+                  <td>Usaha</td>
+                  <td>5-8-2023</td>
+                  <td><span class="badge bg-success">Sudah Diverifikasi</span></td>
+                  <td style="text-align: center;"><button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-secondary"><i class="bx bx-edit me-0"></i></button>
+                  </td>
+                </tr>
+                
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+</div>
+{% endblock %}

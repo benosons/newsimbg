@@ -98,6 +98,21 @@ $routes->add('login', 'View::login');
 // BACKEND
 $routes->add('dashboard', 'View::dashboard');
 $routes->add('permohonan', 'View::permohonan');
+$routes->add('verifikasi_dokumen', 'View::verifikasi_dokumen');
+$routes->add('bangunan_bertahap', 'View::bangunan_bertahap');
+$routes->add('profil_pu', 'View::profil_pu');
+$routes->add('data_asn', 'View::data_asn');
+$routes->add('input_tpa', 'View::input_tpa');
+$routes->add('surat_keputusan', 'View::surat_keputusan');
+$routes->add('data_kampus', 'View::data_kampus');
+$routes->add('konsultasi', 'View::konsultasi');
+$routes->add('penugasan_tpa_tpt', 'View::penugasan_tpa_tpt');
+$routes->add('penjadwalan_konsultasi', 'View::penjadwalan_konsultasi');
+$routes->add('hasil_konsultasi', 'View::hasil_konsultasi');
+$routes->add('perhitungan_retribusi', 'View::perhitungan_retribusi');
+$routes->add('penugasan_inspeksi', 'View::penugasan_inspeksi');
+$routes->add('input_hasil_inspeksi', 'View::input_hasil_inspeksi');
+
 $routes->add('data_mahasiswa', 'View::data_mahasiswa');
 $routes->add('data_dosen', 'View::data_dosen');
 $routes->add('data_kampus', 'View::data_kampus');
