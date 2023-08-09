@@ -4,8 +4,8 @@ $(document).ready(function(){
     loadusers()
     $('#modal_add_user').on('show.bs.modal', function() {
         $("form").trigger("reset")
-        $('#password').attr('placeholder', 'Password')
-        $('#ulangi-pass').attr('placeholder', 'Ulangi Password')
+        $('[name="password"]').attr('placeholder', 'Password')
+        $('#id_role').val(0)
         $('wrd').html('Tambah')
     })
 });
@@ -57,9 +57,9 @@ function loadusers() {
                 mRender: function (data, type, row) {
                   var elem = ''
                   if(data == 1){
-                    elem = '<div class="badge badge-success">Aktif</div>'
+                    elem =  `<span class="badge bg-gradient-quepal text-white shadow-sm w-100">Aktif</span>`
                   }else{
-                    elem = '<div class="badge badge-danger">Tidak Aktif</div>'
+                    elem =  `<span class="badge bg-gradient-bloody text-white shadow-sm w-100">Tidak Aktif</span>`
 
                   }
                   return elem ;
@@ -69,13 +69,9 @@ function loadusers() {
                 {
                 mRender: function (data, type, row) {
                   var elem = `<div class="btn-group" role="group" aria-label="First group">
-                                <button type="button" class="btn btn-primary btn-sm btn-icon"><i class="bx bx-edit me-0 fs-6"></i></button>
-                                <button type="button" class="btn btn-danger btn-sm btn-icon"><i class="bx bx-trash me-0 fs-6"></i></button>
+                                <button type="button" class="btn btn-primary btn-sm btn-icon" onclick="action('update', ${row.id})"><i class="bx bx-edit me-0 fs-6"></i></button>
+                                <button type="button" class="btn btn-danger btn-sm btn-icon" onclick="action('delete', ${row.id}, '${row.username}')"><i class="bx bx-trash me-0 fs-6"></i></button>
                               </div>`
-                    // var elem = '<div class="btn-group" role="group" aria-label="Basic example">'
-                    //     elem += `<button class="btn btn-icon btn-info btn-sm" onclick="action('update', ${row.id})"><i class="la la-edit"></i></button>`
-                    //     elem += `<button class="btn btn-icon btn-danger btn-sm" onclick="action('delete', ${row.id}, '${row.username}')"><i class="la la-trash"></i></button>`
-                    //     elem += '</div>'
                         return elem ;
                 },
                 aTargets: [7],
@@ -147,12 +143,11 @@ function action(mode, id, username) {
             success: function (result) {
                 var data = result.data 
                 $('#modal_add_user').modal('show')
-                $('#id').val(id)
-                $('#name').val(data.name)
-                $('#email').val(data.email)
-                $('#username').val(data.username)
-                $('#password').attr('placeholder', 'kosongkan jika tidak merubah password')
-                $('#ulangi-pass').attr('placeholder', 'kosongkan jika tidak merubah password')
+                $('[name="id"]').val(id)
+                $('[name="name"]').val(data.name)
+                $('[name="email"]').val(data.email)
+                $('[name="username"]').val(data.username)
+                $('[name="password"]').attr('placeholder', 'kosongkan jika tidak merubah password')
                 $('#id_role').val(data.id_role)
                 $('wrd').html('Ubah')
             }

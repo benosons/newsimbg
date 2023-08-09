@@ -14,7 +14,7 @@ class UserModel extends Model{
 
       $builder = $this->db->table('m_user');
       $builder->select("m_user.*, m_role.role");
-      $builder->join('m_role', 'm_role.id = m_user.id_role', 'INNER');
+      $builder->join('m_role', 'm_role.role_id = m_user.id_role', 'INNER');
       // $builder->join('m_provinsi', 'm_provinsi.id = m_user.id_provinsi', 'INNER');
       $query   = $builder->getWhere($where);
       
@@ -31,7 +31,7 @@ class UserModel extends Model{
       }else{
         $builder = $this->db->table('m_user');
         $builder->select("m_user.*, m_role.role");
-        $builder->join('m_role', 'm_role.id = m_user.id_role', 'INNER');
+        $builder->join('m_role', 'm_role.role_id = m_user.id_role', 'INNER');
         // $builder->join('m_provinsi', 'm_provinsi.id = m_user.id_provinsi', 'INNER');
       }
       $query   = $builder->getWhere($where);
@@ -44,7 +44,7 @@ class UserModel extends Model{
 
         $builder = $this->db->table('m_user');
         $builder->select("m_user.*, m_role.role");
-        $builder->join('m_role', 'm_role.id = m_user.id_role', 'INNER');
+        $builder->join('m_role', 'm_role.role_id = m_user.id_role', 'INNER');
         $query   = $builder->get();
       
       // echo $this->db->getLastQuery();
@@ -120,6 +120,13 @@ class UserModel extends Model{
     public function insertUser($data = null)
     {
         $res = $this->db->table('m_user')->insert($data);
+        
+        return  $res;
+    }
+
+    public function insertRole($data = null)
+    {
+        $res = $this->db->table('m_role')->insert($data);
         return  $res;
     }
 

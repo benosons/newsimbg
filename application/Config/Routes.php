@@ -129,6 +129,7 @@ $routes->add('logout', 'Auth::logout');
 $routes->post('getalluser', 'Jsondata::getalluser');
 $routes->post('getuser', 'Jsondata::getuser');
 $routes->post('adduser', 'Jsondata::adduser');
+$routes->post('addrole', 'Jsondata::addrole');
 $routes->post('deleteuser', 'Jsondata::deleteuser');
 
 $routes->post('getallDealerData', 'Jsondata::getallDealerData');
