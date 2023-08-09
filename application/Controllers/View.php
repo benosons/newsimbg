@@ -72,6 +72,24 @@ class View extends \CodeIgniter\Controller
 		}
 	}
 
+	public function register()
+	{
+		
+		if ($this->logged) {
+			return redirect('dashboard');
+		} else {
+			helper('form');
+			helper('url');
+			$uri = current_url(true);
+			$message = $this->session->getFlashdata('msg');
+
+			if ($message) {
+				$this->data['message'] = $message;
+			}
+			return \Twig::instance()->display('auth/register.html', $this->data);
+		}
+	}
+
 	// public function layanan_informasi_mahasiswa()
 	// {
 	// 	helper('url');
