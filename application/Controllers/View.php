@@ -279,79 +279,51 @@ class View extends \CodeIgniter\Controller
 		}
 	}
 
-	public function penugasan_tpa_tpt()
+	public function pengawas_pupr()
 	{
 
 		if ($this->logged) {
 			helper('form');
-			$this->data['active'] = 'penugasan_tpa_tpt';
-			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/penugasan_tpa_tpt.js';
-			return \Twig::instance()->display('admin/pengawas_teknis/penugasan_tpa_tpt.html', $this->data);
+			$this->data['active'] = 'pengawas_pupr';
+			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/pengawas_pupr.js';
+			return \Twig::instance()->display('admin/pengawas_teknis/pengawas_pupr.html', $this->data);
 		} else {
 			return redirect('login');
 		}
 	}
 
-	public function penjadwalan_konsultasi()
+	public function penilaian_konsultasi()
 	{
 
 		if ($this->logged) {
 			helper('form');
-			$this->data['active'] = 'penjadwalan_konsultasi';
-			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/penjadwalan_konsultasi.js';
-			return \Twig::instance()->display('admin/pengawas_teknis/penjadwalan_konsultasi.html', $this->data);
+			$this->data['active'] = 'penilaian_konsultasi';
+			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/penilaian_konsultasi.js';
+			return \Twig::instance()->display('admin/pengawas_teknis/penilaian_konsultasi.html', $this->data);
 		} else {
 			return redirect('login');
 		}
 	}
 
-	public function hasil_konsultasi()
+	public function inspeksi()
 	{
-
 		if ($this->logged) {
 			helper('form');
-			$this->data['active'] = 'hasil_konsultasi';
-			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/hasil_konsultasi.js';
-			return \Twig::instance()->display('admin/pengawas_teknis/hasil_konsultasi.html', $this->data);
+			$this->data['active'] = 'inspeksi';
+			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/inspeksi.js';
+			return \Twig::instance()->display('admin/pengawas_teknis/inspeksi.html', $this->data);
 		} else {
 			return redirect('login');
 		}
 	}
 
-	public function perhitungan_retribusi()
+	public function validasi_rekomtek_kadis()
 	{
-
 		if ($this->logged) {
 			helper('form');
-			$this->data['active'] = 'perhitungan_retribusi';
-			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/perhitungan_retribusi.js';
-			return \Twig::instance()->display('admin/pengawas_teknis/perhitungan_retribusi.html', $this->data);
-		} else {
-			return redirect('login');
-		}
-	}
-
-	public function penugasan_inspeksi()
-	{
-
-		if ($this->logged) {
-			helper('form');
-			$this->data['active'] = 'penugasan_inspeksi';
-			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/penugasan_inspeksi.js';
-			return \Twig::instance()->display('admin/pengawas_teknis/penugasan_inspeksi.html', $this->data);
-		} else {
-			return redirect('login');
-		}
-	}
-
-	public function input_hasil_inspeksi()
-	{
-
-		if ($this->logged) {
-			helper('form');
-			$this->data['active'] = 'input_hasil_inspeksi';
-			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/input_hasil_inspeksi.js';
-			return \Twig::instance()->display('admin/pengawas_teknis/input_hasil_inspeksi.html', $this->data);
+			$this->data['active'] = 'validasi_rekomtek_kadis';
+			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/validasi_rekom/validasi_rekomtek_kadis.js';
+			return \Twig::instance()->display('admin/validasi_rekom/validasi_rekomtek_kadis.html', $this->data);
 		} else {
 			return redirect('login');
 		}

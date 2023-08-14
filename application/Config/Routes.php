@@ -107,12 +107,10 @@ $routes->add('input_tpa', 'View::input_tpa');
 $routes->add('surat_keputusan', 'View::surat_keputusan');
 $routes->add('data_kampus', 'View::data_kampus');
 $routes->add('konsultasi', 'View::konsultasi');
-$routes->add('penugasan_tpa_tpt', 'View::penugasan_tpa_tpt');
-$routes->add('penjadwalan_konsultasi', 'View::penjadwalan_konsultasi');
-$routes->add('hasil_konsultasi', 'View::hasil_konsultasi');
-$routes->add('perhitungan_retribusi', 'View::perhitungan_retribusi');
-$routes->add('penugasan_inspeksi', 'View::penugasan_inspeksi');
-$routes->add('input_hasil_inspeksi', 'View::input_hasil_inspeksi');
+$routes->add('pengawas_pupr', 'View::pengawas_pupr');
+$routes->add('penilaian_konsultasi', 'View::penilaian_konsultasi');
+$routes->add('inspeksi', 'View::inspeksi');
+$routes->add('validasi_rekomtek_kadis', 'View::validasi_rekomtek_kadis');
 
 $routes->add('data_mahasiswa', 'View::data_mahasiswa');
 $routes->add('data_dosen', 'View::data_dosen');
