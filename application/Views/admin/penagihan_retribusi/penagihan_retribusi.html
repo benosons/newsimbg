@@ -1,0 +1,174 @@
+{% extends "admin/layout.html" %} {% block content %}
+<div class="col-12 col-lg-12">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="mb-0">Penagihan Retribusi</h4>
+      <hr>
+
+      <div class="row row-cols-1 row-cols-lg-2">
+
+        <div class="col d-flex">
+          <div class="card radius-10 w-100">
+            <div class="card-header bg-transparent">
+              <div class="d-flex align-items-center">
+                <div>
+                  <h6 class="mb-0">Fungsi Bangunan</h6>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-container-1 mt-3">
+                <canvas id="chart4"></canvas>
+                </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row ">
+
+          <div class="col ">
+            <div class="col-12 col-lg-12">
+              <div class="card shadow-none border radius-15">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="fm-icon-box radius-15 bg-primary text-white"><i class='lni lni-google-drive'></i>
+                    </div>
+                    <div class="ms-auto font-24"><i class='bx bx-dots-horizontal-rounded'></i>
+                    </div>
+                  </div>
+                  <h5 class="mt-3 mb-0">PGB</h5>
+                  <p class="mb-1 mt-4"><span>45 Files</span>  
+                  </p>
+                  <div class="progress" style="height: 7px;">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-12">
+              <div class="card shadow-none border radius-15">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="fm-icon-box radius-15 bg-danger text-white"><i class='lni lni-dropbox-original'></i>
+                    </div>
+                    <div class="ms-auto font-24"><i class='bx bx-dots-horizontal-rounded'></i>
+                    </div>
+                  </div>
+                  <h5 class="mt-3 mb-0">SLF</h5>
+                  <p class="mb-1 mt-4"><span>12 Files</span>  
+                  </p>
+                  <div class="progress" style="height: 7px;">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 45%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="col-12 col-lg-12">
+              <div class="card shadow-none border radius-15">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="fm-icon-box radius-15 bg-warning text-white"><i class='bx bxs-door-open'></i>
+                    </div>
+                    <div class="ms-auto font-24"><i class='bx bx-dots-horizontal-rounded'></i>
+                    </div>
+                  </div>
+                  <h5 class="mt-3 mb-0">SBKBG</h5>
+                  <p class="mb-1 mt-4"><span>25 Files</span> 
+                  </p>
+                  <div class="progress" style="height: 7px;">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-12">
+              <div class="card shadow-none border radius-15">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="fm-icon-box radius-15 bg-success text-white"><i class='bx bxs-network-chart'></i>
+                    </div>
+                    <div class="ms-auto font-24"><i class='bx bx-dots-horizontal-rounded'></i>
+                    </div>
+                  </div>
+                  <h5 class="mt-3 mb-0">RTB</h5>
+                  <p class="mb-1 mt-4"><span>30 Files</span>
+                  </p>
+                  <div class="progress" style="height: 7px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table id="example2" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Jenis Permohonan</th>
+                  <th>No. Konsultasi</th>
+                  <th>Nama Pemilik</th>
+                  <th>Lokasi BG</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div><i class='bx bxs-file-pdf me-2 font-24 text-danger'></i>
+                      </div>Prasarana Bangunan Gedung
+                    </div>
+                  </td>
+                  <td>BLA/123135432563/87967857</td>
+                  <td>John Doe</td>
+                  <td>Jl. Jakarta 10, Kota Bandung</td>
+                  <td style="text-align: center;">
+                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-primary"><i class="bx bx-file me-0"></i>
+                    </button>
+                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-success"><i class="bx bx-edit me-0"></i>
+                    </button>
+                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-danger"><i class="bx bx-trash me-0"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                      <div class="d-flex align-items-center">
+                        <div><i class='bx bxs-file-pdf me-2 font-24 text-danger'></i>
+                        </div>Bangunan Gedung Kepentingan Umum
+                      </div>
+                  </td>
+                  <td>BLA/123135432563/87967857</td>
+                  <td>Jane Doe</td>
+                  <td>Jl. Jakarta 10, Kota Bandung</td>
+                  <td style="text-align: center;">
+                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-primary"><i class="bx bx-file me-0"></i>
+                    </button>
+                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-success"><i class="bx bx-edit me-0"></i>
+                    </button>
+                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-danger"><i class="bx bx-trash me-0"></i>
+                    </button>
+                  </td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+</div>
+{% endblock %}

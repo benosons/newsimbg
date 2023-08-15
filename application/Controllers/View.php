@@ -329,6 +329,54 @@ class View extends \CodeIgniter\Controller
 		}
 	}
 
+	public function validasi_hasil_inspeksi()
+	{
+		if ($this->logged) {
+			helper('form');
+			$this->data['active'] = 'validasi_hasil_inspeksi';
+			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/validasi_hasil_inspeksi/validasi_hasil_inspeksi.js';
+			return \Twig::instance()->display('admin/validasi_hasil_inspeksi/validasi_hasil_inspeksi.html', $this->data);
+		} else {
+			return redirect('login');
+		}
+	}
+
+	public function penagihan_retribusi()
+	{
+		if ($this->logged) {
+			helper('form');
+			$this->data['active'] = 'penagihan_retribusi';
+			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/penagihan_retribusi/penagihan_retribusi.js';
+			return \Twig::instance()->display('admin/penagihan_retribusi/penagihan_retribusi.html', $this->data);
+		} else {
+			return redirect('login');
+		}
+	}
+
+	public function penyerahan_dokumen()
+	{
+		if ($this->logged) {
+			helper('form');
+			$this->data['active'] = 'penyerahan_dokumen';
+			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/penyerahan_dokumen/penyerahan_dokumen.js';
+			return \Twig::instance()->display('admin/penyerahan_dokumen/penyerahan_dokumen.html', $this->data);
+		} else {
+			return redirect('login');
+		}
+	}
+
+	public function penerbitan_dokumen()
+	{
+		if ($this->logged) {
+			helper('form');
+			$this->data['active'] = 'penerbitan_dokumen';
+			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/penerbitan_dokumen/penerbitan_dokumen.js';
+			return \Twig::instance()->display('admin/penerbitan_dokumen/penerbitan_dokumen.html', $this->data);
+		} else {
+			return redirect('login');
+		}
+	}
+
 	// public function data_mahasiswa()
 	// {
 	// 	if ($this->logged) {

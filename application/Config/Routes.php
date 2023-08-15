@@ -111,6 +111,10 @@ $routes->add('pengawas_pupr', 'View::pengawas_pupr');
 $routes->add('penilaian_konsultasi', 'View::penilaian_konsultasi');
 $routes->add('inspeksi', 'View::inspeksi');
 $routes->add('validasi_rekomtek_kadis', 'View::validasi_rekomtek_kadis');
+$routes->add('validasi_hasil_inspeksi', 'View::validasi_hasil_inspeksi');
+$routes->add('penagihan_retribusi', 'View::penagihan_retribusi');
+$routes->add('penyerahan_dokumen', 'View::penyerahan_dokumen');
+$routes->add('penerbitan_dokumen', 'View::penerbitan_dokumen');
 
 $routes->add('data_mahasiswa', 'View::data_mahasiswa');
 $routes->add('data_dosen', 'View::data_dosen');
