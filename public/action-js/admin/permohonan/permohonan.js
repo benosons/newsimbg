@@ -180,8 +180,8 @@ function action(mode, id, username) {
       //     }
       // })
   } else{
-    $('#exampleExtraLargeModal').modal('toggle');
-    $('#exampleExtraLargeModal').modal('show');
+    $('#exampleExtraLargeModal2').modal('toggle');
+    $('#exampleExtraLargeModal2').modal('show');
   }
 }
 
