@@ -139,8 +139,10 @@
           </div>
         </div> -->
         <div class="ms-auto">
-            <a href="javascript:;" class="btn btn-primary">+ Add File</a>
+            <!-- <a id="add-permohonan" class="btn btn-primary">+ Add File</a> -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleExtraLargeModal">+ Tambah</button>
         </div>
+
       </div>
 
       <div class="card">
@@ -149,6 +151,7 @@
             <table id="example2" class="table table-striped table-bordered">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Jenis Permohonan</th>
                   <th>Nama Pemilik</th>
                   <th>No. Registrasi</th>
@@ -158,66 +161,6 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div><i class='bx bxs-file-pdf me-2 font-24 text-danger'></i>
-                      </div>Prasarana Bangunan Gedung
-                    </div>
-                  </td>
-                  <td>John Doe</td>
-                  <td>BLA/123135432563/87967857</td>
-                  <td>Jl. Jakarta 10, Kota Bandung</td>
-                  <td><div class="font-weight-bold text-danger">Ditolak</div></td>
-                  <td style="text-align: center;"><button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-primary"><i class="bx bx-edit me-0"></i></button>
-                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-danger"><i class="bx bx-trash me-0"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div><i class='bx bxs-file me-2 font-24 text-primary'></i>
-                      </div>Bangunan Gedung Kepentingan Umum
-                    </div>
-                  </td>
-                  <td>Jane Doe</td>
-                  <td>BLA/123135432563/87967857</td>
-                  <td>Jl. Jakarta 10, Kota Bandung</td>
-                  <td><div class="font-weight-bold text-primary">Diproses</div></td>
-                  <td style="text-align: center;"><button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-primary"><i class="bx bx-edit me-0"></i></button>
-                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-danger"><i class="bx bx-trash me-0"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div><i class='bx bxs-file me-2 font-24 text-warning'></i>
-                      </div>Bangunan Fungsi Hunian
-                    </div>
-                  </td>
-                  <td>Lorem Ipsum</td>
-                  <td>BLA/123135432563/87967857</td>
-                  <td>Jl. Jakarta 10, Kota Bandung</td>
-                  <td><div class="font-weight-bold text-primary">Diproses</div></td>
-                  <td style="text-align: center;"><button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-primary"><i class="bx bx-edit me-0"></i></button>
-                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-danger"><i class="bx bx-trash me-0"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div><i class='bx bxs-file-doc me-2 font-24 text-success'></i>
-                      </div>Prasarana Bangunan Gedung
-                    </div>
-                  </td>
-                  <td>Quick Brown Fox</td>
-                  <td>BLA/123135432563/87967857</td>
-                  <td>Jl. Jakarta 10, Kota Bandung</td>
-                  <td><div class="font-weight-bold text-success">Terbit/Selesai</div></td>
-                  <td style="text-align: center;"><button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-primary"><i class="bx bx-edit me-0"></i></button>
-                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-danger"><i class="bx bx-trash me-0"></i></button>
-                  </td>
-                </tr>
                 
               </tbody>
             </table>
@@ -228,5 +171,720 @@
       
     </div>
   </div>
+
+  
+
 </div>
+
+<div class="modal fade" id="exampleExtraLargeModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Permohonan Baru</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!--start stepper one--> 
+			   
+				<div id="stepper1" class="bs-stepper">
+				  <div class="card">
+					
+            <div class="card-header">
+              <div class="d-lg-flex flex-lg-row align-items-lg-center justify-content-lg-between" role="tablist">
+                <div class="step" data-target="#test-l-1">
+                  <div class="step-trigger" role="tab" id="stepper1trigger1" aria-controls="test-l-1">
+                  <div class="bs-stepper-circle"><i class='bx bx-edit fs-4'></i></div>
+                  <div class="">
+                    <h5 class="mb-0 steper-title">Daftar Pengajuan</h5>
+                    <!-- <p class="mb-0 steper-sub-title">Enter Your Details</p> -->
+                  </div>
+                  </div>
+                </div>
+                <div class="bs-stepper-line"></div>
+                <div class="step" data-target="#test-l-2">
+                  <div class="step-trigger" role="tab" id="stepper1trigger2" aria-controls="test-l-2">
+                    <div class="bs-stepper-circle"><i class='bx bx-user fs-4'></i></div>
+                    <div class="">
+                      <h5 class="mb-0 steper-title">Data Pemilik</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="bs-stepper-line"></div>
+                <div class="step" data-target="#test-l-3">
+                  <div class="step-trigger" role="tab" id="stepper1trigger3" aria-controls="test-l-3">
+                    <div class="bs-stepper-circle"><i class='bx bx-user fs-4'></i></div>
+                    <div class="">
+                      <h5 class="mb-0 steper-title">Data Tanah</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="bs-stepper-line"></div>
+                <div class="step" data-target="#test-l-5">
+                  <div class="step-trigger" role="tab" id="stepper1trigger5" aria-controls="test-l-5">
+                    <div class="bs-stepper-circle"><i class='bx bx-file fs-4'></i></div>
+                    <div class="">
+                      <h5 class="mb-0 steper-title">Data Bangunan Gedung</h5>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="card-body">
+          
+              <div class="bs-stepper-content">
+                <form onSubmit="return false">
+                  <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
+                    <h5 class="mb-3">Daftar Pengajuan</h5>
+
+                    <hr class="mb-4">
+
+                    <div class="row g-3">
+                      <h6>Form Permohonan Konsultasi</h6>
+                      <hr>
+
+                      
+
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-jenis_permohonan" class="form-label"><span style="color: green;">Jenis Permohonan</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-jenis_permohonan" aria-label="Default select example" required>
+                          <option value="0" selected="">Pilih...</option>
+                          {% for dajen in data_jenis %}
+                          <option value="{{dajen.id_jns_permohonan}}">{{dajen.nm_jns_permohonan}}</option>
+                          {% endfor %}
+                          </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-nama_bangunan" class="form-label"><span style="color: green;">Nama Bangunan</span> <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="tmb-nama_bangunan" placeholder="Nama Bangunan" required>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="InputLanguage" class="form-label"><span style="color: green;">Fungsi Bangunan</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-fungsi_bangunan" aria-label="Default select example" required>
+                          <option value="0" selected="">Pilih...</option>
+                          {% for dafung in data_fungsi %}
+                          <option value="{{dafung.id_fungsi_bg}}">{{dafung.fungsi_bg}}</option>
+                          {% endfor %}
+                          </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-luas_bangunan" class="form-label">Luas Bangunan</label>
+                        <div class="row">
+                          <div class="col-10">
+                            <input type="number" class="form-control" id="tmb-luas_bangunan" placeholder="Luas Bangunan">
+                          </div>
+                          <div class="col-2" style="align-self: center;">
+                            <span>m2</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-jenis_bangunan" class="form-label"><span style="color: green;">Jenis Bangunan</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-jenis_bangunan" aria-label="Default select example" required>
+                          <option value="0" selected="">Pilih...</option>
+                          {% for dajbg in data_jbg %}
+                          <option value="{{dajbg.id}}">{{dajbg.nm_jenis_bg}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-jumlah_lantai" class="form-label"><span style="color: green;">Jumlah Lantai</span> <span style="color: red;">*</span></label>
+                        <input type="number" class="form-control" id="tmb-jumlah_lantai" placeholder="Jumlah Lantai" required>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-tinggi_bangunan" class="form-label"><span style="color: green;">Tinggi Bangunan</span> <span style="color: red;">*</span></label>
+                        <div class="row">
+                          <div class="col-10">
+                            <input type="number" class="form-control" id="tmb-tinggi_bangunan" placeholder="Tinggi Bangunan">
+                          </div>
+                          <div class="col-2" style="align-self: center;">
+                            <span>m</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-luas_basement" class="form-label">Luas Basement Bangunan</label>
+                        <div class="row">
+                          <div class="col-10">
+                            <input type="number" class="form-control" id="tmb-luas_basement" placeholder="Luas Basement Bangunan">
+                          </div>
+                          <div class="col-2" style="align-self: center;">
+                            <span>m2</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6 mb-4">
+                        <label for="tmb-jml_lantai_basement" class="form-label">Jumlah Lantai Basement Bangunan</label>
+                        <input type="number" class="form-control" id="tmb-jml_lantai_basement" placeholder="Jumlah Lantai Basement Bangunan">
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-perancangan_dok_teknis" class="form-label">Perancangan Dokumen Teknis</label>
+                        <select class="form-select" id="tmb-perancangan_dok_teknis" aria-label="Default select example">
+                          <option selected>Disediakan Penyedia Jasa Konstruksi</option>
+                        </select>
+                      </div>
+                      
+                      <h6>Alamat Bangunan</h6>
+                      <hr>
+
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-dapem-prov" class="form-label"><span style="color: green;">Provinsi</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-dapem-prov" aria-label="Default select example" required>
+                          <option selected>---</option>
+                          </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-dapem-kabkot" class="form-label"><span style="color: green;">Kab/Kota</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-dapem-kabkot" aria-label="Default select example" required>
+                          <option selected>---</option>
+                          </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-dapem-kecamatan" class="form-label"><span style="color: green;">Kecamatan</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-dapem-kecamatan" aria-label="Default select example" required>
+                          <option selected>---</option>
+                          </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-dapem-kelurahan" class="form-label"><span style="color: green;">Kelurahan</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-dapem-kelurahan" aria-label="Default select example" required>
+                          <option selected>---</option>
+                          </select>
+                      </div>
+
+                      <div class="col-12 col-lg-12 mb-4">
+                        <label for="tmb-dapem-alamat" class="form-label">Alamat</label>
+                        <textarea class="form-control" id="tmb-dapem-alamat" placeholder="Alamat ..." rows="3"></textarea>
+                      </div>
+
+                      <div class="col-12 col-lg-6">
+                        <button class="btn btn-primary px-4" onclick="stepper1.next()">Next<i class='bx bx-right-arrow-alt ms-2'></i></button>
+                      </div>
+                    </div><!---end row-->
+                  
+                  </div>
+
+                  <div id="test-l-2" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger2">
+
+                    <h5 class="mb-3">Data Pemilik</h5>
+
+                    <div class="row g-3">
+
+                      <hr>
+                      
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-dapem-status_kepemilikan" class="form-label"><span style="color: green;">Status Kepemilikan</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-dapem-status_kepemilikan" aria-label="Default select example" required>
+                          <option selected>Pilih...</option>
+                          <option value="1">Pemerintah</option>
+                          <option value="2">Badan Usaha</option>
+                          <option value="3">Perorangan</option>
+                          </select>
+                      </div>
+
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-dapem-nama_bangunan" class="form-label"><span style="color: green;">Nama</span> <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="tmb-dapem-nama_bangunan" placeholder="Nama Bangunan" required>
+                      </div>
+
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-dapem-jenis_tanda_pengenal" class="form-label"><span style="color: green;">Jenis Tanda Pengenal</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-dapem-jenis_tanda_pengenal" aria-label="Default select example" required>
+                          <option selected>Pilih...</option>
+                          <option value="1">KTP</option>
+                          <option value="2">KITAS</option>
+                          <option value="3">NIB</option>
+                          </select>
+                      </div>
+
+                      <div class="col-12 col-lg-6 mb-4">
+                        <label for="tmb-dapem-no_ktp" class="form-label"><span style="color: green;">No. Tanda Pengenal</span> <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="tmb-dapem-no_ktp" placeholder="No. Tanda Pengenal" required>
+                      </div>
+
+                      <hr>
+
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-dapem-prov" class="form-label"><span style="color: green;">Provinsi</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-dapem-prov" aria-label="Default select example" required>
+                          <option selected>---</option>
+                          </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-dapem-kabkot" class="form-label"><span style="color: green;">Kab/Kota</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-dapem-kabkot" aria-label="Default select example" required>
+                          <option selected>---</option>
+                          </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-dapem-kecamatan" class="form-label"><span style="color: green;">Kecamatan</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-dapem-kecamatan" aria-label="Default select example" required>
+                          <option selected>---</option>
+                          </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-dapem-kelurahan" class="form-label"><span style="color: green;">Kelurahan</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-dapem-kelurahan" aria-label="Default select example" required>
+                          <option selected>---</option>
+                          </select>
+                      </div>
+
+                      <div class="col-12 col-lg-12 mb-4">
+                        <label for="tmb-dapem-alamat" class="form-label">Alamat</label>
+                        <textarea class="form-control" id="tmb-dapem-alamat" placeholder="Alamat ..." rows="3"></textarea>
+                      </div>
+
+                      <hr>
+                      
+                      <div class="col-12 col-lg-6 mb-4">
+                        <label for="tmb-dapem-telp" class="form-label"><span style="color: green;">No. Telepon</span> <span style="color: red;">*</span></label>
+                        <input type="number" class="form-control" id="tmb-dapem-telp" placeholder="No. Telepon" required>
+                      </div>
+
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-dapem-email" class="form-label"><span style="color: green;">Email</span> <span style="color: red;">*</span></label>
+                        <input type="email" class="form-control" id="tmb-dapem-email" placeholder="Email" required>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="d-flex align-items-center gap-3">
+                          <button class="btn btn-outline-secondary px-4" onclick="stepper1.previous()"><i class='bx bx-left-arrow-alt me-2'></i>Previous</button>
+                          <button class="btn btn-primary px-4" onclick="stepper1.next()">Next<i class='bx bx-right-arrow-alt ms-2'></i></button>
+                        </div>
+                      </div>
+                    </div><!---end row-->
+                  
+                  </div>
+
+                  <div id="test-l-3" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger5">
+                    <h5 class="mb-3">Data Tanah</h5>
+
+                    <hr>
+      
+                    <div class="row g-3 mb-4">
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-danah-dok_kepemilikan" class="form-label"><span style="color: green;">Jenis Dokumen Kepemilikan</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-danah-dok_kepemilikan" aria-label="Default select example" required>
+                          <option selected>Pilih...</option>
+                          <option value="1">Sertifikat</option>
+                          <option value="2">Akte Jual Beli</option>
+                          <option value="3">Girik</option>
+                          <option value="4">Petuk</option>
+                          <option value="5">Bukti Lain2</option>
+                          </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-danah-no_dokumen" class="form-label"><span style="color: green;">No Dokumen</span> <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="tmb-danah-no_dokumen" placeholder="Position">
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-danah-tgl_terbit_dok" class="form-label">Tanggal Terbit Dokumen</label>
+                        <input type="date" class="form-control" id="tmb-danah-tgl_terbit_dok" placeholder="Tanggal Terbit Dokumen">
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-danah-luas_tanah" class="form-label">Luas Tanah</label>
+                        <div class="row">
+                          <div class="col-10">
+                            <input type="number" class="form-control" id="tmb-danah-luas_tanah" placeholder="Luas Tanah">
+                          </div>
+                          <div class="col-2" style="align-self: center;">
+                            <span>m2</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-danah-hak_kepemilikan" class="form-label">Hak Kepemilikan</label>
+                        <select class="form-select" id="tmb-danah-hak_kepemilikan" aria-label="Default select example" required>
+                          <option selected>---</option>
+                          <option value="1">Hak Milik</option>
+                          <option value="2">Hak Pakai</option>
+                          <option value="3">Hak Pengelolaan</option>
+                          <option value="4">Hak Guna Bangunan</option>
+                          <option value="5">Hak Guna Usaha</option>
+                          <option value="6">Hak Wakaf</option>
+                          </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-danah-nama_pemilik" class="form-label">Nama Pemilik Hak Atas Tanah</label>
+                        <input type="text" class="form-control" id="tmb-danah-nama_pemilik" placeholder="Nama Pemilik Hak Atas Tanah">
+                      </div>
+
+                      <div class="col-12 col-lg-12 mb-2">
+                        <label for="tmb-danah-alamat" class="form-label">Alamat</label>
+                        <textarea class="form-control" id="tmb-danah-alamat" placeholder="Alamat ..." rows="3"></textarea>
+                      </div>
+
+                      <div class="col-12 col-lg-6 mb-4">
+                        <label for="tmb-danah-file_kepemilikan" class="form-label">File Data Kepemilikan Tanah</label>
+                        <input type="file" class="form-control" id="tmb-danah-file_kepemilikan">
+                      </div>
+
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-danah-ptpt" class="form-label">Perjanjian Tertulis Pemanfaatan Tanah</label>
+                        <select class="form-select" id="tmb-danah-ptpt" aria-label="Default select example" required>
+                          <option selected>Pilih...</option>
+                          <option value="1">Ada</option>
+                          <option value="2">Tidak Ada</option>
+                          </select>
+                      </div>
+
+                      <div class="card">
+                        <div class="card-body">
+                          <table class="table mb-0">
+                            <thead class="table-primary">
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Data Teknis Tanah</th>
+                                <th scope="col">Berkas</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td>Gambar dan Informasi tentang hasil penyelidikan Tanah untuk bangunan sederhana</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-danah-berkas_datek_tanah">
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="d-flex align-items-center gap-3">
+                          <button class="btn btn-outline-secondary px-4" onclick="stepper1.previous()"><i class='bx bx-left-arrow-alt me-2'></i>Previous</button>
+                          <button class="btn btn-primary px-4" onclick="stepper1.next()">Next<i class='bx bx-right-arrow-alt ms-2'></i></button>
+                        </div>
+                      </div>
+
+                    </div><!---end row-->
+
+                  </div>
+
+                  <div id="test-l-5" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger5">
+                    <h5 class="mb-3">Data Kelengkapan</h5>
+
+                    <hr>
+
+                    <h6 class="mb-1">Data Umum</h6>
+      
+                    <div class="row g-3 mb-4">
+                      <div class="card">
+                        <div class="card-body">
+                          <table class="table mb-0">
+                            <thead class="table-primary">
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Data Umum</th>
+                                <th scope="col">Berkas</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row"></th>
+                                <td>Informasi KTP/KITAS*</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-dakel-ktp_kitas">
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row"></th>
+                                <td>Informasi KRK/KKPR*</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-dakel-krk_kkpr">
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row"></th>
+                                <td>Data<br>
+                                  - Penyedia Jasa Perencana Konstruksi badan usaha atau perseorangan</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-dakel-jpk_bu_persero">
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div><!---end row-->
+
+                    <h6 class="mb-1">Data Teknis Arsitektur</h6>
+      
+                    <div class="row g-3 mb-4">
+                      <div class="card">
+                        <div class="card-body">
+                          <table class="table mb-0">
+                            <thead class="table-primary">
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Data Teknis Arsitektur</th>
+                                <th scope="col">Berkas</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row"></th>
+                                <td>Gambar Situasi</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-dakel-gsit">
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row"></th>
+                                <td>Gambar Rencana Tapak</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-dakel-krk_kkpr">
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row"></th>
+                                <td>Gambar Denah</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-dakel-gden">
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row"></th>
+                                <td>Gambar Potongan</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-dakel-gpot">
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row"></th>
+                                <td>Gambar Tampak</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-dakel-gtam">
+                                </td>
+                              </tr> 
+                              <tr>
+                                <th scope="row"></th>
+                                <td>Gambar Detail Arsitektur</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-dakel-gda">
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div><!---end row-->
+
+                    <h6 class="mb-1">Data Teknis Struktur</h6>
+      
+                    <div class="row g-3 mb-4">
+                      <div class="card">
+                        <div class="card-body">
+                          <table class="table mb-0">
+                            <thead class="table-primary">
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Data Teknis Struktur</th>
+                                <th scope="col">Berkas</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row"></th>
+                                <td>Gambar Rencana Fondasi</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-dakel-grf">
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row"></th>
+                                <td>Gambar Rencana Kolom</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-dakel-grk">
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row"></th>
+                                <td>Gambar Rencana Balok</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-dakel-grb">
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row"></th>
+                                <td>Gambar Rencana Rangka Atap</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-dakel-grra">
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row"></th>
+                                <td>Gambar Detail Struktur</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-dakel-gds">
+                                </td>
+                              </tr> 
+                              
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div><!---end row-->
+
+                    <h6 class="mb-1">Data Teknis Mekanikal, Elektrikal, dan Plambing</h6>
+      
+                    <div class="row g-3 mb-4">
+                      <div class="card">
+                        <div class="card-body">
+                          <table class="table mb-0">
+                            <thead class="table-primary">
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Data Teknis Mekanikal, Elektrikal, dan Plambing</th>
+                                <th scope="col">Keterangan</th>
+                                <th scope="col">Berkas</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row"></th>
+                                <td>Gambar Rencana dan Perhitungan Teknis Jaringan Listrik</td>
+                                <td>Antara lain gambar sumber, jaringan listrik dan pencahayaan</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-dakel-grptjl">
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row"></th>
+                                <td>Gambar Rencana dan Perhitungan Sistem Sanitasi</td>
+                                <td>Antara lain gambar rencana pengelolaan air bersih, air limbah, air hujan, drainase, dan persampahan</td>
+                                <td>
+                                  <input type="file" class="form-control" id="tmb-dakel-grpss">
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div><!---end row-->
+
+                    <div class="col-12">
+                      <div class="d-flex align-items-center gap-3">
+                        <button class="btn btn-primary px-4" onclick="stepper1.previous()"><i class='bx bx-left-arrow-alt me-2'></i>Previous</button>
+                        <button class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#exampleScrollableModal">Submit</button>
+                      </div>
+                    </div>
+                    
+                  </div>
+
+                </form>
+              </div>
+              
+            </div>
+          </div>
+				 </div>
+				<!--end stepper one--> 
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleScrollableModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Form Pernyataan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h4>Data Konsultasi</h4>
+        <hr>
+        <div class="row mb-1"> 
+          <div class="col-5">Jenis Konsultasi</div> 
+          <div class="col-1">:</div>
+          <div class="col-6" id="pernyataan-jenis_konsul"> Bangunan Fungsi Hunian</div> 
+        </div>
+        <div class="row mb-1"> 
+          <div class="col-5">Nama Pemilik</div> 
+          <div class="col-1">:</div>
+          <div class="col-6" id="pernyataan-nama_pemilik"> Tukang</div> 
+        </div>
+        <div class="row mb-1"> 
+          <div class="col-5">Alamat Pemilik Bangunan</div> 
+          <div class="col-1">:</div>
+          <div class="col-6" id="pernyataan-alamat_pemilik"> Jl.Tes</div> 
+        </div>
+        <div class="row mb-1"> 
+          <div class="col-5">Lokasi Bangunan Gedung</div> 
+          <div class="col-1">:</div>
+          <div class="col-6" id="pernyataan-lokasi_bangunan"> Jl.Coba</div> 
+        </div>
+        <div class="row mb-4"> 
+          <div class="col-5">Data Bangunan</div> 
+          <div class="col-1">:</div>
+          <div class="col-6" id="pernyataan-data_bangunan"> Luas : 150.00m2, Tinggi : 4.00 Meter, Jumlah Lantai : 1 Lantai</div> 
+        </div>
+
+        <h4>Konfirmasi Pernyataan Permohonan</h4>
+        <hr>
+        <h6><b>Sebelum anda mengkonfirmasi, Mohon memperhatikan informasi berikut:</b></h6>
+        <p>- Data yang anda berikan adalah benar dan dapat dipertanggungjawabkan.</p>
+        <p>- Anda dapat melengkapi data persyaratan dengan cara diunggah melalui situs SIMBG</p>
+        <p>- Dokumen harus dilengkapi dalam waktu 20 hari terhitung mulai tanggal pendaftaran.</p>
+        <p>- Apabila terjadi kesalahan data setelah dilakukan konfirmasi, Anda dapat memperbaikinya setelah dikembalikan oleh Dinas Teknis</p>
+        <br>
+        <h6 ><b>Berdasarkan konfirmasi setuju yang saya nyatakan:</b></h6>
+        <p >- Seluruh data dalam berkas/dokumen yang telah saya unggah dan isi, serta saya sampaikan adalah benar.</p>
+        <p >- Data yang saya berikan tunduk pada peraturan perundang-undangan.</p>
+        <p class="mb-4" >- Apabila di kemudian hari terjadi kesalahan terhadap data yang saya sampaikan, maka saya bersedia menerima sanksi sesuai peraturan perundang-undangan.</p>
+        
+        <h4>Konfirmasi Pernyataan Permohonan</h4>
+        <hr>
+        <div class="form-check">
+          <p>
+            <input class="form-check-input mb-1" type="checkbox" value="" id="check-krk_kkpr">
+            <label class="form-check-label" for="check-krk_kkpr" style="color: green;">Pernyataan mematuhi KRK/KKPR</label>
+          </p>
+          <p>
+            <input class="form-check-input mb-1" type="checkbox" value="" id="check-pelaksana_konstruksi">
+            <label class="form-check-label" for="check-pelaksana_konstruksi" style="color: green;">Pernyataan menggunakan Pelaksana Konstruksi</label>
+          </p>
+          <p>
+            <input class="form-check-input mb-1" type="checkbox" value="" id="check-pengawas_berserti">
+            <label class="form-check-label" for="check-pengawas_berserti" style="color: green;">Pernyataan menggunakan Pengawas/ Manajemen Konstruksi bersertifikat</label>
+          </p>
+          <p>
+            <input class="form-check-input mb-1" type="checkbox" value="" id="check-tidak_sengketa">
+            <label class="form-check-label" for="check-tidak_sengketa" style="color: green;">Pernyataan bahwa tanah tidak dalam status sengketa</label>
+          </p>
+          <p>
+            <input class="form-check-input mb-1" type="checkbox" value="" id="check-tahan_gempa">
+            <label class="form-check-label" for="check-tahan_gempa" style="color: green;">Pernyataan memenuhi ketentuan pokok tahan gempa</label>
+          </p>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-10 mb-1" >
+            <div class="form-check">
+              <input class="form-check-input mb-1" type="checkbox" value="" id="check-semua_persyaratan">
+              <label class="form-check-label" for="check-semua_persyaratan" style="color: red;">Menyetujui Semua Persyaratan</label>
+            </div>
+          </div>
+          <div class="col-2"></div>
+
+          <div class="col-12" style="text-align: right;">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#exampleExtraLargeModal">Back</button>
+            <button type="button" class="btn btn-primary"id="submit-add-permohonan">Submit</button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
 {% endblock %}

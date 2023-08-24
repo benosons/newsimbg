@@ -118,7 +118,7 @@ $routes->add('penerbitan_dokumen', 'View::penerbitan_dokumen');
 
 $routes->add('data_mahasiswa', 'View::data_mahasiswa');
 $routes->add('data_dosen', 'View::data_dosen');
-$routes->add('data_kampus', 'View::data_kampus');
+// $routes->add('data_kampus', 'View::data_kampus');
 $routes->add('data_jadwal', 'View::data_jadwal');
 $routes->add('data_buku', 'View::data_buku');
 $routes->add('data_user', 'View::user');
@@ -150,6 +150,8 @@ $routes->post('getuser', 'Jsondata::getuser');
 $routes->post('adduser', 'Jsondata::adduser');
 $routes->post('addrole', 'Jsondata::addrole');
 $routes->post('deleteuser', 'Jsondata::deleteuser');
+
+$routes->post('getallpermohonan', 'Jsondata::getallpermohonan');
 
 $routes->post('getallDealerData', 'Jsondata::getallDealerData');
 $routes->post('getDealerData', 'Jsondata::getDealerData');
