@@ -1,0 +1,185 @@
+<div class="primary-menu">
+  <nav
+    class="navbar navbar-expand-lg align-items-center"
+    style="border-top: solid #1f3368"
+  >
+    <div
+      class="offcanvas offcanvas-start"
+      tabindex="-1"
+      id="offcanvasNavbar"
+      aria-labelledby="offcanvasNavbarLabel"
+    >
+      <div class="offcanvas-header border-bottom">
+        <div class="d-flex align-items-center">
+          <div class="">
+            <img
+              src="assets/images/logo-icon.png"
+              class="logo-icon"
+              alt="logo icon"
+            />
+          </div>
+          <div class="">
+            <h4 class="logo-text">Rocker</h4>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav align-items-center flex-grow-1">
+          <li class="nav-item dropdown">
+            <a class="nav-link" id="menu-dashboard" href="dashboard">
+              <div class="parent-icon"><i class="bx bx-home-alt"></i></div>
+              <div class="menu-title d-flex align-items-center">Beranda</div>
+              <!-- <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div> -->
+            </a>
+            <!-- <ul class="dropdown-menu">
+               <li><a class="dropdown-item" href="index.html"><i class='bx bx-pie-chart-alt' ></i>Default</a></li>
+               <li><a class="dropdown-item" href="index2.html"><i class='bx bx-shield-alt-2'></i>Alternate</a></li>
+               <li><a class="dropdown-item" href="index3.html"><i class='bx bx-line-chart'></i>Graphical</a></li>
+             </ul> -->
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              id="menu-setting_data"
+              class="nav-link dropdown-toggle dropdown-toggle-nocaret"
+              href="javascript:;"
+              data-bs-toggle="dropdown"
+            >
+              <div class="parent-icon"><i class="bx bx-cube"></i></div>
+              <div class="menu-title d-flex align-items-center">
+                Setting Data
+              </div>
+              <div class="ms-auto dropy-icon">
+                <i class="bx bx-chevron-down"></i>
+              </div>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" id="submenu-data_dokumen" href="#"
+                  ><i class="bx bx-envelope"></i>Data Dokumen</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" id="submenu-jenis_konsultasi" href="#"
+                  ><i class="bx bx-conversation"></i>Jenis Konsultasi</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              id="menu-pengaturan_admin"
+              class="nav-link dropdown-toggle dropdown-toggle-nocaret"
+              href="javascript:;"
+              data-bs-toggle="dropdown"
+            >
+              <div class="parent-icon"><i class="bx bx-cog"></i></div>
+              <div class="menu-title d-flex align-items-center">
+                Pengaturan Admin
+              </div>
+              <div class="ms-auto dropy-icon">
+                <i class="bx bx-chevron-down"></i>
+              </div>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="nav-item dropend">
+                <a id="submenu-pengaturan_api" href="#" class="dropdown-item"
+                  ><i class="bx bx-receipt"></i>Pengaturan API</a
+                >
+              </li>
+              <li class="nav-item dropend">
+                <a id="submenu-profile_user" class="dropdown-item" href="#"
+                  ><i class="bx bx-cylinder"></i>Profile User</a
+                >
+              </li>
+              <li class="nav-item dropend">
+                <a id="submenu-profile_dinas" class="dropdown-item" href="#"
+                  ><i class="bx bx-aperture"></i>Profile Dinas</a
+                >
+              </li>
+              <li class="nav-item dropend">
+                <a id="submenu-role_user" class="dropdown-item" href="#"
+                  ><i class="bx bx-aperture"></i>Role User</a
+                >
+              </li>
+              <li class="nav-item dropend">
+                <a
+                  id="submenu-pengaturan_user"
+                  class="dropdown-item"
+                  href="users"
+                  ><i class="bx bx-aperture"></i>Pengaturan User</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a
+              id="menu-akun"
+              class="nav-link dropdown-toggle dropdown-toggle-nocaret"
+              href="javascript:;"
+              data-bs-toggle="dropdown"
+            >
+              <div class="parent-icon"><i class="bx bx-lock"></i></div>
+              <div class="menu-title d-flex align-items-center">Akun</div>
+              <div class="ms-auto dropy-icon">
+                <i class="bx bx-chevron-down"></i>
+              </div>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="nav-item dropend">
+                <a id="submenu-pengguna" href="#" class="dropdown-item"
+                  ><i class="bx bx-receipt"></i>Pengguna</a
+                >
+              </li>
+              <li class="nav-item dropend">
+                <a id="submenu-ubah_password" class="dropdown-item" href="#"
+                  ><i class="bx bx-cylinder"></i>Ubah Password</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <!-- <li class="nav-item dropdown">
+             <a id="menu-monitoring" class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;" data-bs-toggle="dropdown">
+                <div class="parent-icon"><i class='bx bx-card'></i>
+                </div>
+                <div class="menu-title d-flex align-items-center">Monitoring</div>
+                <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
+             </a>
+             <ul class="dropdown-menu">
+               <li> <a class="dropdown-item" id="submenu-konsultasi" href="konsultasi"><i class='bx bx-conversation'></i>Konsultasi</a></li>
+               
+             </ul>
+            </li> -->
+
+          <!-- <li class="nav-item dropdown">
+             <a id="menu-pengaturan" class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;" data-bs-toggle="dropdown">
+                <div class="parent-icon"><i class='bx bx-message-square-edit'></i>
+                </div>
+                <div class="menu-title d-flex align-items-center">Pengaturan</div>
+                <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
+             </a>
+             <ul class="dropdown-menu">
+                <li> <a class="dropdown-item" id="submenu-profil_pu" href="profil_pu"><i class='bx bx-message-square-dots'></i>Profil</a>
+                </li>
+                <li> <a class="dropdown-item" id="submenu-data_asn" href="data_asn"><i class='bx bx-book-content' ></i>Data ASN</a>
+                </li>
+                <li> <a class="dropdown-item" id="submenu-input_tpa" href="input_tpa"><i class='bx bx-radio-circle-marked'></i>Input TPA</a>
+                </li>
+                <li> <a class="dropdown-item" id="submenu-surat_keputusan" href="surat_keputusan"><i class='bx bx-layer'></i>Surat Keputusan</a>
+                </li>
+                <li> <a class="dropdown-item" id="submenu-data_kampus" href="data_kampus"><i class='bx bx-file-blank' ></i>Data Kampus</a>
+                </li>
+             </ul>
+            </li> -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
