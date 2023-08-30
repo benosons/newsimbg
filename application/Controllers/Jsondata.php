@@ -12,6 +12,8 @@ class Jsondata extends \CodeIgniter\Controller
   {
 			$this->session = session();
 			$this->now = date('Y-m-d H:i:s');
+			$this->day = date('Y-m-d');
+			$this->dax = date('dmY');
 			$this->request = $request;
 			$this->logged = $this->session->get('logged_in');
 			$this->logModel   = new \App\Models\LogModel();
@@ -483,6 +485,243 @@ class Jsondata extends \CodeIgniter\Controller
 	  } catch (\Exception $e) {
 		  die($e->getMessage());
 	  }
+  }
+
+  public function getjsonjbg()
+  {
+	try {
+		$request		= $this->request;
+		$method			= $request->getMethod();
+		$komunikasi 	= new \App\Models\KegiatanModel();
+		
+		$data = $komunikasi->getjbg($request->getVar('id'));
+		
+		if($data){
+			$response = [
+				'status'   => 'sukses',
+				'code'     => 200,
+				'data' 	 => $data
+			];
+		}else{
+			$response = [
+				'status'   => 'gagal',
+				'code'     => '0',
+				'data'     => 'tidak ada data',
+			];
+		}
+
+	header('Content-Type: application/json');
+	echo json_encode($response);
+	exit;
+	} catch (\Exception $e) {
+		die($e->getMessage());
+	}
+  }
+
+  public function getjsonkabkot()
+  {
+	try {
+		$request		= $this->request;
+		$method			= $request->getMethod();
+		$komunikasi 	= new \App\Models\KegiatanModel();
+		
+		$data = $komunikasi->getkabkot($request->getVar('id'));
+		
+		if($data){
+			$response = [
+				'status'   => 'sukses',
+				'code'     => 200,
+				'data' 	 => $data
+			];
+		}else{
+			$response = [
+				'status'   => 'gagal',
+				'code'     => '0',
+				'data'     => 'tidak ada data',
+			];
+		}
+
+	header('Content-Type: application/json');
+	echo json_encode($response);
+	exit;
+	} catch (\Exception $e) {
+		die($e->getMessage());
+	}
+  }
+
+  public function getjsonkec()
+  {
+	try {
+		$request		= $this->request;
+		$method			= $request->getMethod();
+		$komunikasi 	= new \App\Models\KegiatanModel();
+		
+		$data = $komunikasi->getkecamatan($request->getVar('id'));
+		
+		if($data){
+			$response = [
+				'status'   => 'sukses',
+				'code'     => 200,
+				'data' 	 => $data
+			];
+		}else{
+			$response = [
+				'status'   => 'gagal',
+				'code'     => '0',
+				'data'     => 'tidak ada data',
+			];
+		}
+
+	header('Content-Type: application/json');
+	echo json_encode($response);
+	exit;
+	} catch (\Exception $e) {
+		die($e->getMessage());
+	}
+  }
+
+  public function getjsonkel()
+  {
+	try {
+		$request		= $this->request;
+		$method			= $request->getMethod();
+		$komunikasi 	= new \App\Models\KegiatanModel();
+		
+		$data = $komunikasi->getkelurahan($request->getVar('id'));
+		
+		if($data){
+			$response = [
+				'status'   => 'sukses',
+				'code'     => 200,
+				'data' 	 => $data
+			];
+		}else{
+			$response = [
+				'status'   => 'gagal',
+				'code'     => '0',
+				'data'     => 'tidak ada data',
+			];
+		}
+
+	header('Content-Type: application/json');
+	echo json_encode($response);
+	exit;
+	} catch (\Exception $e) {
+		die($e->getMessage());
+	}
+  }
+
+  public function getjsoncount()
+  {
+	try {
+		$request		= $this->request;
+		$method			= $request->getMethod();
+		$komunikasi 	= new \App\Models\KegiatanModel();
+		
+		$data = $komunikasi->getcount();
+		
+		if($data){
+			$response = [
+				'status'   => 'sukses',
+				'code'     => 200,
+				'data' 	 => $data
+			];
+		}else{
+			$response = [
+				'status'   => 'gagal',
+				'code'     => '0',
+				'data'     => 'tidak ada data',
+			];
+		}
+
+	header('Content-Type: application/json');
+	echo json_encode($response);
+	exit;
+	} catch (\Exception $e) {
+		die($e->getMessage());
+	}
+  }
+
+  public function addpermohonan()
+  {
+	try {
+		// print(1);
+		// $dax = date('Y-m-d');
+
+		$request		= $this->request;
+		
+		$method			= $request->getMethod();
+		$perm = new \App\Models\KegiatanModel();
+
+		
+
+		// $day = date('dmY');
+		// $noreg = 'PBG-997101-'+$this->dax+'-1';
+
+		if($method == 'post'){
+
+			$data = [
+				'id_jenis_permohonan'            => $request->getVar('id_jenis_permohonan'),        
+				'id_fungsi_bg'                   => $request->getVar('id_fungsi_bg'),
+				'id_jenis_bg'                    => $request->getVar('id_jenis_bg'),
+				'nama_bg'                        => $request->getVar('nama_bg'),
+				'luas_bg'                        => $request->getVar('luas_bg'),
+				'jml_lantai_bg'                  => $request->getVar('jml_lantai_bg'),
+				'tinggi_bg'                      => $request->getVar('tinggi_bg'),
+				'luas_basement_bg'               => $request->getVar('luas_basement_bg'),
+				'jml_lantai_basement_bg'         => $request->getVar('jml_lantai_basement_bg'),
+				'id_prov_bg'                     => $request->getVar('id_prov_bg'),
+				'id_kabkot_bg'                   => $request->getVar('id_kabkot_bg'),
+				'id_kec_bg'                      => $request->getVar('id_kec_bg'),
+				'id_kel_bg'                      => $request->getVar('id_kel_bg'),
+				'alamat_bg'                      => $request->getVar('alamat_bg'),
+				'id_stat_kepemilikan'            => $request->getVar('id_stat_kepemilikan'),
+				'id_jenis_tanda_pengenal'        => $request->getVar('id_jenis_tanda_pengenal'),
+				'nama_pemilik'                   => $request->getVar('nama_pemilik'),
+				'no_tanda_pengenal'              => $request->getVar('no_tanda_pengenal'),
+				'id_prov_pemilik'                => $request->getVar('id_prov_pemilik'),
+				'id_kabkot_pemilik'              => $request->getVar('id_kabkot_pemilik'),
+				'id_kec_pemilik'                 => $request->getVar('id_kec_pemilik'),
+				'id_kel_pemilik'                 => $request->getVar('id_kel_pemilik'),
+				'alamat_pemilik'                 => $request->getVar('alamat_pemilik'),
+				'no_telp_pemilik'                => $request->getVar('no_telp_pemilik'),
+				'email_pemilik'                  => $request->getVar('email_pemilik'),
+				'id_jenis_dok_tanah'             => $request->getVar('id_jenis_dok_tanah'),
+				'no_dok_tanah'                   => $request->getVar('no_dok_tanah'),
+				'tgl_terbit_dok_tanah'           => $request->getVar('tgl_terbit_dok_tanah'),
+				'luas_tanah'                     => $request->getVar('luas_tanah'),
+				'id_hak_tanah'                   => $request->getVar('id_hak_tanah'),
+				'nama_hak_tanah'                 => $request->getVar('nama_hak_tanah'),
+				'alamat_tanah'                   => $request->getVar('alamat_tanah'),
+				'perjanjian_pemanfaatan_tanah'   => $request->getVar('perjanjian_pemanfaatan_tanah'),
+				'no_registrasi'					 => $request->getVar('no_registrasi'),
+				'in_date'						 => $request->getVar('in_date'),
+
+				'created_date' 					 => $this->now,
+				'updated_date' 					 => $this->now,
+				'created_by' 					 => $this->session->get('id'),
+				'updated_by' 					 => $this->session->get('id')
+			];
+			
+			$perm->insertPermohonan($data);
+
+		}
+
+		$response = [
+			'status'   => 'sukses',
+			'code'     => 200,
+		];
+
+		// return $response;
+		header('Content-Type: application/json');
+		echo json_encode($response);
+		exit;
+		// redirect('permohonan','refresh');
+		
+		// echo json_encode($response);
+	} catch (\Exception $e) {
+		die($e->getMessage());
+	}
   }
 
   public function addDealerData()

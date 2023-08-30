@@ -230,10 +230,10 @@
 
               </div>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="background-color: whitesmoke;">
           
               <div class="bs-stepper-content">
-                <form onSubmit="return false">
+                <form onSubmit="return false" id="form_permohonan">
                   <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
                     <h5 class="mb-3">Daftar Pengajuan</h5>
 
@@ -268,7 +268,7 @@
                           </select>
                       </div>
                       <div class="col-12 col-lg-6">
-                        <label for="tmb-luas_bangunan" class="form-label">Luas Bangunan</label>
+                        <label for="tmb-luas_bangunan" class="form-label"><span style="color: green;">Luas Bangunan</span><span style="color: red;">*</span></label>
                         <div class="row">
                           <div class="col-10">
                             <input type="number" class="form-control" id="tmb-luas_bangunan" placeholder="Luas Bangunan">
@@ -282,9 +282,9 @@
                         <label for="tmb-jenis_bangunan" class="form-label"><span style="color: green;">Jenis Bangunan</span> <span style="color: red;">*</span></label>
                         <select class="form-select" id="tmb-jenis_bangunan" aria-label="Default select example" required>
                           <option value="0" selected="">Pilih...</option>
-                          {% for dajbg in data_jbg %}
+                          <!-- {% for dajbg in data_jbg %}
                           <option value="{{dajbg.id}}">{{dajbg.nm_jenis_bg}}</option>
-                          {% endfor %}
+                          {% endfor %} -->
                         </select>
                       </div>
                       <div class="col-12 col-lg-6">
@@ -320,7 +320,7 @@
                       <div class="col-12 col-lg-6">
                         <label for="tmb-perancangan_dok_teknis" class="form-label">Perancangan Dokumen Teknis</label>
                         <select class="form-select" id="tmb-perancangan_dok_teknis" aria-label="Default select example">
-                          <option selected>Disediakan Penyedia Jasa Konstruksi</option>
+                          <option value="Disediakan Penyedia Jasa Konstruksi" selected>Disediakan Penyedia Jasa Konstruksi</option>
                         </select>
                       </div>
                       
@@ -328,37 +328,40 @@
                       <hr>
 
                       <div class="col-12 col-lg-6">
-                        <label for="tmb-dapem-prov" class="form-label"><span style="color: green;">Provinsi</span> <span style="color: red;">*</span></label>
-                        <select class="form-select" id="tmb-dapem-prov" aria-label="Default select example" required>
+                        <label for="tmb-prov" class="form-label"><span style="color: green;">Provinsi</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-prov" aria-label="Default select example" required>
+                          <option value="0" selected>Pilih...</option>
+                          {% for prov in data_prov %}
+                          <option value="{{prov.id_provinsi}}">{{prov.nama_provinsi}}</option>
+                          {% endfor %}
+                          </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tmb-kabkot" class="form-label"><span style="color: green;">Kab/Kota</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-kabkot" aria-label="Default select example" required>
                           <option selected>---</option>
                           </select>
                       </div>
                       <div class="col-12 col-lg-6">
-                        <label for="tmb-dapem-kabkot" class="form-label"><span style="color: green;">Kab/Kota</span> <span style="color: red;">*</span></label>
-                        <select class="form-select" id="tmb-dapem-kabkot" aria-label="Default select example" required>
+                        <label for="tmb-kecamatan" class="form-label"><span style="color: green;">Kecamatan</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-kecamatan" aria-label="Default select example" required>
                           <option selected>---</option>
                           </select>
                       </div>
                       <div class="col-12 col-lg-6">
-                        <label for="tmb-dapem-kecamatan" class="form-label"><span style="color: green;">Kecamatan</span> <span style="color: red;">*</span></label>
-                        <select class="form-select" id="tmb-dapem-kecamatan" aria-label="Default select example" required>
-                          <option selected>---</option>
-                          </select>
-                      </div>
-                      <div class="col-12 col-lg-6">
-                        <label for="tmb-dapem-kelurahan" class="form-label"><span style="color: green;">Kelurahan</span> <span style="color: red;">*</span></label>
-                        <select class="form-select" id="tmb-dapem-kelurahan" aria-label="Default select example" required>
+                        <label for="tmb-kelurahan" class="form-label"><span style="color: green;">Kelurahan</span> <span style="color: red;">*</span></label>
+                        <select class="form-select" id="tmb-kelurahan" aria-label="Default select example" required>
                           <option selected>---</option>
                           </select>
                       </div>
 
                       <div class="col-12 col-lg-12 mb-4">
-                        <label for="tmb-dapem-alamat" class="form-label">Alamat</label>
-                        <textarea class="form-control" id="tmb-dapem-alamat" placeholder="Alamat ..." rows="3"></textarea>
+                        <label for="tmb-alamat" class="form-label"><span style="color: green;">Alamat</span> <span style="color: red;">*</span></label>
+                        <textarea class="form-control" id="tmb-alamat" placeholder="Alamat ..." rows="3"></textarea>
                       </div>
 
                       <div class="col-12 col-lg-6">
-                        <button class="btn btn-primary px-4" onclick="stepper1.next()">Next<i class='bx bx-right-arrow-alt ms-2'></i></button>
+                        <button class="btn btn-primary px-4" id="btn-perm_val_1" onclick="stepper1.next()" disabled>Next<i class='bx bx-right-arrow-alt ms-2'></i></button>
                       </div>
                     </div><!---end row-->
                   
@@ -383,8 +386,8 @@
                       </div>
 
                       <div class="col-12 col-lg-6">
-                        <label for="tmb-dapem-nama_bangunan" class="form-label"><span style="color: green;">Nama</span> <span style="color: red;">*</span></label>
-                        <input type="text" class="form-control" id="tmb-dapem-nama_bangunan" placeholder="Nama Bangunan" required>
+                        <label for="tmb-dapem-nama_pemilik" class="form-label"><span style="color: green;">Nama Pemilik</span> <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="tmb-dapem-nama_pemilik" placeholder="cth: Budi Oetomo" required>
                       </div>
 
                       <div class="col-12 col-lg-6">
@@ -399,7 +402,7 @@
 
                       <div class="col-12 col-lg-6 mb-4">
                         <label for="tmb-dapem-no_ktp" class="form-label"><span style="color: green;">No. Tanda Pengenal</span> <span style="color: red;">*</span></label>
-                        <input type="text" class="form-control" id="tmb-dapem-no_ktp" placeholder="No. Tanda Pengenal" required>
+                        <input type="text" class="form-control" id="tmb-dapem-no_ktp" placeholder="cth: 3069431209453003" required>
                       </div>
 
                       <hr>
@@ -407,7 +410,10 @@
                       <div class="col-12 col-lg-6">
                         <label for="tmb-dapem-prov" class="form-label"><span style="color: green;">Provinsi</span> <span style="color: red;">*</span></label>
                         <select class="form-select" id="tmb-dapem-prov" aria-label="Default select example" required>
-                          <option selected>---</option>
+                          <option selected>Pilih...</option>
+                          {% for prov in data_prov %}
+                          <option value="{{prov.id_provinsi}}">{{prov.nama_provinsi}}</option>
+                          {% endfor %}
                           </select>
                       </div>
                       <div class="col-12 col-lg-6">
@@ -430,8 +436,8 @@
                       </div>
 
                       <div class="col-12 col-lg-12 mb-4">
-                        <label for="tmb-dapem-alamat" class="form-label">Alamat</label>
-                        <textarea class="form-control" id="tmb-dapem-alamat" placeholder="Alamat ..." rows="3"></textarea>
+                        <label for="tmb-dapem-alamat" class="form-label"><span style="color: green;">Alamat Pemilik</span> <span style="color: red;">*</span></label>
+                        <textarea class="form-control" id="tmb-dapem-alamat" placeholder="Cth : Jl. Diam, Gg. Emas RT 001/02" rows="3"></textarea>
                       </div>
 
                       <hr>
@@ -449,7 +455,7 @@
                       <div class="col-12">
                         <div class="d-flex align-items-center gap-3">
                           <button class="btn btn-outline-secondary px-4" onclick="stepper1.previous()"><i class='bx bx-left-arrow-alt me-2'></i>Previous</button>
-                          <button class="btn btn-primary px-4" onclick="stepper1.next()">Next<i class='bx bx-right-arrow-alt ms-2'></i></button>
+                          <button class="btn btn-primary px-4" id="btn-perm_val_2" onclick="stepper1.next()" disabled>Next<i class='bx bx-right-arrow-alt ms-2'></i></button>
                         </div>
                       </div>
                     </div><!---end row-->
@@ -465,7 +471,7 @@
                       <div class="col-12 col-lg-6">
                         <label for="tmb-danah-dok_kepemilikan" class="form-label"><span style="color: green;">Jenis Dokumen Kepemilikan</span> <span style="color: red;">*</span></label>
                         <select class="form-select" id="tmb-danah-dok_kepemilikan" aria-label="Default select example" required>
-                          <option selected>Pilih...</option>
+                          <option value="0" selected>Pilih...</option>
                           <option value="1">Sertifikat</option>
                           <option value="2">Akte Jual Beli</option>
                           <option value="3">Girik</option>
@@ -478,11 +484,11 @@
                         <input type="text" class="form-control" id="tmb-danah-no_dokumen" placeholder="Position">
                       </div>
                       <div class="col-12 col-lg-6">
-                        <label for="tmb-danah-tgl_terbit_dok" class="form-label">Tanggal Terbit Dokumen</label>
+                        <label for="tmb-danah-tgl_terbit_dok" class="form-label"><span style="color: green;">Tanggal Terbit Dokumen</span> <span style="color: red;">*</span></label>
                         <input type="date" class="form-control" id="tmb-danah-tgl_terbit_dok" placeholder="Tanggal Terbit Dokumen">
                       </div>
                       <div class="col-12 col-lg-6">
-                        <label for="tmb-danah-luas_tanah" class="form-label">Luas Tanah</label>
+                        <label for="tmb-danah-luas_tanah" class="form-label"><span style="color: green;">Luas Tanah</span> <span style="color: red;">*</span></label>
                         <div class="row">
                           <div class="col-10">
                             <input type="number" class="form-control" id="tmb-danah-luas_tanah" placeholder="Luas Tanah">
@@ -493,9 +499,9 @@
                         </div>
                       </div>
                       <div class="col-12 col-lg-6">
-                        <label for="tmb-danah-hak_kepemilikan" class="form-label">Hak Kepemilikan</label>
+                        <label for="tmb-danah-hak_kepemilikan" class="form-label"><span style="color: green;">Hak Kepemilikan</span> <span style="color: red;">*</span></label>
                         <select class="form-select" id="tmb-danah-hak_kepemilikan" aria-label="Default select example" required>
-                          <option selected>---</option>
+                          <option value="0" selected>---</option>
                           <option value="1">Hak Milik</option>
                           <option value="2">Hak Pakai</option>
                           <option value="3">Hak Pengelolaan</option>
@@ -505,12 +511,12 @@
                           </select>
                       </div>
                       <div class="col-12 col-lg-6">
-                        <label for="tmb-danah-nama_pemilik" class="form-label">Nama Pemilik Hak Atas Tanah</label>
+                        <label for="tmb-danah-nama_pemilik" class="form-label"><span style="color: green;">Nama Pemilik Hak Atas Tanah</span> <span style="color: red;">*</span></label>
                         <input type="text" class="form-control" id="tmb-danah-nama_pemilik" placeholder="Nama Pemilik Hak Atas Tanah">
                       </div>
 
                       <div class="col-12 col-lg-12 mb-2">
-                        <label for="tmb-danah-alamat" class="form-label">Alamat</label>
+                        <label for="tmb-danah-alamat" class="form-label"><span style="color: green;">Alamat</span> <span style="color: red;">*</span></label>
                         <textarea class="form-control" id="tmb-danah-alamat" placeholder="Alamat ..." rows="3"></textarea>
                       </div>
 
@@ -554,7 +560,7 @@
                       <div class="col-12">
                         <div class="d-flex align-items-center gap-3">
                           <button class="btn btn-outline-secondary px-4" onclick="stepper1.previous()"><i class='bx bx-left-arrow-alt me-2'></i>Previous</button>
-                          <button class="btn btn-primary px-4" onclick="stepper1.next()">Next<i class='bx bx-right-arrow-alt ms-2'></i></button>
+                          <button class="btn btn-primary px-4" id="btn-perm_val_3" onclick="stepper1.next()">Next<i class='bx bx-right-arrow-alt ms-2'></i></button>
                         </div>
                       </div>
 
@@ -767,7 +773,7 @@
                     <div class="col-12">
                       <div class="d-flex align-items-center gap-3">
                         <button class="btn btn-primary px-4" onclick="stepper1.previous()"><i class='bx bx-left-arrow-alt me-2'></i>Previous</button>
-                        <button class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#exampleScrollableModal">Submit</button>
+                        <button class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#exampleScrollableModal" id="btn-sub_add_perm">Submit</button>
                       </div>
                     </div>
                     
@@ -822,7 +828,7 @@
         <div class="row mb-4"> 
           <div class="col-5">Data Bangunan</div> 
           <div class="col-1">:</div>
-          <div class="col-6" id="pernyataan-data_bangunan"> Luas : 150.00m2, Tinggi : 4.00 Meter, Jumlah Lantai : 1 Lantai</div> 
+          <div class="col-6" id="pernyataan-data_bangunan"> Luas : <span id="pernyataan-data_luas">150.00</span> m2, Tinggi : <span id="pernyataan-data_tinggi">4.00</span> m, Jumlah Lantai : <span id="pernyataan-data_lantai">1</span> Lantai</div> 
         </div>
 
         <h4>Konfirmasi Pernyataan Permohonan</h4>
@@ -842,23 +848,23 @@
         <hr>
         <div class="form-check">
           <p>
-            <input class="form-check-input mb-1" type="checkbox" value="" id="check-krk_kkpr">
+            <input class="form-check-input mb-1 checkval" type="checkbox" value="" id="check-krk_kkpr">
             <label class="form-check-label" for="check-krk_kkpr" style="color: green;">Pernyataan mematuhi KRK/KKPR</label>
           </p>
           <p>
-            <input class="form-check-input mb-1" type="checkbox" value="" id="check-pelaksana_konstruksi">
+            <input class="form-check-input mb-1 checkval" type="checkbox" value="" id="check-pelaksana_konstruksi">
             <label class="form-check-label" for="check-pelaksana_konstruksi" style="color: green;">Pernyataan menggunakan Pelaksana Konstruksi</label>
           </p>
           <p>
-            <input class="form-check-input mb-1" type="checkbox" value="" id="check-pengawas_berserti">
+            <input class="form-check-input mb-1 checkval" type="checkbox" value="" id="check-pengawas_berserti">
             <label class="form-check-label" for="check-pengawas_berserti" style="color: green;">Pernyataan menggunakan Pengawas/ Manajemen Konstruksi bersertifikat</label>
           </p>
           <p>
-            <input class="form-check-input mb-1" type="checkbox" value="" id="check-tidak_sengketa">
+            <input class="form-check-input mb-1 checkval" type="checkbox" value="" id="check-tidak_sengketa">
             <label class="form-check-label" for="check-tidak_sengketa" style="color: green;">Pernyataan bahwa tanah tidak dalam status sengketa</label>
           </p>
           <p>
-            <input class="form-check-input mb-1" type="checkbox" value="" id="check-tahan_gempa">
+            <input class="form-check-input mb-1 checkval" type="checkbox" value="" id="check-tahan_gempa">
             <label class="form-check-label" for="check-tahan_gempa" style="color: green;">Pernyataan memenuhi ketentuan pokok tahan gempa</label>
           </p>
         </div>
@@ -868,7 +874,7 @@
         <div class="row">
           <div class="col-10 mb-1" >
             <div class="form-check">
-              <input class="form-check-input mb-1" type="checkbox" value="" id="check-semua_persyaratan">
+              <input class="form-check-input mb-1 checkval" type="checkbox" value="" id="check-semua_persyaratan">
               <label class="form-check-label" for="check-semua_persyaratan" style="color: red;">Menyetujui Semua Persyaratan</label>
             </div>
           </div>
@@ -876,7 +882,7 @@
 
           <div class="col-12" style="text-align: right;">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#exampleExtraLargeModal">Back</button>
-            <button type="button" class="btn btn-primary"id="submit-add-permohonan">Submit</button>
+            <button type="button" class="btn btn-primary"id="submit-add-permohonan" disabled>Submit</button>
           </div>
 
         </div>

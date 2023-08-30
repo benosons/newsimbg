@@ -172,7 +172,8 @@ class View extends \CodeIgniter\Controller
 			$this->data['active'] = 'permohonan';
 			$this->data['data_jenis']		= $perm->getjenis();
 			$this->data['data_fungsi']		= $perm->getfungsi();
-			$this->data['data_jbg']		= $perm->getjbg();
+			// $this->data['data_jbg']		= $perm->getjbg();
+			$this->data['data_prov']		= $perm->getprov();
 			
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/permohonan/permohonan.js';
 			return \Twig::instance()->display('admin/permohonan/permohonan.html', $this->data);
