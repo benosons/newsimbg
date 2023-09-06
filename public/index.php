@@ -29,15 +29,6 @@ unset($minPHPVersion);
  */
 
 // running under Continuous Integration server?
-if (getenv('CI') !== false)
-{
-	define('ENVIRONMENT', 'testing');
-}
-else
-{
-	// define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
-}
 
 /*
  *---------------------------------------------------------------
@@ -144,6 +135,21 @@ define('APPPATH', realpath($application_directory).DIRECTORY_SEPARATOR);
 // The path to the "tests" directory
 define('TESTPATH', realpath($tests_directory).DIRECTORY_SEPARATOR);
 
+require BASEPATH.'Config/DotEnv.php';
+$env = new CodeIgniter\Config\DotEnv(APPPATH);
+$env->load();
+unset($env);
+
+// if (getenv('CI') !== false)
+// {
+// 	define('ENVIRONMENT', 'testing');
+// }
+// else
+// {
+// 	define('ENVIRONMENT', getenv('CI_ENVIRONMENT'));
+	// define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+// }
+define('ENVIRONMENT', getenv('CI_ENVIRONMENT'));
 /*
  *---------------------------------------------------------------
  * BOOT THE ENVIRONMENT
@@ -187,10 +193,7 @@ if ($useKint === true)
 
 // Load environment settings from .env files
 // into $_SERVER and $_ENV
-require BASEPATH.'Config/DotEnv.php';
-$env = new CodeIgniter\Config\DotEnv(APPPATH);
-$env->load();
-unset($env);
+
 
 /*
  * ------------------------------------------------------
