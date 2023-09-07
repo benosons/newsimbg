@@ -1,115 +1,201 @@
 <div class="primary-menu">
-   <nav class="navbar navbar-expand-lg align-items-center" style="border-top: solid #1f3368;">
-     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+  <nav
+    class="navbar navbar-expand-lg align-items-center"
+    style="border-top: solid #1f3368"
+  >
+    <div
+      class="offcanvas offcanvas-start"
+      tabindex="-1"
+      id="offcanvasNavbar"
+      aria-labelledby="offcanvasNavbarLabel"
+    >
       <div class="offcanvas-header border-bottom">
-         <div class="d-flex align-items-center">
-            <div class="">
-               <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-            </div>
-            <div class="">
-               <h4 class="logo-text">Rocker</h4>
-            </div>
-         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <div class="d-flex align-items-center">
+          <div class="">
+            <img
+              src="assets/images/logo-icon.png"
+              class="logo-icon"
+              alt="logo icon"
+            />
+          </div>
+          <div class="">
+            <h4 class="logo-text">Rocker</h4>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav align-items-center flex-grow-1">
-           <li class="nav-item dropdown">
+          <li class="nav-item dropdown">
             <a class="nav-link" id="menu-dashboard" href="dashboard">
-               <div class="parent-icon"><i class='bx bx-home-alt'></i>
-               </div>
-               <div class="menu-title d-flex align-items-center">Beranda</div>
-               <!-- <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div> -->
+              <div class="parent-icon"><i class="bx bx-home-alt"></i></div>
+              <div class="menu-title d-flex align-items-center">Beranda</div>
+              <!-- <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div> -->
             </a>
             <!-- <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="index.html"><i class='bx bx-pie-chart-alt' ></i>Default</a></li>
               <li><a class="dropdown-item" href="index2.html"><i class='bx bx-shield-alt-2'></i>Alternate</a></li>
               <li><a class="dropdown-item" href="index3.html"><i class='bx bx-line-chart'></i>Graphical</a></li>
             </ul> -->
-           </li>
-           <li class="nav-item">
+          </li>
+          <li class="nav-item">
             <a class="nav-link" id="menu-permohonan" href="permohonan">
-               <div class="parent-icon"><i class='bx bx-pie-chart-alt'></i>
-               </div>
-               <div class="menu-title d-flex align-items-center">Permohonan</div>
+              <div class="parent-icon"><i class="bx bx-pie-chart-alt"></i></div>
+              <div class="menu-title d-flex align-items-center">Permohonan</div>
             </a>
-           </li>
-           <li class="nav-item dropdown">
-            <a id="menu-dinas_teknis" class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;" data-bs-toggle="dropdown">
-               <div class="parent-icon"><i class='bx bx-cube'></i>
-               </div>
-               <div class="menu-title d-flex align-items-center">Dinas Teknis</div>
-               <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" id="submenu-verifikasi_dokumen" href="verifikasi_dokumen"><i class='bx bx-envelope'></i>Verifikasi Dokumen</a></li>
-              <li><a class="dropdown-item" id="submenu-bangunan_bertahap" href="bangunan_bertahap"><i class='bx bx-conversation' ></i>Bangunan Bertahap</a></li>
-              
-            </ul>
-           </li>
-           <li class="nav-item dropdown">
-            <a id="menu-pengawas_teknis" class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;" data-bs-toggle="dropdown">
-               <div class="parent-icon"><i class='bx bx-lock'></i>
-               </div>
-               <div class="menu-title d-flex align-items-center">Pengawas Teknis</div>
-               <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              id="menu-dinas_teknis"
+              class="nav-link dropdown-toggle dropdown-toggle-nocaret"
+              href="javascript:;"
+              data-bs-toggle="dropdown"
+            >
+              <div class="parent-icon"><i class="bx bx-cube"></i></div>
+              <div class="menu-title d-flex align-items-center">
+                Dinas Teknis
+              </div>
+              <div class="ms-auto dropy-icon">
+                <i class="bx bx-chevron-down"></i>
+              </div>
             </a>
             <ul class="dropdown-menu">
-              <li class="nav-item dropend">
-               <a id="submenu-pengawas_pupr" href="pengawas_pupr" class="dropdown-item" ><i class='bx bx-receipt'></i>Pengawas PUPR</a>
+              <li>
+                <a
+                  class="dropdown-item"
+                  id="submenu-verifikasi_dokumen"
+                  href="verifikasi_dokumen"
+                  ><i class="bx bx-envelope"></i>Verifikasi Dokumen</a
+                >
               </li>
-              <li class="nav-item dropend">
-               <a id="submenu-hasil_konsultasi" class="dropdown-item"  href="penilaian_konsultasi"><i class='bx bx-cylinder'></i>Penilaian Konsul</a>
-               
-              </li>
-              <li class="nav-item dropend">
-               <a id="submenu-inspeksi" class="dropdown-item" href="inspeksi"><i class='bx bx-aperture'></i>Inspeksi</a>
+              <li>
+                <a
+                  class="dropdown-item"
+                  id="submenu-bangunan_bertahap"
+                  href="bangunan_bertahap"
+                  ><i class="bx bx-conversation"></i>Bangunan Bertahap</a
+                >
               </li>
             </ul>
-           </li>
-
-           <li class="nav-item dropdown">
-            <a id="menu-validasi" class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;" data-bs-toggle="dropdown">
-               <div class="parent-icon"><i class='bx bx-lock'></i>
-               </div>
-               <div class="menu-title d-flex align-items-center">Validasi</div>
-               <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              id="menu-pengawas_teknis"
+              class="nav-link dropdown-toggle dropdown-toggle-nocaret"
+              href="javascript:;"
+              data-bs-toggle="dropdown"
+            >
+              <div class="parent-icon"><i class="bx bx-lock"></i></div>
+              <div class="menu-title d-flex align-items-center">
+                Pengawas Teknis
+              </div>
+              <div class="ms-auto dropy-icon">
+                <i class="bx bx-chevron-down"></i>
+              </div>
             </a>
             <ul class="dropdown-menu">
               <li class="nav-item dropend">
-               <a id="submenu-validasi_rekom" href="validasi_rekomtek_kadis" class="dropdown-item" ><i class='bx bx-receipt'></i>Validasi Rekomtek Kadis</a>
+                <a
+                  id="submenu-pengawas_pupr"
+                  href="pengawas_pupr"
+                  class="dropdown-item"
+                  ><i class="bx bx-receipt"></i>Pengawas PUPR</a
+                >
               </li>
               <li class="nav-item dropend">
-               <a id="submenu-validasi_inspek" class="dropdown-item"  href="validasi_hasil_inspeksi"><i class='bx bx-cylinder'></i>Validasi Hasil Inspeksi</a>
+                <a
+                  id="submenu-hasil_konsultasi"
+                  class="dropdown-item"
+                  href="penilaian_konsultasi"
+                  ><i class="bx bx-cylinder"></i>Penilaian Konsul</a
+                >
+              </li>
+              <li class="nav-item dropend">
+                <a id="submenu-inspeksi" class="dropdown-item" href="inspeksi"
+                  ><i class="bx bx-aperture"></i>Inspeksi</a
+                >
               </li>
             </ul>
-           </li>
+          </li>
 
-           <li class="nav-item">
-               <a class="nav-link" id="menu-penagihan_retribusi" href="penagihan_retribusi">
-                  <div class="parent-icon"><i class='bx bx-pie-chart-alt'></i>
-                  </div>
-                  <div class="menu-title d-flex align-items-center">Penagihan Retribusi</div>
-               </a>
-           </li>
-
-           <li class="nav-item">
-               <a class="nav-link" id="menu-penyerahan_dokumen" href="penyerahan_dokumen">
-                  <div class="parent-icon"><i class='bx bx-pie-chart-alt'></i>
-                  </div>
-                  <div class="menu-title d-flex align-items-center">Penyerahan Dokumen</div>
-               </a>
-           </li>
-
-           <li class="nav-item">
-            <a class="nav-link" id="menu-penerbitan_dokumen" href="penerbitan_dokumen">
-               <div class="parent-icon"><i class='bx bx-pie-chart-alt'></i>
-               </div>
-               <div class="menu-title d-flex align-items-center">Penerbitan Dokumen</div>
+          <li class="nav-item dropdown">
+            <a
+              id="menu-validasi"
+              class="nav-link dropdown-toggle dropdown-toggle-nocaret"
+              href="javascript:;"
+              data-bs-toggle="dropdown"
+            >
+              <div class="parent-icon"><i class="bx bx-lock"></i></div>
+              <div class="menu-title d-flex align-items-center">Validasi</div>
+              <div class="ms-auto dropy-icon">
+                <i class="bx bx-chevron-down"></i>
+              </div>
             </a>
-        </li>
+            <ul class="dropdown-menu">
+              <li class="nav-item dropend">
+                <a
+                  id="submenu-validasi_rekom"
+                  href="validasi_rekomtek_kadis"
+                  class="dropdown-item"
+                  ><i class="bx bx-receipt"></i>Validasi Rekomtek Kadis</a
+                >
+              </li>
+              <li class="nav-item dropend">
+                <a
+                  id="submenu-validasi_inspek"
+                  class="dropdown-item"
+                  href="validasi_hasil_inspeksi"
+                  ><i class="bx bx-cylinder"></i>Validasi Hasil Inspeksi</a
+                >
+              </li>
+            </ul>
+          </li>
 
-           <!-- <li class="nav-item dropdown">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="menu-penagihan_retribusi"
+              href="penagihan_retribusi"
+            >
+              <div class="parent-icon"><i class="bx bx-pie-chart-alt"></i></div>
+              <div class="menu-title d-flex align-items-center">
+                Penagihan Retribusi
+              </div>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="menu-penyerahan_dokumen"
+              href="penyerahan_dokumen"
+            >
+              <div class="parent-icon"><i class="bx bx-pie-chart-alt"></i></div>
+              <div class="menu-title d-flex align-items-center">
+                Penyerahan Dokumen
+              </div>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="menu-penerbitan_dokumen"
+              href="penerbitan_dokumen"
+            >
+              <div class="parent-icon"><i class="bx bx-pie-chart-alt"></i></div>
+              <div class="menu-title d-flex align-items-center">
+                Penerbitan Dokumen
+              </div>
+            </a>
+          </li>
+
+          <!-- <li class="nav-item dropdown">
             <a id="menu-monitoring" class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;" data-bs-toggle="dropdown">
                <div class="parent-icon"><i class='bx bx-card'></i>
                </div>
@@ -122,7 +208,7 @@
             </ul>
            </li> -->
 
-           <!-- <li class="nav-item dropdown">
+          <!-- <li class="nav-item dropdown">
             <a id="menu-pengaturan" class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;" data-bs-toggle="dropdown">
                <div class="parent-icon"><i class='bx bx-message-square-edit'></i>
                </div>
@@ -142,15 +228,15 @@
                </li>
             </ul>
            </li> -->
-           
-           <li class="nav-item">
-               <a class="nav-link" href="users">
-                  <div class="parent-icon"><i class='bx bx-user'></i></div>
-                  <div class="menu-title d-flex align-items-center">Pengguna</div>
-               </a>
-           </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="users">
+              <div class="parent-icon"><i class="bx bx-user"></i></div>
+              <div class="menu-title d-flex align-items-center">Pengguna</div>
+            </a>
+          </li>
         </ul>
       </div>
-     </div>
+    </div>
   </nav>
 </div>

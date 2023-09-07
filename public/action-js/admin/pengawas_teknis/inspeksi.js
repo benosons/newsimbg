@@ -1,24 +1,28 @@
 $(() => {
-  $("#menu-pengawas_teknis").addClass("active");
-  $("#submenu-inspeksi").addClass("active");
+  // $("#menu-pengawas_teknis").addClass("active");
+  $("#menu-inspeksi").addClass("active");
 });
 
-$(document).ready(function() {
-  var table = $('#table-penugasan_inspeksi').DataTable( {
+$(document).ready(function () {
+  var table = $("#table-penugasan_inspeksi").DataTable({
     lengthChange: false,
-    buttons: ['excel', 'pdf']
-  } );
-  
-  table.buttons().container()
-    .appendTo( '#table-penugasan_inspeksi_wrapper .col-md-6:eq(0)' );
-} );
+    buttons: ["excel", "pdf"],
+  });
 
-$(document).ready(function() {
-  var table = $('#table-input_hasil_inspeksi').DataTable( {
+  table
+    .buttons()
+    .container()
+    .appendTo("#table-penugasan_inspeksi_wrapper .col-md-6:eq(0)");
+});
+
+$(document).ready(function () {
+  var table = $("#table-input_hasil_inspeksi").DataTable({
     lengthChange: false,
-    buttons: ['excel', 'pdf']
-  } );
-  
-  table.buttons().container()
-    .appendTo( '#table-input_hasil_inspeksi_wrapper .col-md-6:eq(0)' );
-} );
+    buttons: ["excel", "pdf"],
+  });
+
+  table
+    .buttons()
+    .container()
+    .appendTo("#table-input_hasil_inspeksi_wrapper .col-md-6:eq(0)");
+});

@@ -1,0 +1,186 @@
+<div class="primary-menu">
+  <nav
+    class="navbar navbar-expand-lg align-items-center"
+    style="border-top: solid #1f3368"
+  >
+    <div
+      class="offcanvas offcanvas-start"
+      tabindex="-1"
+      id="offcanvasNavbar"
+      aria-labelledby="offcanvasNavbarLabel"
+    >
+      <div class="offcanvas-header border-bottom">
+        <div class="d-flex align-items-center">
+          <div class="">
+            <img
+              src="assets/images/logo-icon.png"
+              class="logo-icon"
+              alt="logo icon"
+            />
+          </div>
+          <div class="">
+            <h4 class="logo-text">Rocker</h4>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav align-items-center flex-grow-1">
+          <li class="nav-item dropdown">
+            <a class="nav-link" id="menu-dashboard" href="dashboard">
+              <div class="parent-icon"><i class="bx bx-home-alt"></i></div>
+              <div class="menu-title d-flex align-items-center">Beranda</div>
+              <!-- <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div> -->
+            </a>
+            <!-- <ul class="dropdown-menu">
+               <li><a class="dropdown-item" href="index.html"><i class='bx bx-pie-chart-alt' ></i>Default</a></li>
+               <li><a class="dropdown-item" href="index2.html"><i class='bx bx-shield-alt-2'></i>Alternate</a></li>
+               <li><a class="dropdown-item" href="index3.html"><i class='bx bx-line-chart'></i>Graphical</a></li>
+             </ul> -->
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              id="menu-dinas_teknis"
+              class="nav-link dropdown-toggle dropdown-toggle-nocaret"
+              href="javascript:;"
+              data-bs-toggle="dropdown"
+            >
+              <div class="parent-icon"><i class="bx bx-cube"></i></div>
+              <div class="menu-title d-flex align-items-center">
+                Dinas Teknis
+              </div>
+              <div class="ms-auto dropy-icon">
+                <i class="bx bx-chevron-down"></i>
+              </div>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  id="submenu-verifikasi_dokumen"
+                  href="verifikasi_dokumen"
+                  ><i class="bx bx-envelope"></i>Verifikasi Dokumen</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  id="submenu-bangunan_bertahap"
+                  href="bangunan_bertahap"
+                  ><i class="bx bx-conversation"></i>Bangunan Bertahap</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" id="menu-inspeksi" href="inspeksi">
+              <div class="parent-icon"><i class="bx bx-lock"></i></div>
+              <div class="menu-title d-flex align-items-center">Inspeksi</div>
+            </a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a
+              id="menu-pengaturan"
+              class="nav-link dropdown-toggle dropdown-toggle-nocaret"
+              href="javascript:;"
+              data-bs-toggle="dropdown"
+            >
+              <div class="parent-icon"><i class="bx bx-cog"></i></div>
+              <div class="menu-title d-flex align-items-center">Pengaturan</div>
+              <div class="ms-auto dropy-icon">
+                <i class="bx bx-chevron-down"></i>
+              </div>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="nav-item dropend">
+                <a
+                  id="submenu-profil_dinas_teknis"
+                  href="profil_pu"
+                  class="dropdown-item"
+                  ><i class="bx bx-receipt"></i>Profil Dinas Teknis</a
+                >
+              </li>
+              <li class="nav-item dropend">
+                <a id="submenu-data_asn" class="dropdown-item" href="data_asn"
+                  ><i class="bx bx-cylinder"></i>Data ASN</a
+                >
+              </li>
+              <li class="nav-item dropend">
+                <a id="submenu-input_tpa" class="dropdown-item" href="input_tpa"
+                  ><i class="bx bx-cylinder"></i>Input TPA</a
+                >
+              </li>
+              <li class="nav-item dropend">
+                <a
+                  id="submenu-surat_keputusan"
+                  class="dropdown-item"
+                  href="surat_keputusan"
+                  ><i class="bx bx-cylinder"></i>Surat Keputusan</a
+                >
+              </li>
+              <li class="nav-item dropend">
+                <a
+                  id="submenu-data_kampus"
+                  class="dropdown-item"
+                  href="data_kampus"
+                  ><i class="bx bx-cylinder"></i>Data Kampus</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" id="menu-download_shst" href="#">
+              <div class="parent-icon"><i class="bx bx-pie-chart-alt"></i></div>
+              <div class="menu-title d-flex align-items-center">
+                Download SHST
+              </div>
+            </a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a
+              id="menu-monitoring"
+              class="nav-link dropdown-toggle dropdown-toggle-nocaret"
+              href="javascript:;"
+              data-bs-toggle="dropdown"
+            >
+              <div class="parent-icon">
+                <i class="bx bx-message-square-edit"></i>
+              </div>
+              <div class="menu-title d-flex align-items-center">Monitoring</div>
+              <div class="ms-auto dropy-icon">
+                <i class="bx bx-chevron-down"></i>
+              </div>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="nav-item dropend">
+                <a
+                  id="submenu-monitoring_konsultasi"
+                  href="konsultasi"
+                  class="dropdown-item"
+                  ><i class="bx bx-receipt"></i>Monitoring Konsultasi</a
+                >
+              </li>
+              <li class="nav-item dropend">
+                <a
+                  id="submenu-monitoring_provinsi"
+                  href="#"
+                  class="dropdown-item"
+                  ><i class="bx bx-receipt"></i>Monitoring Provinsi</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
