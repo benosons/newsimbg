@@ -490,14 +490,14 @@ $('#submit-add-permohonan').click(function(){
     success: function (result) {
         var data = result.data 
         console.log(data[0]['count(*)'])
-        var par = parseInt(parseInt(data[0]['count(*)'])+1)
+        var parnumber = parseInt(parseInt(data[0]['count(*)'])+1)
 
-        var d = new Date();
+        var date = new Date();
 
-        var datex =  d.getDate() + "" + (d.getMonth()+1) + "" + d.getFullYear();
-        var noreg = 'PBG-997101-'+datex+'-'+par;
+        var datex =  ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
+        var noreg = 'PBG-997101-'+datex+'-'+parnumber.toString().padStart(3, '0');
 
-        var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+        var strDate = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
 
         id_jenis_permohonan            = $('#tmb-jenis_permohonan :selected').val()
         id_fungsi_bg                   = $('#tmb-fungsi_bangunan :selected').val()
