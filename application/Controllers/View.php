@@ -165,14 +165,15 @@ class View extends \CodeIgniter\Controller
 	public function permohonan()
 	{
 
-		if ($this->logged && ($this->data['role'] == 10)) {
+		if ($this->logged && ($this->data['role'] == 10 || $this->data['role'] == 200)) {
 			helper('form');
 			$perm = new \App\Models\KegiatanModel();
 
 			$this->data['active'] = 'permohonan';
 			$this->data['data_jenis']		= $perm->getjenis();
 			$this->data['data_fungsi']		= $perm->getfungsi();
-			$this->data['data_jbg']		= $perm->getjbg();
+			// $this->data['data_jbg']		= $perm->getjbg();
+			$this->data['data_prov']		= $perm->getprov();
 
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/permohonan/permohonan.js';
 			return \Twig::instance()->display('admin/permohonan/permohonan.html', $this->data);
@@ -184,7 +185,7 @@ class View extends \CodeIgniter\Controller
 	public function verifikasi_dokumen()
 	{
 
-		if ($this->logged && ($this->data['role'] == 20)) {
+		if ($this->logged && ($this->data['role'] == 20 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'verifikasi_dokumen';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/dinas_teknis/verifikasi_dokumen.js';
@@ -197,7 +198,7 @@ class View extends \CodeIgniter\Controller
 	public function bangunan_bertahap()
 	{
 
-		if ($this->logged && ($this->data['role'] == 20)) {
+		if ($this->logged && ($this->data['role'] == 20 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'bangunan_bertahap';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/dinas_teknis/bangunan_bertahap.js';
@@ -210,7 +211,7 @@ class View extends \CodeIgniter\Controller
 	public function profil_pu()
 	{
 
-		if ($this->logged && ($this->data['role'] == 20 || $this->data['role'] == 30 || $this->data['role'] == 40 || $this->data['role'] == 50 || $this->data['role'] == 60 || $this->data['role'] == 70)) {
+		if ($this->logged && ($this->data['role'] == 20 || $this->data['role'] == 30 || $this->data['role'] == 40 || $this->data['role'] == 50 || $this->data['role'] == 60 || $this->data['role'] == 70 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'profil_pu';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengaturan/profil_pu.js';
@@ -223,7 +224,7 @@ class View extends \CodeIgniter\Controller
 	public function data_asn()
 	{
 
-		if ($this->logged && ($this->data['role'] == 20)) {
+		if ($this->logged && ($this->data['role'] == 20 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'data_asn';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengaturan/data_asn.js';
@@ -236,7 +237,7 @@ class View extends \CodeIgniter\Controller
 	public function input_tpa()
 	{
 
-		if ($this->logged && ($this->data['role'] == 20 || $this->data['role'] == 30 || $this->data['role'] == 40)) {
+		if ($this->logged && ($this->data['role'] == 20 || $this->data['role'] == 30 || $this->data['role'] == 40 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'input_tpa';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengaturan/input_tpa.js';
@@ -249,7 +250,7 @@ class View extends \CodeIgniter\Controller
 	public function surat_keputusan()
 	{
 
-		if ($this->logged  && ($this->data['role'] == 20 || $this->data['role'] == 30 || $this->data['role'] == 40)) {
+		if ($this->logged  && ($this->data['role'] == 20 || $this->data['role'] == 30 || $this->data['role'] == 40 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'surat_keputusan';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengaturan/surat_keputusan.js';
@@ -262,7 +263,7 @@ class View extends \CodeIgniter\Controller
 	public function data_kampus()
 	{
 
-		if ($this->logged && ($this->data['role'] == 20)) {
+		if ($this->logged && ($this->data['role'] == 20 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'data_kampus';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengaturan/data_kampus.js';
@@ -275,7 +276,7 @@ class View extends \CodeIgniter\Controller
 	public function konsultasi()
 	{
 
-		if ($this->logged  && ($this->data['role'] == 20 || $this->data['role'] == 30 || $this->data['role'] == 50 || $this->data['role'] == 60)) {
+		if ($this->logged  && ($this->data['role'] == 20 || $this->data['role'] == 30 || $this->data['role'] == 50 || $this->data['role'] == 60 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'konsultasi';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/monitoring/konsultasi.js';
@@ -288,7 +289,7 @@ class View extends \CodeIgniter\Controller
 	public function pengawas_pupr()
 	{
 
-		if ($this->logged && ($this->data['role'] == 40)) {
+		if ($this->logged && ($this->data['role'] == 30 || $this->data['role'] == 40 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'pengawas_pupr';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/pengawas_pupr.js';
@@ -301,7 +302,7 @@ class View extends \CodeIgniter\Controller
 	public function penilaian_konsultasi()
 	{
 
-		if ($this->logged && ($this->data['role'] == 30)) {
+		if ($this->logged && ($this->data['role'] == 30 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'penilaian_konsultasi';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/penilaian_konsultasi.js';
@@ -313,7 +314,7 @@ class View extends \CodeIgniter\Controller
 
 	public function inspeksi()
 	{
-		if ($this->logged  && ($this->data['role'] == 20 || $this->data['role'] == 30 || $this->data['role'] == 40)) {
+		if ($this->logged  && ($this->data['role'] == 20 || $this->data['role'] == 30 || $this->data['role'] == 40 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'inspeksi';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/inspeksi.js';
@@ -325,7 +326,7 @@ class View extends \CodeIgniter\Controller
 
 	public function validasi_rekomtek_kadis()
 	{
-		if ($this->logged && ($this->data['role'] == 40)) {
+		if ($this->logged && ($this->data['role'] == 40 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'validasi_rekomtek_kadis';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/validasi_rekom/validasi_rekomtek_kadis.js';
@@ -337,7 +338,7 @@ class View extends \CodeIgniter\Controller
 
 	public function validasi_hasil_inspeksi()
 	{
-		if ($this->logged && ($this->data['role'] == 40)) {
+		if ($this->logged && ($this->data['role'] == 40 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'validasi_hasil_inspeksi';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/validasi_hasil_inspeksi/validasi_hasil_inspeksi.js';
@@ -349,7 +350,7 @@ class View extends \CodeIgniter\Controller
 
 	public function penagihan_retribusi()
 	{
-		if ($this->logged && ($this->data['role'] == 50)) {
+		if ($this->logged && ($this->data['role'] == 50 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'penagihan_retribusi';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/penagihan_retribusi/penagihan_retribusi.js';
@@ -361,7 +362,7 @@ class View extends \CodeIgniter\Controller
 
 	public function penyerahan_dokumen()
 	{
-		if ($this->logged && ($this->data['role'] == 50)) {
+		if ($this->logged && ($this->data['role'] == 50 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'penyerahan_dokumen';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/penyerahan_dokumen/penyerahan_dokumen.js';
@@ -373,7 +374,7 @@ class View extends \CodeIgniter\Controller
 
 	public function penerbitan_dokumen()
 	{
-		if ($this->logged && ($this->data['role'] == 70)) {
+		if ($this->logged && ($this->data['role'] == 70 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'penerbitan_dokumen';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/penerbitan_dokumen/penerbitan_dokumen.js';

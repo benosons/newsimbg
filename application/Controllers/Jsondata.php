@@ -1,4 +1,7 @@
-<?php namespace App\Controllers;
+<?php
+
+namespace App\Controllers;
+
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use App\Controller\BaseController;
@@ -8,387 +11,388 @@ class Jsondata extends \CodeIgniter\Controller
 	protected $session;
 	protected $request;
 
-  function __construct(RequestInterface $request)
-  {
-			$this->session = session();
-			$this->now = date('Y-m-d H:i:s');
-			$this->request = $request;
-			$this->logged = $this->session->get('logged_in');
-			$this->logModel   = new \App\Models\LogModel();
-			$this->data = array(
-				'version' => \CodeIgniter\CodeIgniter::CI_VERSION,
-				// 'baseURL' => BASE.'/public',
-				'baseURL' => BASE,
-				'userid' => $this->session->get('user_id'),
-				'username' => $this->session->get('username'),
-				'id' => $this->session->get('id'),
-				'role' => $this->session->get('role'),
-				'id_provinsi' => $this->session->get('id_provinsi'),
-				'provinsi' => $this->session->get('provinsi'),
-				'rolename' => $this->session->get('rolename'),
-				'logged_in' => $this->session->get('logged_in'),
-			);
-  }
+	function __construct(RequestInterface $request)
+	{
+		$this->session = session();
+		$this->now = date('Y-m-d H:i:s');
+		$this->day = date('Y-m-d');
+		$this->dax = date('dmY');
+		$this->request = $request;
+		$this->logged = $this->session->get('logged_in');
+		$this->logModel   = new \App\Models\LogModel();
+		$this->data = array(
+			'version' => \CodeIgniter\CodeIgniter::CI_VERSION,
+			// 'baseURL' => BASE.'/public',
+			'baseURL' => BASE,
+			'userid' => $this->session->get('user_id'),
+			'username' => $this->session->get('username'),
+			'id' => $this->session->get('id'),
+			'role' => $this->session->get('role'),
+			'id_provinsi' => $this->session->get('id_provinsi'),
+			'provinsi' => $this->session->get('provinsi'),
+			'rolename' => $this->session->get('rolename'),
+			'logged_in' => $this->session->get('logged_in'),
+		);
+	}
 
-  public function getalluser()
-  {
-	  try {
-		  $request	= $this->request;
-		  $param	= $request->getVar('param');
-		  $user = new \App\Models\UserModel();
-		  $data = $user->getUsers($param);
-		  
-		  if($data){
-			  $response = [
-				  'status'   => 'sukses',
-				  'code'     => 200,
-				  'data' 	 => $data
-			  ];
-		  }else{
-			  $response = [
-				  'status'   => 'gagal',
-				  'code'     => '0',
-				  'data'     => 'tidak ada data',
-			  ];
-		  }
+	public function getalluser()
+	{
+		try {
+			$request	= $this->request;
+			$param	= $request->getVar('param');
+			$user = new \App\Models\UserModel();
+			$data = $user->getUsers($param);
 
-	  header('Content-Type: application/json');
-	  echo json_encode($response);
-	  exit;
-	  } catch (\Exception $e) {
-		  die($e->getMessage());
-	  }
-  }
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
 
-  public function getuser()
-  {
-	  try {
-		  $request	= $this->request;
-		  $param 	= $request->getVar('param');
-		
-		  $user = new \App\Models\UserModel();
-		  if($param){
-		  	$data = $user->getWhere(['m_user_simponi.id_usersim' => $request->getVar('id')], $param)->getRow();
-		  }else{
-		  	$data = $user->getWhere(['m_user.id' => $request->getVar('id')])->getRow();
-		  }
-		  
-		  if($data){
-			  $response = [
-				  'status'   => 'sukses',
-				  'code'     => 200,
-				  'data' 	 => $data
-			  ];
-		  }else{
-			  $response = [
-				  'status'   => 'gagal',
-				  'code'     => '0',
-				  'data'     => 'tidak ada data',
-			  ];
-		  }
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
 
-	  header('Content-Type: application/json');
-	  echo json_encode($response);
-	  exit;
-	  } catch (\Exception $e) {
-		  die($e->getMessage());
-	  }
-  }
+	public function getuser()
+	{
+		try {
+			$request	= $this->request;
+			$param 	= $request->getVar('param');
 
-  public function getallDealerData()
-  {
-	  try {
-		  $request	= $this->request;
-		  $param	= $request->getVar('param');
-		  $user = new \App\Models\DealerDataModel();
-		  $data = $user->getDealerData($param);
-		  
-		  if($data){
-			  $response = [
-				  'status'   => 'sukses',
-				  'code'     => 200,
-				  'data' 	 => $data
-			  ];
-		  }else{
-			  $response = [
-				  'status'   => 'gagal',
-				  'code'     => '0',
-				  'data'     => 'tidak ada data',
-			  ];
-		  }
+			$user = new \App\Models\UserModel();
+			if ($param) {
+				$data = $user->getWhere(['m_user_simponi.id_usersim' => $request->getVar('id')], $param)->getRow();
+			} else {
+				$data = $user->getWhere(['m_user.id' => $request->getVar('id')])->getRow();
+			}
 
-	  header('Content-Type: application/json');
-	  echo json_encode($response);
-	  exit;
-	  } catch (\Exception $e) {
-		  die($e->getMessage());
-	  }
-  }
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
 
-  public function getDealerData()
-  {
-	  try {
-		  $request	= $this->request;
-		  $param 	= $request->getVar('param');
-		
-		  $user = new \App\Models\DealerDataModel();
-		  if($param){
-		  	$data = $user->getWhere(['m_user_simponi.id_usersim' => $request->getVar('id')], $param)->getRow();
-		  }else{
-		  	$data = $user->getWhere(['biller.id_biller' => $request->getVar('id_biller')])->getRow();
-		  }
-		  
-		  if($data){
-			  $response = [
-				  'status'   => 'sukses',
-				  'code'     => 200,
-				  'data' 	 => $data
-			  ];
-		  }else{
-			  $response = [
-				  'status'   => 'gagal',
-				  'code'     => '0',
-				  'data'     => 'tidak ada data',
-			  ];
-		  }
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
 
-	  header('Content-Type: application/json');
-	  echo json_encode($response);
-	  exit;
-	  } catch (\Exception $e) {
-		  die($e->getMessage());
-	  }
-  }
+	public function getallDealerData()
+	{
+		try {
+			$request	= $this->request;
+			$param	= $request->getVar('param');
+			$user = new \App\Models\DealerDataModel();
+			$data = $user->getDealerData($param);
 
-  public function getallPaymentData()
-  {
-	  try {
-		  $request	= $this->request;
-		  $param	= $request->getVar('param');
-		  $user = new \App\Models\PaymentDataModel();
-		  $data = $user->getPaymentData($param);
-		  
-		  if($data){
-			  $response = [
-				  'status'   => 'sukses',
-				  'code'     => 200,
-				  'data' 	 => $data
-			  ];
-		  }else{
-			  $response = [
-				  'status'   => 'gagal',
-				  'code'     => '0',
-				  'data'     => 'tidak ada data',
-			  ];
-		  }
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
 
-	  header('Content-Type: application/json');
-	  echo json_encode($response);
-	  exit;
-	  } catch (\Exception $e) {
-		  die($e->getMessage());
-	  }
-  }
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
 
-  public function getPaymentData()
-  {
-	  try {
-		  $request	= $this->request;
-		  $param 	= $request->getVar('param');
-		
-		  $user = new \App\Models\PaymentDataModel();
-		  if($param){
-		  	$data = $user->getWhere(['m_user_simponi.id_usersim' => $request->getVar('id')], $param)->getRow();
-		  }else{
-		  	$data = $user->getWhere(['transaction.id' => $request->getVar('id')])->getRow();
-		  }
-		  
-		  if($data){
-			  $response = [
-				  'status'   => 'sukses',
-				  'code'     => 200,
-				  'data' 	 => $data
-			  ];
-		  }else{
-			  $response = [
-				  'status'   => 'gagal',
-				  'code'     => '0',
-				  'data'     => 'tidak ada data',
-			  ];
-		  }
+	public function getDealerData()
+	{
+		try {
+			$request	= $this->request;
+			$param 	= $request->getVar('param');
 
-	  header('Content-Type: application/json');
-	  echo json_encode($response);
-	  exit;
-	  } catch (\Exception $e) {
-		  die($e->getMessage());
-	  }
-  }
+			$user = new \App\Models\DealerDataModel();
+			if ($param) {
+				$data = $user->getWhere(['m_user_simponi.id_usersim' => $request->getVar('id')], $param)->getRow();
+			} else {
+				$data = $user->getWhere(['biller.id_biller' => $request->getVar('id_biller')])->getRow();
+			}
 
-  public function getallVoucherData()
-  {
-	  try {
-		  $request	= $this->request;
-		  $param	= $request->getVar('param');
-		  $user = new \App\Models\VoucherDataModel();
-		  $data = $user->getVoucherData($param);
-		  
-		  if($data){
-			  $response = [
-				  'status'   => 'sukses',
-				  'code'     => 200,
-				  'data' 	 => $data
-			  ];
-		  }else{
-			  $response = [
-				  'status'   => 'gagal',
-				  'code'     => '0',
-				  'data'     => 'tidak ada data',
-			  ];
-		  }
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
 
-	  header('Content-Type: application/json');
-	  echo json_encode($response);
-	  exit;
-	  } catch (\Exception $e) {
-		  die($e->getMessage());
-	  }
-  }
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
 
-  public function getVoucherData()
-  {
-	  try {
-		  $request	= $this->request;
-		  $param 	= $request->getVar('param');
-		
-		  $user = new \App\Models\VoucherDataModel();
-		  if($param){
-		  	$data = $user->getWhere(['m_user_simponi.id_usersim' => $request->getVar('id')], $param)->getRow();
-		  }else{
-		  	$data = $user->getWhere(['master_voucher.id_voucher' => $request->getVar('id_voucher')])->getRow();
-		  }
-		  
-		  if($data){
-			  $response = [
-				  'status'   => 'sukses',
-				  'code'     => 200,
-				  'data' 	 => $data
-			  ];
-		  }else{
-			  $response = [
-				  'status'   => 'gagal',
-				  'code'     => '0',
-				  'data'     => 'tidak ada data',
-			  ];
-		  }
+	public function getallPaymentData()
+	{
+		try {
+			$request	= $this->request;
+			$param	= $request->getVar('param');
+			$user = new \App\Models\PaymentDataModel();
+			$data = $user->getPaymentData($param);
 
-	  header('Content-Type: application/json');
-	  echo json_encode($response);
-	  exit;
-	  } catch (\Exception $e) {
-		  die($e->getMessage());
-	  }
-  }
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
 
-  public function getallTokenData()
-  {
-	  try {
-		  $request	= $this->request;
-		  $param	= $request->getVar('param');
-		  $user = new \App\Models\TokenDataModel();
-		  $data = $user->getTokenData($param);
-		  
-		  if($data){
-			  $response = [
-				  'status'   => 'sukses',
-				  'code'     => 200,
-				  'data' 	 => $data
-			  ];
-		  }else{
-			  $response = [
-				  'status'   => 'gagal',
-				  'code'     => '0',
-				  'data'     => 'tidak ada data',
-			  ];
-		  }
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
 
-	  header('Content-Type: application/json');
-	  echo json_encode($response);
-	  exit;
-	  } catch (\Exception $e) {
-		  die($e->getMessage());
-	  }
-  }
+	public function getPaymentData()
+	{
+		try {
+			$request	= $this->request;
+			$param 	= $request->getVar('param');
 
-  public function getTokenData()
-  {
-	  try {
-		  $request	= $this->request;
-		  $param 	= $request->getVar('param');
-		
-		  $user = new \App\Models\TokenDataModel();
-		  if($param){
-		  	$data = $user->getWhere(['m_user_simponi.id_usersim' => $request->getVar('id')], $param)->getRow();
-		  }else{
-		  	$data = $user->getWhere(['bank_token.id_token' => $request->getVar('id_token')])->getRow();
-		  }
-		  
-		  if($data){
-			  $response = [
-				  'status'   => 'sukses',
-				  'code'     => 200,
-				  'data' 	 => $data
-			  ];
-		  }else{
-			  $response = [
-				  'status'   => 'gagal',
-				  'code'     => '0',
-				  'data'     => 'tidak ada data',
-			  ];
-		  }
+			$user = new \App\Models\PaymentDataModel();
+			if ($param) {
+				$data = $user->getWhere(['m_user_simponi.id_usersim' => $request->getVar('id')], $param)->getRow();
+			} else {
+				$data = $user->getWhere(['transaction.id' => $request->getVar('id')])->getRow();
+			}
 
-	  header('Content-Type: application/json');
-	  echo json_encode($response);
-	  exit;
-	  } catch (\Exception $e) {
-		  die($e->getMessage());
-	  }
-  }
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
 
-  public function adduser()
-  {
-	try {
-		
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		
-		$method			= $request->getMethod();
-		$user = new \App\Models\UserModel();
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
 
-		if($method == 'post'){
-				
-				if($request->getVar('id')){
+	public function getallVoucherData()
+	{
+		try {
+			$request	= $this->request;
+			$param	= $request->getVar('param');
+			$user = new \App\Models\VoucherDataModel();
+			$data = $user->getVoucherData($param);
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getVoucherData()
+	{
+		try {
+			$request	= $this->request;
+			$param 	= $request->getVar('param');
+
+			$user = new \App\Models\VoucherDataModel();
+			if ($param) {
+				$data = $user->getWhere(['m_user_simponi.id_usersim' => $request->getVar('id')], $param)->getRow();
+			} else {
+				$data = $user->getWhere(['master_voucher.id_voucher' => $request->getVar('id_voucher')])->getRow();
+			}
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getallTokenData()
+	{
+		try {
+			$request	= $this->request;
+			$param	= $request->getVar('param');
+			$user = new \App\Models\TokenDataModel();
+			$data = $user->getTokenData($param);
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getTokenData()
+	{
+		try {
+			$request	= $this->request;
+			$param 	= $request->getVar('param');
+
+			$user = new \App\Models\TokenDataModel();
+			if ($param) {
+				$data = $user->getWhere(['m_user_simponi.id_usersim' => $request->getVar('id')], $param)->getRow();
+			} else {
+				$data = $user->getWhere(['bank_token.id_token' => $request->getVar('id_token')])->getRow();
+			}
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function adduser()
+	{
+		try {
+
+			$request		= $this->request;
+			$param		= $request->getVar('param');
+
+			$method			= $request->getMethod();
+			$user = new \App\Models\UserModel();
+
+			if ($method == 'post') {
+
+				if ($request->getVar('id')) {
 					$data = [
-						'name' 		=> $request->getVar('name'),	
-						'email' 		=> $request->getVar('email'),	
-						'username' 		=> $request->getVar('username'),	
+						'name' 		=> $request->getVar('name'),
+						'email' 		=> $request->getVar('email'),
+						'username' 		=> $request->getVar('username'),
 						'id_role' 			=> $request->getVar('id_role'),
 						'status' 		=> 1,
 						'update_date' 	=> $this->now,
 						'update_by' 	=> $this->session->get('id')
 					];
-					
-					if($request->getVar('password')){
+
+					if ($request->getVar('password')) {
 						$data['password'] = md5($request->getVar('password'));
 					}
-					
+
 					$user->updateUser($request->getVar('id'), $data);
-					
-				}else{
+				} else {
 					$data = [
-						'name' 			=> $request->getVar('name'),	
-						'email' 		=> $request->getVar('email'),	
-						'username' 		=> $request->getVar('username'),	
+						'name' 			=> $request->getVar('name'),
+						'email' 		=> $request->getVar('email'),
+						'username' 		=> $request->getVar('username'),
 						'password' 		=> md5($request->getVar('password')),
 						'id_role' 		=> $request->getVar('id_role'),
 						'status' 		=> 1,
@@ -397,303 +401,565 @@ class Jsondata extends \CodeIgniter\Controller
 						'create_by' 	=> $this->session->get('id'),
 						'update_by' 	=> $this->session->get('id')
 					];
-					
+
 					$user->insertUser($data);
 				}
+			}
+			redirect('users', 'refresh');
+		} catch (\Exception $e) {
+			die($e->getMessage());
 		}
-		redirect('users','refresh');
-	} catch (\Exception $e) {
-		die($e->getMessage());
 	}
-  }
 
-  public function addrole()
-  {
-	try {
-		
-		$request	= $this->request;
-		$param		= $request->getVar('param');
-		
-		$method		= $request->getMethod();
-		$user 		= new \App\Models\UserModel();
+	public function addrole()
+	{
+		try {
 
-		if($method == 'post'){
-				
-				
-			$data = [
-				'role' 			=> $request->getVar('role'),	
-				'status' 		=> 1,
+			$request	= $this->request;
+			$param		= $request->getVar('param');
+
+			$method		= $request->getMethod();
+			$user 		= new \App\Models\UserModel();
+
+			if ($method == 'post') {
+
+
+				$data = [
+					'role' 			=> $request->getVar('role'),
+					'status' 		=> 1,
+				];
+				$user->insertRole($data);
+			}
+			redirect('users', 'refresh');
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function deleteuser()
+	{
+		try {
+			$request		= $this->request;
+			$param		= $request->getVar('param');
+			$method			= $request->getMethod();
+			$user = new \App\Models\UserModel();
+
+			$user->deleteUser($request->getVar('id'));
+
+			$response = [
+				'status'   => 'success',
+				'code'     => 200,
 			];
-			$user->insertRole($data);
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
 		}
-		redirect('users','refresh');
-	} catch (\Exception $e) {
-		die($e->getMessage());
 	}
-  }
 
-  public function deleteuser()
-  {
-	try {
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		$method			= $request->getMethod();
-		$user = new \App\Models\UserModel();
+	public function getallpermohonan()
+	{
+		try {
+			$request	= $this->request;
+			$param	= $request->getVar('param');
+			$user = new \App\Models\KegiatanModel();
+			$data = $user->getPermohonan($param);
 
-		$user->deleteUser($request->getVar('id'));
-		
-		$response = [
-			'status'   => 'success',
-			'code'     => 200,
-		];
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
 
-		header('Content-Type: application/json');
-		echo json_encode($response);
-		exit;
-	} catch (\Exception $e) {
-		die($e->getMessage());
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
 	}
-  }
 
-  public function getallpermohonan()
-  {
-	  try {
-		  $request	= $this->request;
-		  $param	= $request->getVar('param');
-		  $user = new \App\Models\KegiatanModel();
-		  $data = $user->getPermohonan($param);
-		  
-		  if($data){
-			  $response = [
-				  'status'   => 'sukses',
-				  'code'     => 200,
-				  'data' 	 => $data
-			  ];
-		  }else{
-			  $response = [
-				  'status'   => 'gagal',
-				  'code'     => '0',
-				  'data'     => 'tidak ada data',
-			  ];
-		  }
+	public function getpermohonan()
+	{
+		try {
+			$request	= $this->request;
+			$param	= $request->getVar('param');
+			$user = new \App\Models\KegiatanModel();
+			$data = $user->getPermohonanfull($param);
 
-	  header('Content-Type: application/json');
-	  echo json_encode($response);
-	  exit;
-	  } catch (\Exception $e) {
-		  die($e->getMessage());
-	  }
-  }
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
 
-  public function addDealerData()
-  {
-	try {
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		
-		$method			= $request->getMethod();
-		$dealer = new \App\Models\DealerDataModel();
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
 
-		if($method == 'post'){
-				
-				if($request->getVar('id_biller')){
+	public function getjsonjbg()
+	{
+		try {
+			$request		= $this->request;
+			$method			= $request->getMethod();
+			$komunikasi 	= new \App\Models\KegiatanModel();
+
+			$data = $komunikasi->getjbg($request->getVar('id'));
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getjsonkabkot()
+	{
+		try {
+			$request		= $this->request;
+			$method			= $request->getMethod();
+			$komunikasi 	= new \App\Models\KegiatanModel();
+
+			$data = $komunikasi->getkabkot($request->getVar('id'));
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getjsonkec()
+	{
+		try {
+			$request		= $this->request;
+			$method			= $request->getMethod();
+			$komunikasi 	= new \App\Models\KegiatanModel();
+
+			$data = $komunikasi->getkecamatan($request->getVar('id'));
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getjsonkel()
+	{
+		try {
+			$request		= $this->request;
+			$method			= $request->getMethod();
+			$komunikasi 	= new \App\Models\KegiatanModel();
+
+			$data = $komunikasi->getkelurahan($request->getVar('id'));
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getjsoncount()
+	{
+		try {
+			$request		= $this->request;
+			$method			= $request->getMethod();
+			$komunikasi 	= new \App\Models\KegiatanModel();
+
+			$data = $komunikasi->getcount();
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function addpermohonan()
+	{
+		try {
+			// print(1);
+			// $dax = date('Y-m-d');
+
+			$request		= $this->request;
+
+			$method			= $request->getMethod();
+			$perm = new \App\Models\KegiatanModel();
+
+
+
+			// $day = date('dmY');
+			// $noreg = 'PBG-997101-'+$this->dax+'-1';
+
+			if ($method == 'post') {
+
+				$data = [
+					'id_jenis_permohonan'            => $request->getVar('id_jenis_permohonan'),
+					'id_fungsi_bg'                   => $request->getVar('id_fungsi_bg'),
+					'id_jenis_bg'                    => $request->getVar('id_jenis_bg'),
+					'nama_bg'                        => $request->getVar('nama_bg'),
+					'luas_bg'                        => $request->getVar('luas_bg'),
+					'jml_lantai_bg'                  => $request->getVar('jml_lantai_bg'),
+					'tinggi_bg'                      => $request->getVar('tinggi_bg'),
+					'luas_basement_bg'               => $request->getVar('luas_basement_bg'),
+					'jml_lantai_basement_bg'         => $request->getVar('jml_lantai_basement_bg'),
+					'id_prov_bg'                     => $request->getVar('id_prov_bg'),
+					'id_kabkot_bg'                   => $request->getVar('id_kabkot_bg'),
+					'id_kec_bg'                      => $request->getVar('id_kec_bg'),
+					'id_kel_bg'                      => $request->getVar('id_kel_bg'),
+					'alamat_bg'                      => $request->getVar('alamat_bg'),
+					'id_stat_kepemilikan'            => $request->getVar('id_stat_kepemilikan'),
+					'id_jenis_tanda_pengenal'        => $request->getVar('id_jenis_tanda_pengenal'),
+					'nama_pemilik'                   => $request->getVar('nama_pemilik'),
+					'no_tanda_pengenal'              => $request->getVar('no_tanda_pengenal'),
+					'id_prov_pemilik'                => $request->getVar('id_prov_pemilik'),
+					'id_kabkot_pemilik'              => $request->getVar('id_kabkot_pemilik'),
+					'id_kec_pemilik'                 => $request->getVar('id_kec_pemilik'),
+					'id_kel_pemilik'                 => $request->getVar('id_kel_pemilik'),
+					'alamat_pemilik'                 => $request->getVar('alamat_pemilik'),
+					'no_telp_pemilik'                => $request->getVar('no_telp_pemilik'),
+					'email_pemilik'                  => $request->getVar('email_pemilik'),
+					'id_jenis_dok_tanah'             => $request->getVar('id_jenis_dok_tanah'),
+					'no_dok_tanah'                   => $request->getVar('no_dok_tanah'),
+					'tgl_terbit_dok_tanah'           => $request->getVar('tgl_terbit_dok_tanah'),
+					'luas_tanah'                     => $request->getVar('luas_tanah'),
+					'id_hak_tanah'                   => $request->getVar('id_hak_tanah'),
+					'nama_hak_tanah'                 => $request->getVar('nama_hak_tanah'),
+					'alamat_tanah'                   => $request->getVar('alamat_tanah'),
+					'perjanjian_pemanfaatan_tanah'   => $request->getVar('perjanjian_pemanfaatan_tanah'),
+					'no_registrasi'					 => $request->getVar('no_registrasi'),
+					'in_date'						 => $request->getVar('in_date'),
+
+					'created_date' 					 => $this->now,
+					'updated_date' 					 => $this->now,
+					'created_by' 					 => $this->session->get('id'),
+					'updated_by' 					 => $this->session->get('id')
+				];
+
+				$perm->insertPermohonan($data);
+			}
+
+			$response = [
+				'status'   => 'sukses',
+				'code'     => 200,
+			];
+
+			// return $response;
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+			// redirect('permohonan','refresh');
+
+			// echo json_encode($response);
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function addDealerData()
+	{
+		try {
+			$request		= $this->request;
+			$param		= $request->getVar('param');
+
+			$method			= $request->getMethod();
+			$dealer = new \App\Models\DealerDataModel();
+
+			if ($method == 'post') {
+
+				if ($request->getVar('id_biller')) {
 					$data = [
-						'nm_biller' 	=> $request->getVar('nm_biller'),	
-						'alamat' 		=> $request->getVar('alamat'),	
+						'nm_biller' 	=> $request->getVar('nm_biller'),
+						'alamat' 		=> $request->getVar('alamat'),
 						'kontak' 		=> $request->getVar('kontak'),
 						'create_dtm' 	=> $this->now,
 						'status' 		=> 1
 					];
-					
+
 					$dealer->updateDealerData($request->getVar('id_biller'), $data);
-					
-				}else{
+				} else {
 					$data = [
-						'nm_biller' 	=> $request->getVar('nm_biller'),	
-						'alamat' 		=> $request->getVar('alamat'),	
+						'nm_biller' 	=> $request->getVar('nm_biller'),
+						'alamat' 		=> $request->getVar('alamat'),
 						'kontak' 		=> $request->getVar('kontak'),
 						'create_dtm' 	=> $this->now,
 						'status' 		=> 1
 					];
 					$dealer->insertDealerData($data);
 				}
+			}
+			redirect('dealerData', 'refresh');
+		} catch (\Exception $e) {
+			die($e->getMessage());
 		}
-		redirect('dealerData','refresh');
-	} catch (\Exception $e) {
-		die($e->getMessage());
 	}
-  }
 
-  public function deleteDealerData()
-  {
-	try {
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		$method			= $request->getMethod();
-		$dealerData = new \App\Models\DealerDataModel();
+	public function deleteDealerData()
+	{
+		try {
+			$request		= $this->request;
+			$param		= $request->getVar('param');
+			$method			= $request->getMethod();
+			$dealerData = new \App\Models\DealerDataModel();
 
-		$dealerData->deleteDealerData($request->getVar('id_biller'));
-		
-		$response = [
-			'status'   => 'success',
-			'code'     => 200,
-		];
+			$dealerData->deleteDealerData($request->getVar('id_biller'));
 
-		header('Content-Type: application/json');
-		echo json_encode($response);
-		exit;
-	} catch (\Exception $e) {
-		die($e->getMessage());
+			$response = [
+				'status'   => 'success',
+				'code'     => 200,
+			];
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
 	}
-  }
 
-  public function addPaymentData()
-  {
-	try {
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		
-		$method			= $request->getMethod();
-		$user = new \App\Models\PaymentDataModel();
+	public function addPaymentData()
+	{
+		try {
+			$request		= $this->request;
+			$param		= $request->getVar('param');
 
-		if($method == 'post'){
-				
-				if($request->getVar('id')){
+			$method			= $request->getMethod();
+			$user = new \App\Models\PaymentDataModel();
+
+			if ($method == 'post') {
+
+				if ($request->getVar('id')) {
 					$data = [
-						'dateTransaction' 		=> $request->getVar('dateTransaction'),	
-						'nominal' 		=> $request->getVar('nominal'),	
+						'dateTransaction' 		=> $request->getVar('dateTransaction'),
+						'nominal' 		=> $request->getVar('nominal'),
 						'status' 		=> 1
 					];
-					
+
 					$user->update($request->getVar('id'), $data);
-					
-				}else{
+				} else {
 					$data = [
-						'dateTransaction' 		=> $request->getVar('dateTransaction'),	
-						'nominal' 		=> $request->getVar('nominal'),	
+						'dateTransaction' 		=> $request->getVar('dateTransaction'),
+						'nominal' 		=> $request->getVar('nominal'),
 						'status' 		=> 1
 					];
 					$user->insert($data);
 				}
+			}
+			redirect('payment', 'refresh');
+		} catch (\Exception $e) {
+			die($e->getMessage());
 		}
-		redirect('payment','refresh');
-	} catch (\Exception $e) {
-		die($e->getMessage());
 	}
-  }
 
-  public function deletePaymentData()
-  {
-	try {
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		$method			= $request->getMethod();
-		$payment = new \App\Models\PaymentDataModel();
+	public function deletePaymentData()
+	{
+		try {
+			$request		= $this->request;
+			$param		= $request->getVar('param');
+			$method			= $request->getMethod();
+			$payment = new \App\Models\PaymentDataModel();
 
-		$payment->deletePaymentData($request->getVar('id'));
-		
-		$response = [
-			'status'   => 'success',
-			'code'     => 200,
-		];
+			$payment->deletePaymentData($request->getVar('id'));
 
-		header('Content-Type: application/json');
-		echo json_encode($response);
-		exit;
-	} catch (\Exception $e) {
-		die($e->getMessage());
+			$response = [
+				'status'   => 'success',
+				'code'     => 200,
+			];
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
 	}
-  }
 
-  public function addTokenData()
-  {
-	try {
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		
-		$method			= $request->getMethod();
-		$token = new \App\Models\TokenDataModel();
+	public function addTokenData()
+	{
+		try {
+			$request		= $this->request;
+			$param		= $request->getVar('param');
 
-		if($method == 'post'){
-				
-				if($request->getVar('id')){
+			$method			= $request->getMethod();
+			$token = new \App\Models\TokenDataModel();
+
+			if ($method == 'post') {
+
+				if ($request->getVar('id')) {
 					$data = [
-						'token'				 	=> $request->getVar('token'),					
-						'id_user'		 		=> $request->getVar('id_user'),			
+						'token'				 	=> $request->getVar('token'),
+						'id_user'		 		=> $request->getVar('id_user'),
 						'valid_until'	 		=> $request->getVar('valid_until'),
 					];
-					
+
 					$token->update($request->getVar('id'), $data);
-					
-				}else{
+				} else {
 					$data = [
-						'token'				 	=> $request->getVar('token'),					
-						'id_user'		 		=> $request->getVar('id_user'),			
+						'token'				 	=> $request->getVar('token'),
+						'id_user'		 		=> $request->getVar('id_user'),
 						'valid_until'	 		=> $request->getVar('valid_until'),
 					];
 					$token->insert($data);
 				}
+			}
+			redirect('tokenData', 'refresh');
+		} catch (\Exception $e) {
+			die($e->getMessage());
 		}
-		redirect('tokenData','refresh');
-	} catch (\Exception $e) {
-		die($e->getMessage());
 	}
-  }
 
-  public function deleteTokenData()
-  {
-	try {
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		$method			= $request->getMethod();
-		$token = new \App\Models\TokenDataModel();
+	public function deleteTokenData()
+	{
+		try {
+			$request		= $this->request;
+			$param		= $request->getVar('param');
+			$method			= $request->getMethod();
+			$token = new \App\Models\TokenDataModel();
 
-		$token->deleteTokenData($request->getVar('id_token'));
-		
-		$response = [
-			'status'   => 'success',
-			'code'     => 200,
-		];
+			$token->deleteTokenData($request->getVar('id_token'));
 
-		header('Content-Type: application/json');
-		echo json_encode($response);
-		exit;
-	} catch (\Exception $e) {
-		die($e->getMessage());
+			$response = [
+				'status'   => 'success',
+				'code'     => 200,
+			];
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
 	}
-  }
 
-public function addVoucherData()
-  {
-	try {
-		
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		
-		$method			= $request->getMethod();
-		$voucher = new \App\Models\VoucherDataModel();
+	public function addVoucherData()
+	{
+		try {
 
-		if($method == 'post'){
-				
-				if($request->getVar('id_voucher')){
+			$request		= $this->request;
+			$param		= $request->getVar('param');
+
+			$method			= $request->getMethod();
+			$voucher = new \App\Models\VoucherDataModel();
+
+			if ($method == 'post') {
+
+				if ($request->getVar('id_voucher')) {
 					$data = [
-						'kd_voucher' 		=> $request->getVar('kd_voucher'),	
-						'nm_voucher' 		=> $request->getVar('nm_voucher'),	
-						'min_pembelian' 	=> $request->getVar('min_pembelian'),	
+						'kd_voucher' 		=> $request->getVar('kd_voucher'),
+						'nm_voucher' 		=> $request->getVar('nm_voucher'),
+						'min_pembelian' 	=> $request->getVar('min_pembelian'),
 						'jml_potongan' 		=> $request->getVar('jml_potongan'),
 						'stock' 		=> $request->getVar('stock'),
 						// date('d',$timestamp);
 						'expired_by' 	=> $request->getVar('expired_by'),
 						'jns_potongan' 	=> $request->getVar('jns_potongan')
 					];
-					
+
 					$voucher->update($request->getVar('id_voucher'), $data);
-					
-				}else{
+				} else {
 					$data = [
-						'kd_voucher' 		=> $request->getVar('kd_voucher'),	
-						'nm_voucher' 		=> $request->getVar('nm_voucher'),	
-						'min_pembelian' 	=> $request->getVar('min_pembelian'),	
+						'kd_voucher' 		=> $request->getVar('kd_voucher'),
+						'nm_voucher' 		=> $request->getVar('nm_voucher'),
+						'min_pembelian' 	=> $request->getVar('min_pembelian'),
 						'jml_potongan' 		=> $request->getVar('jml_potongan'),
 						'stock' 		=> $request->getVar('stock'),
 						// date('d',$timestamp);
@@ -702,39 +968,146 @@ public function addVoucherData()
 					];
 					$voucher->insert($data);
 				}
+			}
+			redirect('reportVouchers', 'refresh');
+		} catch (\Exception $e) {
+			die($e->getMessage());
 		}
-		redirect('reportVouchers','refresh');
-	} catch (\Exception $e) {
-		die($e->getMessage());
 	}
-  }
 
-  public function deleteVoucher()
-  {
-	try {
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		$method			= $request->getMethod();
-		$voucher = new \App\Models\VoucherDataModel();
+	public function deleteVoucher()
+	{
+		try {
+			$request		= $this->request;
+			$param		= $request->getVar('param');
+			$method			= $request->getMethod();
+			$voucher = new \App\Models\VoucherDataModel();
 
-		$voucher->deleteVoucher($request->getVar('id_voucher'));
-		
-		$response = [
-			'status'   => 'success',
-			'code'     => 200,
-		];
+			$voucher->deleteVoucher($request->getVar('id_voucher'));
 
-		header('Content-Type: application/json');
-		echo json_encode($response);
-		exit;
-	} catch (\Exception $e) {
-		die($e->getMessage());
+			$response = [
+				'status'   => 'success',
+				'code'     => 200,
+			];
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
 	}
-  }
 
+	// VERIFIKASI DOKUMEN
+	public function status_dt_teknis()
+	{
+		$request = $this->request;
+		$perm = new \App\Models\KegiatanModel();
+		$user_id		= 1;
+		$id_kabkot		= 3273;
+		$status			= $request->getVar('status_syarat');
+		$no_surat		= $request->getVar('no_surat');
+		$catatan		= $request->getVar('catatan');
+		// $id_pemilik		= $request->getVar('id_pemilik');
+		$id_permohonan	= $request->getVar('id_permohonan');
+		// $id_pemilik = 0;
+		$email			= $request->getVar('email');
+		$no_konsultasi	= $request->getVar('no_konsultasi');
+		$tgl_skrg 		= date('Y-m-d');
 
-	
+		if (!file_exists($_FILES['file']['tmp_name']) || !is_uploaded_file($_FILES['file']['tmp_name'])) {
+			$imgname = "";
+		} else {
+			if (array_key_exists("file", $_FILES)) {
+				foreach ($_FILES as $key => $value) {
+					$basepath = './uploads/fileverifikasi/';
+					if (!is_dir($basepath)) {
+						mkdir($basepath, 0777, true);
+					}
 
+					// for ($i = 0; $i < count($value['tmp_name']); $i++) {
+					$tmp_name = $value['tmp_name'];
+					if ($tmp_name) {
+						$path = $value['name'];
+						$ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+						$imgname = "SuratPemberitahuan-" . date('dmYHis') . "-" . $path;
+						$terupload = move_uploaded_file($tmp_name, $basepath . $imgname);
+						if ($terupload) {
+						}
+					}
+				}
+			}
+
+			if ($status == '1') {
+				if ($id_kabkot == '31') {
+					$data	= array(
+						'tanggal' => $tgl_skrg,
+						'status' => 4,
+						// 'id_dki' => '1',
+						'no_surat' => $no_surat,
+						'id_permohonan' => $id_permohonan,
+						'catatan' => $catatan,
+						'dir_file' => $imgname,
+						'create_by' => $user_id
+					);
+				} else {
+					$data	= array(
+						'tanggal' => $tgl_skrg,
+						'status' => '4',
+						'no_surat' => $no_surat,
+						'id_permohonan' => $id_permohonan,
+						'catatan' => $catatan,
+						'dir_file' => $imgname,
+						'create_by' => $user_id
+					);
+				}
+			} else {
+				$data	= array(
+					'tanggal' => $tgl_skrg,
+					'status' => '3',
+					'no_surat' => $no_surat,
+					'id_permohonan' => $id_permohonan,
+					'catatan' => $catatan,
+					'dir_file' => $imgname,
+					'create_by' => $user_id
+				);
+			}
+
+			// insert th_data_konsultasi
+			$insertVerifikasiDokumen = $perm->insertVerifikasiDokumen($data);
+			// updatestatuspermohonan
+			$updatepermohonan = $perm->updatePermohonan(['status' => $data['status']], ['id' => $id_permohonan]);
+
+			if ($insertVerifikasiDokumen && $updatepermohonan) {
+				if ($status == '2') {
+					$ket = "Dikembalikan ke Pemohon agar di perbaiki/dilengkapi";
+					$response = array(
+						'code' => 200,
+						'msg' => $ket
+					);
+				} else if ($status == '1') {
+					$ket = "Sudah Lengkap dan akan masuk ketahap Penugasan TPT/TPA";
+					$response = array(
+						'code' => 200,
+						'msg' => $ket
+					);
+				} else {
+					$ket = "Belum ditentukan";
+					$response = array(
+						'code' => 0,
+						'msg' => $ket
+					);
+				}
+			} else {
+				$response = array(
+					'code' => 200,
+					'msg' => 'Data Gagal Disimpan'
+				);
+			}
+
+			echo json_encode($response);
+		}
+	}
 }
 
 

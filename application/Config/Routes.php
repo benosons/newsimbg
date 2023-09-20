@@ -140,7 +140,7 @@ $routes->add('tokenData', 'View::tokenData');
 // $routes->add('login', 'View::login');
 // $routes->add('dashboard', 'View::dashboard');
 $routes->add('users', 'View::user');
- 
+
 $routes->add('auth', 'Auth::auth');
 $routes->add('reg', 'Auth::reg');
 $routes->add('logout', 'Auth::logout');
@@ -152,6 +152,19 @@ $routes->post('addrole', 'Jsondata::addrole');
 $routes->post('deleteuser', 'Jsondata::deleteuser');
 
 $routes->post('getallpermohonan', 'Jsondata::getallpermohonan');
+$routes->post('getpermohonan', 'Jsondata::getpermohonan');
+$routes->post('getjsonjbg', 'Jsondata::getjsonjbg');
+
+$routes->post('addpermohonan', 'Jsondata::addpermohonan');
+
+$routes->post('getjsonkabkot', 'Jsondata::getjsonkabkot');
+$routes->post('getjsonkec', 'Jsondata::getjsonkec');
+$routes->post('getjsonkel', 'Jsondata::getjsonkel');
+
+$routes->post('getjsoncount', 'Jsondata::getjsoncount');
+
+// verifikasi data
+$routes->post('status_dt_teknis', 'Jsondata::status_dt_teknis');
 
 $routes->post('getallDealerData', 'Jsondata::getallDealerData');
 $routes->post('getDealerData', 'Jsondata::getDealerData');
