@@ -549,6 +549,82 @@ class Jsondata extends \CodeIgniter\Controller
 		}
 	}
 
+	public function savePenugasanTpt()
+	{
+		try {
+
+			$request		= $this->request;
+			$kegiatan = new \App\Models\KegiatanModel();
+
+			$val = explode(',', $request->getVar('val'));
+
+			for ($i = 0; $i < count($val); $i++) {
+				$data = array(
+					'id_permohonan' => $request->getVar('id_permohonan'),
+					'id_personal' => $val[$i]
+				);
+
+				$insertpenugasan = $kegiatan->savePenugasanTpt($data);
+			}
+
+			$updatePermohonan = $kegiatan->updatePermohonan(array('status' => $request->getVar('status')), array('id' => $request->getVar('id_permohonan')));
+
+			if ($insertpenugasan && $updatePermohonan) {
+				$response = array(
+					'code' => 200,
+					'msg' => 'Penugasan Berhasil, Perlu Melakukan Penjadwalan Konsultasi'
+				);
+			} else {
+				$response = array(
+					'code' => 0,
+					'msg' => 'Penugasan Gagal, Silahkan Coba Kembali'
+				);
+			}
+
+			echo json_encode($response);
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getTpaTptPenugasan()
+	{
+		try {
+
+			$request		= $this->request;
+			$kegiatan = new \App\Models\KegiatanModel();
+
+			$id_permohonan = $request->getVar('id_permohonan');
+
+			$getPenugasanTpt = $kegiatan->getPenugasanTpt(array('id_permohonan' => $id_permohonan));
+			if (count($getPenugasanTpt) == 0) {
+				$getPenugasanTpa = $kegiatan->getPenugasanTpa(array('id_permohonan' => $id_permohonan));
+				if (count($getPenugasanTpa) > 0) {
+					$response = array(
+						'code' => 200,
+						'thead' => 'Nama Tim TPA',
+						'data' => $getPenugasanTpa
+					);
+				} else {
+					$response = array(
+						'code' => 0,
+						'msg' => 'Data Tidak Tersedia !'
+					);
+				}
+			} else {
+				$response = array(
+					'code' => 200,
+					'thead' => 'Nama Tim TPT',
+					'data' => $getPenugasanTpt
+				);
+			}
+
+			echo json_encode($response);
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
 	public function getjsonjbg()
 	{
 		try {

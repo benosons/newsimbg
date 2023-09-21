@@ -157,4 +157,38 @@ class KegiatanModel extends Model
     $query = $builder->get();
     return $query->getResult();
   }
+
+  public function getPenugasanTpt($where = null)
+  {
+    $builder = $this->db->table('tm_penugasan_pbg');
+    $builder->select("tm_penugasan_pbg.*, CONCAT(tm_personal.glr_depan, ', ', tm_personal.nama_personal, ', ', tm_personal.glr_belakang) as nama_petugas");
+    $builder->join('tm_personal ', 'tm_personal.id_personal = tm_penugasan_pbg.id_personal', 'INNER');
+    if ($where != NULL) {
+      $builder->where($where);
+    }
+    $query = $builder->get();
+
+    return $query->getResult();
+  }
+
+  public function getPenugasanTpa($where = null)
+  {
+    $builder = $this->db->table('tm_penugasan_tpa');
+    $builder->select("tm_penugasan_tpa.*, CONCAT(t_tpa.glr_depan, ', ', t_tpa.nm_tpa, ', ', t_tpa.glr_belakang) as nama_petugas");
+    $builder->join('t_tpa ', 't_tpa.id_personal = tm_penugasan_tpa.id_personal', 'INNER');
+    if ($where != NULL) {
+      $builder->where($where);
+    }
+    $query = $builder->get();
+
+    return $query->getResult();
+  }
+
+  // save Penugasan TPT
+  public function savePenugasanTpt($data)
+  {
+    $builder = $this->db->table('tm_penugasan_pbg');
+    $query = $builder->insert($data);
+    return $query;
+  }
 }

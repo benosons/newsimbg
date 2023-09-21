@@ -1,4 +1,6 @@
-<?php namespace App\Controllers;
+<?php
+
+namespace App\Controllers;
 
 /**
  * Class BaseController
@@ -39,5 +41,4 @@ class BaseController extends \CodeIgniter\Controller
 		// E.g.:
 		// $this->session = \Config\Services::session();
 	}
-
 }

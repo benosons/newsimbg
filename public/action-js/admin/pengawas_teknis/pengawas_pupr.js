@@ -3,15 +3,17 @@ $(() => {
   // $("#submenu-pengawas_pupr").addClass("active");
   // $("#isubmenu-penugasan_tpa_tpt").addClass("active");
 
-  loadpermohonan();
+  loadpermohonanpenugasan();
+  loadpermohonanpenjadwalan();
 
   $("#savepenugasan").click(function () {
     var val = [];
     $("input[name='terpilih']:checked").each(function (i) {
       val[i] = $(this).val();
     });
-
-    console.log(val);
+    var id_permohonan = $("#id_permohonan_penugasan").val();
+    var urlpenugasan = "/savePenugasanTpt";
+    savepenugasan(val, id_permohonan, urlpenugasan);
   });
 });
 
@@ -39,7 +41,7 @@ $(document).ready(function () {
     .appendTo("#table-penjadwalan_konsultasi_wrapper .col-md-6:eq(0)");
 });
 
-function loadpermohonan() {
+function loadpermohonanpenugasan() {
   $.ajax({
     type: "post",
     dataType: "json",
@@ -141,8 +143,110 @@ function loadpermohonan() {
     },
   });
 }
+function loadpermohonanpenjadwalan() {
+  $.ajax({
+    type: "post",
+    dataType: "json",
+    data: { param: { "data_permohonan.status": 5 } },
+    url: "/getallpermohonan",
+    success: function (result) {
+      let data = result.data;
+      let code = result.code;
+      var dt = $("#tablepenjadwalan").DataTable({
+        dom:
+          "<'row'" +
+          "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
+          "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
+          ">" +
+          "<'table-responsive'tr>" +
+          "<'row'" +
+          "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
+          "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
+          ">",
+        destroy: true,
+        paging: true,
+        lengthChange: false,
+        searching: true,
+        ordering: true,
+        info: true,
+        autoWidth: false,
+        responsive: false,
+        pageLength: 10,
+        aaData: result.data,
+        aoColumns: [
+          { mDataProp: "id", class: "text-center", width: "2%" },
+          { mDataProp: "nm_jns_permohonan", class: "text-center" },
+          { mDataProp: "no_registrasi", class: "text-center" },
+          { mDataProp: "nama_pemilik" },
+          { mDataProp: "address", width: "3%" },
+          { mDataProp: "fungsi_bg", width: "3%" },
+          { mDataProp: "in_date", width: "3%" },
+          { mDataProp: "status_dinas", width: "2%", class: "text-center" },
+          { mDataProp: "id", width: "10%", class: "text-center" },
+        ],
+        order: [[0, "ASC"]],
+        fixedColumns: true,
+        aoColumnDefs: [
+          {
+            mRender: function (data, type, row) {
+              var elem = "";
+              // if (data == 1) {
+              //   elem = `<span class="badge bg-gradient-bloody text-white shadow-sm w-100">Menunggu Verifikasi Dokumen</span>`;
+              // } else if (data == 3) {
+              //   elem = `<span class="badge bg-gradient-quepal text-white shadow-sm w-100">Terbit</span>`;
+              // } else if (data == 4) {
+              //   elem = `<span class="badge bg-gradient-bloody text-white shadow-sm w-100">Ditolak</span>`;
+              // } else {
+              // }
+              elem = `<span class="badge bg-gradient-quepal text-white shadow-sm w-100">${row.status_dinas}</span>`;
+              return elem;
+            },
+            aTargets: [7],
+          },
+          {
+            mRender: function (data, type, row) {
+              var elem = `<div class="btn-group" role="group" aria-label="First group">
+                              <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="action('penjadwalan', ${row.id})"><i class="bx bxs-user-detail me-0 fs-6" title="Jadwalkan Konsultasi"></i></button>
+                              <button type="button" class="btn btn-primary btn-sm btn-icon" onclick="action('update', ${row.id})"><i class="bx bx-edit me-0 fs-6"></i></button>
+                            </div>`;
+
+              return elem;
+            },
+            aTargets: [8],
+          },
+        ],
+        fnRowCallback: function (
+          nRow,
+          aData,
+          iDisplayIndex,
+          iDisplayIndexFull
+        ) {
+          var index = iDisplayIndexFull + 1;
+          $("td:eq(0)", nRow).html("#" + index);
+          return index;
+        },
+        fnDrawCallback: function () {
+          $(".update_status").change(function () {
+            action("update", this.value, this.checked);
+          });
+        },
+        fnInitComplete: function () {
+          var that = this;
+          var td;
+          var tr;
+          this.$("td").click(function () {
+            td = this;
+          });
+          this.$("tr").click(function () {
+            tr = this;
+          });
+        },
+      });
+    },
+  });
+}
+
 function action(mode, id, username) {
-  console.log("pecet");
   if (mode == "delete") {
     Swal.fire({
       html: `Apakah anda yakin menghapus Data ini?`,
@@ -174,10 +278,35 @@ function action(mode, id, username) {
     });
   } else if (mode == "penugasan") {
     getdatapermohonan(id);
-    gettpt();
-    $("#id_permohonan").val(id);
+    gettpt(id);
+    $("#id_permohonan_penugasan").val(id);
     $("#exampleExtraLargeModal2").modal("toggle");
     $("#exampleExtraLargeModal2").modal("show");
+    // $.ajax({
+    //     type: "post",
+    //     dataType: "json",
+    //     url: "/getuser",
+    //     data: {
+    //         id: id
+    //     },
+    //     success: function (result) {
+    //         var data = result.data
+    //         $('#modal_add_user').modal('show')
+    //         $('[name="id"]').val(id)
+    //         $('[name="name"]').val(data.name)
+    //         $('[name="email"]').val(data.email)
+    //         $('[name="username"]').val(data.username)
+    //         $('[name="password"]').attr('placeholder', 'kosongkan jika tidak merubah password')
+    //         $('#id_role').val(data.id_role)
+    //         $('wrd').html('Ubah')
+    //     }
+    // })
+  } else if (mode == "penjadwalan") {
+    getdatapermohonanpenjadwalan(id);
+    gettpatpt(id);
+    $("#id_permohonan_penugasan").val(id);
+    $("#exampleExtraLargeModal3").modal("toggle");
+    $("#exampleExtraLargeModal3").modal("show");
     // $.ajax({
     //     type: "post",
     //     dataType: "json",
@@ -202,6 +331,7 @@ function action(mode, id, username) {
     $("#exampleExtraLargeModal2").modal("show");
   }
 }
+
 function getdatapermohonan(id) {
   $.ajax({
     type: "post",
@@ -308,7 +438,39 @@ function getdatapermohonan(id) {
     },
   });
 }
-function gettpt() {
+
+function getdatapermohonanpenjadwalan(id) {
+  $.ajax({
+    type: "post",
+    dataType: "json",
+    data: { param: { "data_permohonan.id": id } },
+    url: "/getpermohonan",
+    success: function (response) {
+      if (response.code == 200) {
+        var data = response.data[0];
+        $("#id_permohonan_penjadwalan").val(data.id);
+        $("#sum-data_pbg-penjadwalan").html(data.no_registrasi);
+        $("#sum-nama_pemilik-penjadwalan").html(data.nama_pemilik);
+        $("#sum-identitas_pemilik-penjadwalan").html(data.no_tanda_pengenal);
+        $("#sum-alamat_pemilik-penjadwalan").html(data.address);
+        $("#sum-kontak_pemilik-penjadwalan").html(data.no_telp_pemilik);
+        $("#sum-email_pemilik-penjadwalan").html(data.email_pemilik);
+        $("#sum-lokasi_bangunan-penjadwalan").html(data.alamat_bg);
+
+        var statuskepemilikan = "";
+        if (data.id_stat_kepemilikan == 1) {
+          statuskepemilikan = "Pemerintahan";
+        } else if (data.id_stat_kepemilikan == 2) {
+          statuskepemilikan = "Badan Usaha";
+        } else if (data.id_stat_kepemilikan == 3) {
+          statuskepemilikan = "Perorangan";
+        }
+      }
+    },
+  });
+}
+
+function gettpt(id) {
   $.ajax({
     type: "post",
     dataType: "json",
@@ -329,6 +491,66 @@ function gettpt() {
           nomor += 1;
         });
         $("#listtpatpt").html(html);
+      }
+    },
+  });
+}
+
+function gettpatpt(id) {
+  $.ajax({
+    type: "post",
+    dataType: "json",
+    data: { id_permohonan: id },
+    url: "/getTpaTptPenugasan",
+    success: function (response) {
+      if (response.code == 200) {
+        var data = response.data;
+        var html = ``;
+        var nomor = 1;
+        $("#thead-penjadwalan").html(response.thead);
+        data.forEach((item) => {
+          html += `
+            <tr>
+              <td> ${nomor} </td>
+              <td> ${item.nama_petugas} </td>
+              <td> - </td>
+              <td> - </td>
+            </tr>
+          `;
+          nomor += 1;
+        });
+        $("#listpenugasantpatpt").html(html);
+      }
+    },
+  });
+}
+
+function savepenugasan(val, id_permohonan, urlpenugasan) {
+  var fd = new FormData();
+  fd.append("val", val);
+  fd.append("id_permohonan", id_permohonan);
+  fd.append("status", 5);
+  $.ajax({
+    type: "post",
+    dataType: "json",
+    data: fd,
+    processData: false,
+    contentType: false,
+    url: urlpenugasan,
+    success: function (response) {
+      if (response.code == 200) {
+        Swal.fire({
+          html: response.msg,
+          icon: "success",
+          buttonsStyling: true,
+          cancelButtonText: "Close",
+          customClass: {
+            cancelButton: "btn btn-success btn-sm",
+          },
+        }).then((result) => {
+          loadpermohonanpenugasan();
+          loadpermohonanpenjadwalan();
+        });
       }
     },
   });

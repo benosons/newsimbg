@@ -169,6 +169,10 @@ $routes->post('status_dt_teknis', 'Jsondata::status_dt_teknis');
 // LIST ASN
 $routes->post('listDataPersonilAsn', 'Jsondata::listDataPersonilAsn');
 
+// PENUGASAN TPA/TP
+$routes->post('savePenugasanTpt', 'Jsondata::savePenugasanTpt');
+$routes->post('getTpaTptPenugasan', 'Jsondata::getTpaTptPenugasan');
+
 
 $routes->post('getallDealerData', 'Jsondata::getallDealerData');
 $routes->post('getDealerData', 'Jsondata::getDealerData');
