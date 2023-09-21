@@ -519,6 +519,36 @@ class Jsondata extends \CodeIgniter\Controller
 		}
 	}
 
+	public function listDataPersonilAsn()
+	{
+		try {
+			$request	= $this->request;
+			$param	= $request->getVar('param');
+			$user = new \App\Models\KegiatanModel();
+			$data = $user->getListDataAsn($param);
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
 	public function getjsonjbg()
 	{
 		try {

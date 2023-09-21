@@ -43,11 +43,12 @@ class KegiatanModel extends Model
   {
 
     $builder = $this->db->table('data_permohonan');
-    $builder->select("data_permohonan.id, tm_jenis_permohonan.nm_jns_permohonan, data_permohonan.nama_pemilik, data_permohonan.no_registrasi, CONCAT(data_permohonan.alamat_bg, ', ', tr_kecamatan.nama_kecamatan, ', ', tr_kabkot.nama_kabkota) AS address, data_permohonan.status, tr_fungsi_bg.fungsi_bg, data_permohonan.in_date");
+    $builder->select("data_permohonan.id, tm_jenis_permohonan.nm_jns_permohonan, data_permohonan.nama_pemilik, data_permohonan.no_registrasi, CONCAT(data_permohonan.alamat_bg, ', ', tr_kecamatan.nama_kecamatan, ', ', tr_kabkot.nama_kabkota) AS address, data_permohonan.status, tr_fungsi_bg.fungsi_bg, data_permohonan.in_date, status_sistem.status_pemohon, status_sistem.status_dinas");
     $builder->join('tm_jenis_permohonan ', 'tm_jenis_permohonan.id_jns_permohonan = data_permohonan.id_jenis_permohonan', 'INNER');
     $builder->join('tr_fungsi_bg ', 'tr_fungsi_bg.id_fungsi_bg = data_permohonan.id_fungsi_bg', 'INNER');
     $builder->join('tr_kecamatan', 'tr_kecamatan.id_kecamatan = data_permohonan.id_kec_bg', 'INNER');
     $builder->join('tr_kabkot', 'tr_kabkot.id_kabkot = data_permohonan.id_kabkot_bg', 'INNER');
+    $builder->join('status_sistem', 'status_sistem.status_progress = data_permohonan.status', 'INNER');
     $builder->where('data_permohonan.status is not Null');
     if ($param != NULL) {
       $builder->where($param);
@@ -62,11 +63,12 @@ class KegiatanModel extends Model
   {
 
     $builder = $this->db->table('data_permohonan');
-    $builder->select("data_permohonan.*, tm_jenis_permohonan.nm_jns_permohonan, CONCAT(data_permohonan.alamat_bg, ', ', tr_kecamatan.nama_kecamatan, ', ', tr_kabkot.nama_kabkota) AS address, tr_fungsi_bg.fungsi_bg");
+    $builder->select("data_permohonan.*, tm_jenis_permohonan.nm_jns_permohonan, CONCAT(data_permohonan.alamat_bg, ', ', tr_kecamatan.nama_kecamatan, ', ', tr_kabkot.nama_kabkota) AS address, tr_fungsi_bg.fungsi_bg, status_sistem.status_pemohon, status_sistem.status_dinas");
     $builder->join('tm_jenis_permohonan ', 'tm_jenis_permohonan.id_jns_permohonan = data_permohonan.id_jenis_permohonan', 'INNER');
     $builder->join('tr_fungsi_bg ', 'tr_fungsi_bg.id_fungsi_bg = data_permohonan.id_fungsi_bg', 'INNER');
     $builder->join('tr_kecamatan', 'tr_kecamatan.id_kecamatan = data_permohonan.id_kec_bg', 'INNER');
     $builder->join('tr_kabkot', 'tr_kabkot.id_kabkot = data_permohonan.id_kabkot_bg', 'INNER');
+    $builder->join('status_sistem', 'status_sistem.status_progress = data_permohonan.status', 'INNER');
     $builder->where('data_permohonan.status is not Null');
     if ($param != NULL) {
       $builder->where($param);
@@ -136,10 +138,23 @@ class KegiatanModel extends Model
     return $update;
   }
 
+  // Verifikasi Dokumen
+
   public function insertVerifikasiDokumen($data = null)
   {
     $builder = $this->db->table('verifikasi_dokumen');
     $query = $builder->insert($data);
     return $query;
+  }
+
+  // List Data ASN
+  public function getListDataAsn($where = null)
+  {
+    $builder = $this->db->table('tm_personal');
+    if ($where != NULL) {
+      $builder->where($where);
+    }
+    $query = $builder->get();
+    return $query->getResult();
   }
 }

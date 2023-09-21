@@ -166,6 +166,10 @@ $routes->post('getjsoncount', 'Jsondata::getjsoncount');
 // verifikasi data
 $routes->post('status_dt_teknis', 'Jsondata::status_dt_teknis');
 
+// LIST ASN
+$routes->post('listDataPersonilAsn', 'Jsondata::listDataPersonilAsn');
+
+
 $routes->post('getallDealerData', 'Jsondata::getallDealerData');
 $routes->post('getDealerData', 'Jsondata::getDealerData');
 $routes->post('addDealerData', 'Jsondata::addDealerData');
