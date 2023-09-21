@@ -167,14 +167,17 @@ class View extends \CodeIgniter\Controller
 
 		if ($this->logged && ($this->data['role'] == 10 || $this->data['role'] == 200)) {
 			helper('form');
-			$perm = new \App\Models\KegiatanModel();
+			$global = new \App\Models\GlobalModel();
+			$konsultasi = new \App\Models\KonsultasiModel();
 
 			$this->data['active'] = 'permohonan';
-			$this->data['data_jenis']		= $perm->getjenis();
-			$this->data['data_fungsi']		= $perm->getfungsi();
+			$this->data['data_jenis']		= $global->getjenis();
+			$this->data['data_fungsi']		= $global->getfungsi();
 			// $this->data['data_jbg']		= $perm->getjbg();
-			$this->data['data_prov']		= $perm->getprov();
-
+			$this->data['data_prov']		= $global->getprov();
+			$this->data['prof'] 			= json_decode( json_encode($konsultasi->getDataUserProfil('a.*', $this->session->get('id'))), true);
+			// echo '<pre>';
+			// print_r($this->data['prof'] );die;
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/permohonan/permohonan.js';
 			return \Twig::instance()->display('admin/permohonan/permohonan.html', $this->data);
 		} else {
@@ -662,5 +665,47 @@ class View extends \CodeIgniter\Controller
 	// 		return redirect('dashboard');
 	// 	}
 	// }
+
+	public function dataprofile()
+	{
+
+		if ($this->logged) {
+			helper('form');
+			$profile = new \App\Models\ProfileModel();
+			$global = new \App\Models\GlobalModel();
+
+			$this->data['user_id'] = $this->session->get('id');
+			//echo $user_id;
+			$this->data['profile_user'] = $profile->getDataUserProfile('a.*', $this->session->get('id'));
+			$this->data['daftar_provinsi']	= $global->listDataProvinsi('id_provinsi,nama_provinsi');
+			if (isset($this->data['profile_user']->id_provinsi)) {
+				$provinsi = $this->data['profile_user']->id_provinsi;
+				$this->data['daftar_kabkota']		= $global->listDataKabKota('id_kabkot,nama_kabkota', '', $provinsi);
+			}
+			if (isset($this->data['profile_user']->id_kabkota)) {
+				$kabkot = $this->data['profile_user']->id_kabkota;
+				$this->data['daftar_kecamatan']	= $global->listDataKecamatan('a.id_kecamatan,a.nama_kecamatan', '', $kabkot);
+			}
+			
+			$this->data['active'] = '';
+			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/user/profil.js';
+			return \Twig::instance()->display('admin/user/profil.html', $this->data);
+		} else {
+			return redirect('login');
+		}
+	}
+
+	public function FormPendaftaran()
+	{
+
+		if ($this->logged ) {
+			helper('form');
+			$this->data['active'] = '';
+			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/konsultasi/formpendaftaran.js';
+			return \Twig::instance()->display('admin/konsultasi/formpendaftaran.html', $this->data);
+		} else {
+			return redirect('login');
+		}
+	}
 
 }

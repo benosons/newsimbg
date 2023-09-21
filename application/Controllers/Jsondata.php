@@ -17,6 +17,7 @@ class Jsondata extends \CodeIgniter\Controller
 			$this->request = $request;
 			$this->logged = $this->session->get('logged_in');
 			$this->logModel   = new \App\Models\LogModel();
+			$this->konsulModel   = new \App\Models\KonsultasiModel();
 			$this->data = array(
 				'version' => \CodeIgniter\CodeIgniter::CI_VERSION,
 				// 'baseURL' => BASE.'/public',
@@ -25,6 +26,7 @@ class Jsondata extends \CodeIgniter\Controller
 				'username' => $this->session->get('username'),
 				'id' => $this->session->get('id'),
 				'role' => $this->session->get('role'),
+				'email' => $this->session->get('email'),
 				'id_provinsi' => $this->session->get('id_provinsi'),
 				'provinsi' => $this->session->get('provinsi'),
 				'rolename' => $this->session->get('rolename'),
@@ -462,13 +464,18 @@ class Jsondata extends \CodeIgniter\Controller
 	  try {
 		  $request	= $this->request;
 		  $param	= $request->getVar('param');
-		  $user = new \App\Models\KegiatanModel();
-		  $data = $user->getPermohonan($param);
+		  $konsultasi = new \App\Models\KonsultasiModel();
+		  $user_id				= $this->session->get('user_id');
+		  $filterQuery			= 'a.*, b.no_konsultasi,b.pernyataan,b.status, b.almt_bgn,c.nm_konsultasi,d.status_pemohon';
+
+		  $data = $konsultasi->getDataKonsultasi($filterQuery, $user_id, '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'));
+		  $count = $konsultasi->getDataKonsultasiCount($user_id, '', $request->getVar('search'));
 		  
 		  if($data){
 			  $response = [
 				  'status'   => 'sukses',
 				  'code'     => 200,
+				  'recordsTotal' => $count,
 				  'data' 	 => $data
 			  ];
 		  }else{
@@ -518,14 +525,21 @@ class Jsondata extends \CodeIgniter\Controller
 	}
   }
 
-  public function getjsonkabkot()
+  public function getwil()
   {
 	try {
-		$request		= $this->request;
-		$method			= $request->getMethod();
-		$komunikasi 	= new \App\Models\KegiatanModel();
-		
-		$data = $komunikasi->getkabkot($request->getVar('id'));
+		$request	= $this->request;
+		$method		= $request->getMethod();
+		$glob 		= new \App\Models\GlobalModel();
+		$param 		= $request->getVar('param');
+
+		if($param == 'kabupaten'){
+			$data 		= $glob->getkabkot($request->getVar('id'));
+		}else if($param == 'kecamatan'){
+			$data 		= $glob->getkecamatan($request->getVar('id'));
+		}else if($param == 'kelurahan'){
+			$data 		= $glob->getkelurahan($request->getVar('id'));
+		}
 		
 		if($data){
 			$response = [
@@ -537,7 +551,7 @@ class Jsondata extends \CodeIgniter\Controller
 			$response = [
 				'status'   => 'gagal',
 				'code'     => '0',
-				'data'     => 'tidak ada data',
+				'data'     => [],
 			];
 		}
 
@@ -724,1219 +738,675 @@ class Jsondata extends \CodeIgniter\Controller
 	}
   }
 
-  public function addDealerData()
+  public function savepermohonan()
   {
-	try {
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		
-		$method			= $request->getMethod();
-		$dealer = new \App\Models\DealerDataModel();
+	  	$user_id			= $this->session->get('id');
+	  	$db = \Config\Database::connect(); // Connect to the database
+		$db->query('START TRANSACTION');
+	  
+	  $id_izin			= $this->request->getVar('id_izin');
+	  $id_kolektif		= $this->request->getVar('id_kolektif');
+	  $tipeA			= $this->request->getVar('tipeA');
+	  $jumlahA			= $this->request->getVar('jumlahA');
+	  $luasA			= $this->request->getVar('luasA');
+	  $tinggiA			= $this->request->getVar('tinggiA');
+	  $lantaiA			= $this->request->getVar('lantaiA');
+	  $id_fungsi_bg		= $this->request->getVar('id_fungsi_bg');
+	  $id_jns_bg		= $this->request->getVar('id_jns_bg');
+	  if ($id_izin == '') {
+		  $id_izin		= $this->request->getVar('id_existing');
+	  }
+	  $nama_bangunan				= $this->request->getVar('nama_bangunan');
+	  $nama_bangunan_prasarana 		= $this->request->getVar('nama_bangunan_prasarana');
+	  $nama_bangunan_kolektif		= $this->request->getVar('nama_bangunan_kolektif');
+	  $nama_bangunan_pertashop 		= $this->request->getVar('nama_bangunan_pertashop');
+	  if ($nama_bangunan) {
+		  $nama_bangunan			= $this->request->getVar('nama_bangunan');
+	  } else if ($nama_bangunan_kolektif) {
+		  $nama_bangunan			= $this->request->getVar('nama_bangunan_kolektif');
+	  } else if ($nama_bangunan_prasarana){
+		  $nama_bangunan			= $this->input->post('nama_bangunan_prasarana');
+	  }else{
+		  $nama_bangunan			= $this->request->getVar('nama_bangunan_pertashop');
+	  }
 
-		if($method == 'post'){
-				
-				if($request->getVar('id_biller')){
-					$data = [
-						'nm_biller' 	=> $request->getVar('nm_biller'),	
-						'alamat' 		=> $request->getVar('alamat'),	
-						'kontak' 		=> $request->getVar('kontak'),
-						'create_dtm' 	=> $this->now,
-						'status' 		=> 1
-					];
-					
-					$dealer->updateDealerData($request->getVar('id_biller'), $data);
-					
-				}else{
-					$data = [
-						'nm_biller' 	=> $request->getVar('nm_biller'),	
-						'alamat' 		=> $request->getVar('alamat'),	
-						'kontak' 		=> $request->getVar('kontak'),
-						'create_dtm' 	=> $this->now,
-						'status' 		=> 1
-					];
-					$dealer->insertDealerData($data);
+	  $luas_bg				= $this->request->getVar('luas_bg');
+	  $tinggi_bg			= $this->request->getVar('tinggi_bg');
+	  $lantai_bg			= $this->request->getVar('lantai_bg');
+	  $luas_basement		= $this->request->getVar('luas_basement');
+	  $lapis_basement		= $this->request->getVar('lapis_basement');
+	  $id_prasarana_bg		= $this->request->getVar('id_prasarana_bg');
+	  $luas_bgp				= $this->request->getVar('luas_bgp');
+	  $tinggi_bgp			= $this->request->getVar('tinggi_bgp');
+	  $id_prototype			= $this->request->getVar('id_prototype');
+	  $jual					= $this->request->getVar('jual');
+	  $imb					= $this->request->getVar('imb');
+	  $slf					= $this->request->getVar('slf');
+	  $cetak				= $this->request->getVar('cetak');
+	  $id_doc_tek			= $this->request->getVar('id_doc_tek');
+	  $no_imb				= $this->request->getVar('no_imb');
+	  $no_slf				= $this->request->getVar('no_slf');
+	  $permohonan_slf		= $this->request->getVar('permohonan_slf');
+
+	  if ($id_fungsi_bg == 6) {
+		  $jns_campur		= $this->request->getVar('dcampur');
+		  $id_jns_bg		= json_encode($jns_campur);
+	  }
+
+	if ($id_izin == '1') {
+		if ($id_fungsi_bg == '1') { //Fungsi Hunian
+				if ($id_doc_tek == '1') {
+					if ($luas_bg <= 72) { // Fungsi Hunian Sederhana Penyedia Jasa
+						if($lantai_bg <= '2'){
+							$jenis_konsultasi = '1';
+							$id_klasifikasi = '1';
+						}
+					} else if ($luas_bg <= 90){ //Fungsi Hunian Sederhana Penyedia Jasa 
+						if($lantai_bg <= '2')
+						$jenis_konsultasi = '1';
+						$id_klasifikasi = '1';
+					}else if($luas_bg > 91) { //Fungsi Hunian Tidak Sederhana Penyedia Jasa
+						$jenis_konsultasi = '2';
+						$id_klasifikasi = '2';
+					}
+				} else if ($id_doc_tek == '2') { //Fungsi Hunian Prototype
+					$jenis_konsultasi = '3';
+				} else if ($id_doc_tek == '3') { //Fungsi Hunian Pengembangan Prototype
+					$jenis_konsultasi = '4';
+				} else if ($id_doc_tek == '4') { //Fungsi Hunian Tahan Gempa
+					$jenis_konsultasi = '5';
 				}
-		}
-		redirect('dealerData','refresh');
-	} catch (\Exception $e) {
-		die($e->getMessage());
-	}
-  }
-
-  public function deleteDealerData()
-  {
-	try {
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		$method			= $request->getMethod();
-		$dealerData = new \App\Models\DealerDataModel();
-
-		$dealerData->deleteDealerData($request->getVar('id_biller'));
-		
-		$response = [
-			'status'   => 'success',
-			'code'     => 200,
-		];
-
-		header('Content-Type: application/json');
-		echo json_encode($response);
-		exit;
-	} catch (\Exception $e) {
-		die($e->getMessage());
-	}
-  }
-
-  public function addPaymentData()
-  {
-	try {
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		
-		$method			= $request->getMethod();
-		$user = new \App\Models\PaymentDataModel();
-
-		if($method == 'post'){
-				
-				if($request->getVar('id')){
-					$data = [
-						'dateTransaction' 		=> $request->getVar('dateTransaction'),	
-						'nominal' 		=> $request->getVar('nominal'),	
-						'status' 		=> 1
-					];
-					
-					$user->update($request->getVar('id'), $data);
-					
-				}else{
-					$data = [
-						'dateTransaction' 		=> $request->getVar('dateTransaction'),	
-						'nominal' 		=> $request->getVar('nominal'),	
-						'status' 		=> 1
-					];
-					$user->insert($data);
+		} else if ($id_fungsi_bg == '2') { //Fungsi Non Hunian dan Non Khusus serta Non Campuran
+				$jenis_konsultasi = '6';
+		} else if ($id_fungsi_bg == '3') {
+				if ($jual == '1') {
+					$jenis_konsultasi = '7';
+				} else {
+					$jenis_konsultasi = '6';
 				}
+		} else if ($id_fungsi_bg == '4') {
+				$jenis_konsultasi = '6';
+		} else if ($id_fungsi_bg == '5') {
+				$jenis_konsultasi = '9';
+		} else if ($id_fungsi_bg == '6') { //Fungsi Campuran
+				$jenis_konsultasi = '13';
 		}
-		redirect('payment','refresh');
-	} catch (\Exception $e) {
-		die($e->getMessage());
+	} else if ($id_izin == '2') {
+		  if ($id_fungsi_bg == '1') {
+			  if ($imb == '1') {
+				  if ($slf == '1') {
+					  $jenis_konsultasi = '15';
+				  } else {
+					  $jenis_konsultasi = '14';
+				  }
+			  } else {
+				  $jenis_konsultasi = '14';
+			  }
+		  } else if ($id_fungsi_bg == '2') {
+			  if ($imb == '1') {
+				  if ($slf == '1') {
+					  $jenis_konsultasi = '15';
+				  } else {
+					  $jenis_konsultasi = '14';
+				  }
+			  } else {
+				  $jenis_konsultasi = '14';
+			  }
+		  } else if ($id_fungsi_bg == '3') {
+			  if ($imb == '1') {
+				  if ($slf == '1') {
+					  $jenis_konsultasi = '15';
+				  } else {
+					  $jenis_konsultasi = '14';
+				  }
+			  } else {
+				  $jenis_konsultasi = '14';
+			  }
+		  } else if ($id_fungsi_bg == '4') {
+			  if ($imb == '1') {
+				  if ($slf == '1') {
+					  $jenis_konsultasi = '15';
+				  } else {
+					  $jenis_konsultasi = '14';
+				  }
+			  } else {
+				  $jenis_konsultasi = '14';
+			  }
+		  } else if ($id_fungsi_bg == '6') {
+			  if ($imb == '1' || $slf == '1') {
+				  $jenis_konsultasi = '15';
+			  } else {
+				  $jenis_konsultasi = '14';
+			  }
+		  } else if ($id_fungsi_bg == '5') {
+			  $jenis_konsultasi = '16';
+		  }
+		  $jenis_konsultasi 	= '14';
+	} else if ($id_izin == '3') {
+		  $jenis_konsultasi 	= '18';
+	} else if ($id_izin == '4') {
+		  if ($luasA[1] <= 72) { // Fungsi Hunian Sederhana Kolektif Luas Maksimal 72m
+			  if($lantaiA[1] == '1'){
+				  $jenis_konsultasi 	= '29'; // Fungsi Hunian Luas Maksimal 72m dengan 1 Lantai Kolektif
+				  $id_klasifikasi 	= '1';
+				  $tahap_pbg 			= null;
+			  }else if($lantaiA[1] == '2'){
+				  $jenis_konsultasi 	= '30'; // Fungsi Hunian Luas Maksimal 72 dengan 2 Lantai
+				  $id_klasifikasi 	= '2';
+				  $tahap_pbg 			= null;
+			  }else{
+				  $jenis_konsultasi 	= '33';
+				  $id_klasifikasi 	= '2';
+				  $tahap_pbg 			= null;
+			  }
+		  } else if ($luasA[1] <= 90){ //Fungsi Hunian SederhanaKolektif dengan Luas Maksimal 90 Penyedia Jasa 
+			  if($lantaiA[1] == '1'){
+				  $jenis_konsultasi 	= '30'; //Fungsi Hunian Kolektif Luas 90 m dengan 1 Lantai
+				  $id_klasifikasi 	= '1';
+			  }else if($lantaiA[1] == '2'){
+				  $jenis_konsultasi 	= '30';
+				  $id_klasifikasi 	= '1';
+				  $tahap_pbg 			= null;
+			  }else{
+				  $jenis_konsultasi 	= '33';// Fungsi Hunian Kolektif Bangunan Tidak Sederhana
+				  $id_klasifikasi 	= '2';
+				  $tahap_pbg 			= null;
+			  }
+		  }else{
+			  if($lantaiA[1] == '1'){
+				  $jenis_konsultasi 	= '31';
+				  $id_klasifikasi 	= '2';
+				  $tahap_pbg 			= null;
+			  }else if($lantaiA[1] == '2'){
+				  $jenis_konsultasi 	= '32';
+				  $id_klasifikasi 	= '2';
+				  $tahap_pbg 			= null;
+			  }else{
+				  $jenis_konsultasi 	= '33';
+				  $id_klasifikasi 	= '2';
+				  $tahap_pbg 			= null;
+			  }
+		  }
+	} else if ($id_izin == '5') {
+		  $jenis_konsultasi 	= '12';
+	} else if ($id_izin == '6') {
+		  $jenis_konsultasi 	= '17';
+	} else if($id_izin == '7'){
+		  $jenis_konsultasi 	= '21';
+		  $id_fungsi_bg 		='3';
+		  $id_jns_bg			='2';
+		  $luas_bgp 			='10.01';
+		  $tinggi_bgp 		='2.6';
 	}
-  }
+	$data	= array(
+		'id_izin'				=> $id_izin,
+		'id_prov_bgn'			=> $id_kolektif,
+		'tipeA'				=> json_encode($tipeA),
+		'jumlahA'				=> json_encode($jumlahA),
+		'luasA'				=> json_encode($luasA),
+		'tinggiA'				=> json_encode($tinggiA),
+		'lantaiA'				=> json_encode($lantaiA),
+		'id_fungsi_bg'		=> $id_fungsi_bg,
+		'id_jns_bg'			=> $id_jns_bg,
+		'nm_bgn'				=> $nama_bangunan,
+		'luas_bgn'			=> $luas_bg,
+		'tinggi_bgn'			=> $tinggi_bg,
+		'jml_lantai'			=> $lantai_bg,
+		'luas_basement'		=> $luas_basement,
+		'lapis_basement'		=> $lapis_basement,
+		'id_prasarana_bg'		=> $id_prasarana_bg,
+		'luas_bgp'			=> $luas_bgp,
+		'tinggi_bgp'			=> $tinggi_bgp,
+		'jual'				=> $jual,
+		'imb'					=> $imb,
+		'slf'					=> $slf,
+		'status'				=> 0,
+		'id_prototype'		=> $id_prototype,
+		'id_jenis_permohonan' => $jenis_konsultasi,
+		'id_doc_tek'			=> $id_doc_tek,
+		'no_imb'				=> $no_imb,
+		'no_slf'				=> $no_slf,
+		'permohonan_slf'		=> $permohonan_slf,
+		'cetak_dok'			=> json_encode($cetak),
+		'last_update'			=> date("Y-m-d h:i:sa"),
+	);
 
-  public function deletePaymentData()
-  {
-	try {
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		$method			= $request->getMethod();
-		$payment = new \App\Models\PaymentDataModel();
-
-		$payment->deletePaymentData($request->getVar('id'));
+	$dataP	= array(
+		'user_id' => $user_id,
+		'post_date' => date("Y-m-d"),
+		'post_by' => $this->session->get('email')
+	);
 		
-		$response = [
-			'status'   => 'success',
-			'code'     => 200,
-		];
-
-		header('Content-Type: application/json');
-		echo json_encode($response);
-		exit;
-	} catch (\Exception $e) {
-		die($e->getMessage());
-	}
-  }
-
-  public function addTokenData()
-  {
-	try {
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		
-		$method			= $request->getMethod();
-		$token = new \App\Models\TokenDataModel();
-
-		if($method == 'post'){
-				
-				if($request->getVar('id')){
-					$data = [
-						'token'				 	=> $request->getVar('token'),					
-						'id_user'		 		=> $request->getVar('id_user'),			
-						'valid_until'	 		=> $request->getVar('valid_until'),
-					];
-					
-					$token->update($request->getVar('id'), $data);
-					
-				}else{
-					$data = [
-						'token'				 	=> $request->getVar('token'),					
-						'id_user'		 		=> $request->getVar('id_user'),			
-						'valid_until'	 		=> $request->getVar('valid_until'),
-					];
-					$token->insert($data);
-				}
-		}
-		redirect('tokenData','refresh');
-	} catch (\Exception $e) {
-		die($e->getMessage());
-	}
-  }
-
-  public function deleteTokenData()
-  {
-	try {
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		$method			= $request->getMethod();
-		$token = new \App\Models\TokenDataModel();
-
-		$token->deleteTokenData($request->getVar('id_token'));
-		
-		$response = [
-			'status'   => 'success',
-			'code'     => 200,
-		];
-
-		header('Content-Type: application/json');
-		echo json_encode($response);
-		exit;
-	} catch (\Exception $e) {
-		die($e->getMessage());
-	}
-  }
-
-public function addVoucherData()
-  {
-	try {
-		
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		
-		$method			= $request->getMethod();
-		$voucher = new \App\Models\VoucherDataModel();
-
-		if($method == 'post'){
-				
-				if($request->getVar('id_voucher')){
-					$data = [
-						'kd_voucher' 		=> $request->getVar('kd_voucher'),	
-						'nm_voucher' 		=> $request->getVar('nm_voucher'),	
-						'min_pembelian' 	=> $request->getVar('min_pembelian'),	
-						'jml_potongan' 		=> $request->getVar('jml_potongan'),
-						'stock' 		=> $request->getVar('stock'),
-						// date('d',$timestamp);
-						'expired_by' 	=> $request->getVar('expired_by'),
-						'jns_potongan' 	=> $request->getVar('jns_potongan')
-					];
-					
-					$voucher->update($request->getVar('id_voucher'), $data);
-					
-				}else{
-					$data = [
-						'kd_voucher' 		=> $request->getVar('kd_voucher'),	
-						'nm_voucher' 		=> $request->getVar('nm_voucher'),	
-						'min_pembelian' 	=> $request->getVar('min_pembelian'),	
-						'jml_potongan' 		=> $request->getVar('jml_potongan'),
-						'stock' 		=> $request->getVar('stock'),
-						// date('d',$timestamp);
-						'expired_by' 	=> $request->getVar('expired_by'),
-						'jns_potongan' 	=> $request->getVar('jns_potongan')
-					];
-					$voucher->insert($data);
-				}
-		}
-		redirect('reportVouchers','refresh');
-	} catch (\Exception $e) {
-		die($e->getMessage());
-	}
-  }
-
-  public function deleteVoucher()
-  {
-	try {
-		$request		= $this->request;
-		$param		= $request->getVar('param');
-		$method			= $request->getMethod();
-		$voucher = new \App\Models\VoucherDataModel();
-
-		$voucher->deleteVoucher($request->getVar('id_voucher'));
-		
-		$response = [
-			'status'   => 'success',
-			'code'     => 200,
-		];
-
-		header('Content-Type: application/json');
-		echo json_encode($response);
-		exit;
-	} catch (\Exception $e) {
-		die($e->getMessage());
-	}
-  }
-
-
+	$this->konsulModel->insertData('tmdatapemilik', $dataP);
+	$idP		=  $this->konsulModel->insertID();
+	$data['id'] = $idP;
 	
+	if ($idP) {
+		
+		$this->konsulModel->insertData('tmdatabangunan', $data);
+		$lastid = $this->konsulModel->insertID();
+		$db->query('COMMIT');
+		$response = [
+			'status'   	=> 'success',
+			'code'     	=> 200,
+			'data'		=> [
+				'id_pemilik' => $idP,
+				'id_bangunan'	=> $lastid
+			]
+		];
+	} else {
+		$db->query('ROLLBACK');
+		$response = [
+			'status'   => 'failed',
+			'code'     => 0,
+		];
+	}
+
+	header('Content-Type: application/json');
+	echo json_encode($response);
+	exit;
+  }
+
+  public function getpemilik()
+  {
+	try {
+		$request	= $this->request;
+		$method		= $request->getMethod();
+		$konsultasi	= new \App\Models\KonsultasiModel();
+		$param 		= $request->getVar('param');
+		
+		$data 		= $konsultasi->getPemilik('', $request->getVar('id'));
+		
+		if($data){
+			$response = [
+				'status'   => 'sukses',
+				'code'     => 200,
+				'data' 	 => $data
+			];
+		}else{
+			$response = [
+				'status'   => 'gagal',
+				'code'     => '0',
+				'data'     => 'tidak ada data',
+			];
+		}
+
+	header('Content-Type: application/json');
+	echo json_encode($response);
+	exit;
+	} catch (\Exception $e) {
+		die($e->getMessage());
+	}
+  }
+
+  public function savedata()
+  {
+	try {
+		// print(1);
+		// $dax = date('Y-m-d');
+
+		$request		= $this->request;
+		
+		$method			= $request->getMethod();
+		$konsultasi = new \App\Models\KonsultasiModel();
+
+		// $day = date('dmY');
+		// $noreg = 'PBG-997101-'+$this->dax+'-1';
+
+		if($method == 'post'){
+
+			$data = [
+				'user_id' 						=> $request->getVar('user_id'),
+				'nm_pemilik' 					=> $request->getVar('nm_pemilik'),
+				'jns_pemilik' 					=> $request->getVar('jns_pemilik'),
+				'glr_depan' 					=> $request->getVar('glr_depan'),
+				'glr_belakang' 					=> $request->getVar('glr_belakang'),
+				'alamat' 						=> $request->getVar('alamat'),
+				'id_provinsi' 					=> $request->getVar('id_provinsi'),
+				'id_kabkota' 					=> $request->getVar('id_kabkota'),
+				'id_kecamatan' 					=> $request->getVar('id_kecamatan'),
+				'id_kelurahan' 					=> $request->getVar('id_kelurahan'),
+				'jenis_id' 						=> $request->getVar('jenis_id'),
+				'no_ktp' 						=> $request->getVar('no_ktp'),
+				'no_kitas' 						=> $request->getVar('no_kitas'),
+				'no_hp' 						=> $request->getVar('no_hp'),
+				'email' 						=> $request->getVar('email'),
+				'unit_organisasi' 				=> $request->getVar('unit_organisasi')
+			];
+			if($request->getVar('id')){
+				$konsultasi->updateData($request->getVar('id'), $data, 'tmdatapemilik', 'id' );
+				$lastid = $request->getVar('id');
+			} else {
+				$konsultasi->insertData('tmdatapemilik', $data );
+				$lastid = $konsultasi->insertID();
+			}
+
+		}
+
+		$response = [
+			'status'   => 'sukses',
+			'code'     => 200,
+			'data'     => $lastid,
+		];
+
+		// return $response;
+		header('Content-Type: application/json');
+		echo json_encode($response);
+		exit;
+		// redirect('permohonan','refresh');
+		
+		// echo json_encode($response);
+	} catch (\Exception $e) {
+		die($e->getMessage());
+	}
+  }
+
+  public function savealamatbangunan()
+  {
+	$user_id			= $this->session->get('id');
+	$db = \Config\Database::connect(); // Connect to the database
+	$db->query('START TRANSACTION');
+	$id_bgn			= $this->request->getVar('id');
+
+	$data	= array(
+		'id_prov_bgn' => $this->request->getVar('id_prov_bgn'),
+		'id_kabkot_bgn' => $this->request->getVar('id_kabkot_bgn'),
+		'id_kec_bgn' => $this->request->getVar('id_kec_bgn'),
+		'id_kel_bgn' => $this->request->getVar('id_kel_bgn'),
+		'almt_bgn' => $this->request->getVar('almt_bgn')
+	);
+	
+	if($this->request->getVar('id')){
+		$this->konsulModel->updateData($this->request->getVar('id'), $data, 'tmdatabangunan', 'id' );
+		$lastid = $this->request->getVar('id');
+	} else {
+		$this->konsulModel->insertData('tmdatabangunan', $data );
+		$lastid = $this->konsulModel->insertID();
+	}
+
+	$db->query('COMMIT');
+	$response = [
+		'status'   	=> 'success',
+		'code'     	=> 200,
+		'data'		=> $lastid
+	];
+
+	header('Content-Type: application/json');
+	echo json_encode($response);
+	exit;
+  }
+
+  public function getdatajnskonsultasi()
+  {
+	try {
+		$request		= $this->request;
+		$id		= $request->getVar('id');
+		$method			= $request->getMethod();
+		
+		$data = json_decode( json_encode($this->konsulModel->getdatajnskonsultasi('a.*', $id)), true);
+		
+		$id_jenis_permohonan = $data['id_jenis_permohonan'];
+		$data['id_jenis_permohonan']	= $id_jenis_permohonan;
+		if ($id != '') {
+			$filterPemilik	= '	a.*,b.nama_kecamatan,c.nama_kabkota,d.nama_provinsi';
+			$data['DataPemilik']	= json_decode( json_encode($this->konsulModel->getPemilik($filterPemilik, $id)), true);
+			$data['DataTanah']		= json_decode( json_encode($this->konsulModel->getTanah('a.*', $id)), true);
+			$filterBangunan	= '	a.*,b.nama_kecamatan,c.nama_kabkota,d.nama_provinsi,e.nm_konsultasi';
+			$data['DataBangunan']	= json_decode( json_encode($this->konsulModel->getBangunan($filterBangunan, $id)), true);
+			$data['DataTeknisTanah']	=json_decode( json_encode( $this->konsulModel->getDataDokumen('a.*', $id)), true);
+			$filterQuery				= 'b.id_detail, b.id_syarat, c.nm_dokumen,c.keterangan';
+			$data['DataTkTanah']	= json_decode( json_encode($this->konsulModel->getDataTanah($filterQuery, $id_jenis_permohonan)), true);
+		}
+		$data['Konsultasi'] = json_decode( json_encode($this->konsulModel->getDataKonsultasi('a.*', $id)), true);
+		// print_r($data);die;
+		if($data){
+			$response = [
+				'status'   => 'sukses',
+				'code'     => 200,
+				'data' 	 => $data
+			];
+		}else{
+			$response = [
+				'status'   => 'gagal',
+				'code'     => '0',
+				'data'     => 'tidak ada data',
+			];
+		}
+
+	header('Content-Type: application/json');
+	echo json_encode($response);
+	exit;
+	} catch (\Exception $e) {
+		die($e->getMessage());
+	}
+  }
+	
+  public function saveTanah()
+  {
+	  	$user_id			= $this->session->get('id');
+	  	$db = \Config\Database::connect(); // Connect to the database
+		$db->query('START TRANSACTION');
+
+		$user_id						= $this->session->get('id');
+		$id_tanah						= $this->request->getVar('id_tanah');
+		$id								= $this->request->getVar('id');
+		$id_dokumen						= $this->request->getVar('id_dokumen');
+		$nama_jns_dok_lain				= $this->request->getVar('nama_jns_dok_lain');
+		$nomor_dokumen					= $this->request->getVar('nomor_dokumen');
+		$tgl_terbit_dokumen				= $this->request->getVar('tgl_terbit_dokumen');
+		$lokasi_tanah					= $this->request->getVar('lokasi_tanah');
+		$nama_provinsi					= $this->request->getVar('nama_provinsi');
+		$nama_kabkota					= $this->request->getVar('nama_kabkota');
+		$nama_kecamatan					= $this->request->getVar('nama_kecamatan');
+		$luas_tanah						= $this->request->getVar('luas_tanah');
+		$nama_pemegang_hak_atas_tanah	= $this->request->getVar('atas_nama');
+		$hat							= $this->request->getVar('hat');
+		$hat2							= $this->request->getVar('hat2');
+		$id_status_izin_pemanfaatan		= $this->request->getVar('id_status_izin_pemanfaatan');
+		$no_dok_izin_pemanfaatan		= $this->request->getVar('no_dok_izin_pemanfaatan');
+		$tgl_terbit_pemanfaatan			= $this->request->getVar('tgl_terbit_phat');
+		$nama_pemegang_izin				= $this->request->getVar('nama_penerima_kuasa');
+
+		if(array_key_exists("dir_file_tan",$_FILES)){
+			$dir_file_tan = $this->uploadfiletanah('./object-storage/dekill/Earth/', $this->request->getFile('dir_file_tan'));
+		};
+		if(array_key_exists("dir_file_phat",$_FILES)){
+			$dir_file_phat = $this->uploadfiletanah('./object-storage/dekill/Earth/', $this->request->getFile('dir_file_phat'));
+		};
+		
+		$data	= array(
+			'id' => $id,
+			'id_dokumen' => $id_dokumen,
+			'dir_file' => $dir_file_tan,
+			'jenis_dokumen_phat' => $nama_jns_dok_lain,
+			'no_dok' => $nomor_dokumen,
+			'tanggal_dok' => date('Y-m-d', strtotime($tgl_terbit_dokumen)),
+			'lokasi_tanah' => $lokasi_tanah,
+			'id_provinsi' => $nama_provinsi,
+			'id_kabkot' => $nama_kabkota,
+			'id_kecamatan' => $nama_kecamatan,
+			'luas_tanah' => $luas_tanah,
+			'atas_nama_dok' => $nama_pemegang_hak_atas_tanah,
+			'status_phat' => $hat2,
+			'dir_file_phat' => $dir_file_phat,
+			'no_dokumen_phat' => $no_dok_izin_pemanfaatan,
+			'nama_penerima_phat' => $nama_pemegang_izin,
+			'hat' => $hat,
+			'tgl_terbit_phat' => date('Y-m-d', strtotime($tgl_terbit_pemanfaatan)),
+		);
+		
+	if ($id_tanah) {
+		
+		$this->konsulModel->insertData('tmdatatanah', $data);
+		$lastid = $this->konsulModel->insertID();
+		$db->query('COMMIT');
+		$response = [
+			'status'   	=> 'success',
+			'code'     	=> 200,
+			'data'		=> $id
+		];
+	} else {
+		
+		$this->konsulModel->insertData('tmdatatanah', $data);
+		$lastid = $this->konsulModel->insertID();
+		$data['lastid'] = $lastid;
+		
+		$db->query('COMMIT');
+		$response = [
+			'status'   	=> 'success',
+			'code'     	=> 200,
+			'data'		=> json_decode( json_encode($this->konsulModel->getTanah('a.*', $id)), true)
+
+		];
+	}
+
+	header('Content-Type: application/json');
+	echo json_encode($response);
+	exit;
+  }
+
+  public function uploadfiletanah($path, $file)
+  {
+	
+	  $basepath = $path;
+	  if(!is_dir($basepath)){
+		  mkdir($basepath, 0777, true);
+	  }
+	  $filename = $file->getName();
+	  $temp = $file->getTempName();
+	  $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+	  
+	  move_uploaded_file($temp, $basepath.$filename);
+
+	  return $filename;
+  }
+
+  public function uploadfiledokumen($path, $file)
+  {
+	
+	  $basepath = $path;
+	  if(!is_dir($basepath)){
+		  mkdir($basepath, 0777, true);
+	  }
+	  $filename = $file->getName();
+	  $temp = $file->getTempName();
+	  $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+	  
+	  move_uploaded_file($temp, $basepath.$filename);
+
+	  return $filename;
+  }
+
+  public function getdatadokumen()
+  {
+	try {
+		$request		= $this->request;
+		$id				= $request->getVar('id');
+		$method			= $request->getMethod();
+		
+		$data = json_decode( json_encode($this->konsulModel->getdatajnskonsultasi('a.*', $id)), true);
+		
+		$id_jenis_permohonan = $data['id_jenis_permohonan'];
+		$data['id_jenis_permohonan']	= $id_jenis_permohonan;
+		$tahap_pbg 						= $data['tahap_pbg'];
+		if($tahap_pbg != ''){
+			if ($id != '') {
+				$filterPemilik			= '	a.*,b.nama_kecamatan,c.nama_kabkota,d.nama_provinsi';
+				$data['DataPemilik']	= json_decode( json_encode($this->konsulModel->getPemilik($filterPemilik, $id)), true);
+				$filterBangunan			= '	a.*,b.nama_kecamatan,c.nama_kabkota,d.nama_provinsi,e.nm_konsultasi,f.dir_file,h.nama_kelurahan';
+				$data['DataBangunan']	= json_decode( json_encode($this->konsulModel->getBangunan($filterBangunan, $id)), true);
+				$data['DataUmum']		= json_decode( json_encode($this->konsulModel->getDataDokumen('a.*', $id)), true);
+				$filterQuery			= 'b.id_detail, b.id_syarat, c.nm_dokumen,c.keterangan,c.id_tahap';
+				$data['DokumenUmum']	= json_decode( json_encode($this->konsulModel->getDataUmumBertahap($filterQuery, $id_jenis_permohonan, $tahap_pbg)), true);
+			}
+		}else{
+			$data['id_jenis_permohonan']	= $id_jenis_permohonan;
+			if ($id != '') {
+				$filterPemilik			= '	a.*,b.nama_kecamatan,c.nama_kabkota,d.nama_provinsi';
+				$data['DataPemilik']	= json_decode( json_encode($this->konsulModel->getPemilik($filterPemilik, $id)), true);
+				$filterBangunan			= '	a.*,b.nama_kecamatan,c.nama_kabkota,d.nama_provinsi,e.nm_konsultasi,h.nama_kelurahan';
+				$data['DataBangunan']	= json_decode( json_encode($this->konsulModel->getBangunan($filterBangunan, $id)), true);
+				//Begin Data Umum 
+				$data['DataFile']		= $this->konsulModel->getDataDokumen('a.*', $id);
+
+				$filterQuery			= 'b.id_detail, b.id_syarat, c.nm_dokumen,c.keterangan';
+				$data['DokumenUmum']	= json_decode( json_encode($this->konsulModel->getDataUmum($filterQuery, $id_jenis_permohonan)), true);
+				$filterQuery				= 'b.id_detail, b.id_syarat,c.id, c.nm_dokumen,c.keterangan';
+				$data['DataArsitektur']	= json_decode( json_encode($this->konsulModel->getDataArsitektur($filterQuery, $id_jenis_permohonan)), true);
+				$filterQuery				= 'b.id_detail, b.id_syarat, c.nm_dokumen,c.keterangan';
+				$data['DataStruktur']	= json_decode( json_encode($this->konsulModel->getDataStruktur($filterQuery, $id_jenis_permohonan)), true);
+				$filterQuery				= 'b.id_detail, b.id_syarat, c.nm_dokumen,c.keterangan';
+				$data['DataMPE']		= json_decode( json_encode($this->konsulModel->getDataMEP($filterQuery, $id_jenis_permohonan)), true);
+				//End Data Teknis Struktur
+			}
+		}
+
+		if($data){
+			$response = [
+				'status'   => 'sukses',
+				'code'     => 200,
+				'data' 	 => $data
+			];
+		}else{
+			$response = [
+				'status'   => 'gagal',
+				'code'     => '0',
+				'data'     => [],
+			];
+		}
+
+	header('Content-Type: application/json');
+	echo json_encode($response);
+	exit;
+	} catch (\Exception $e) {
+		die($e->getMessage());
+	}
+  }
+
+  public function SaveDokumen()
+  {
+	try {
+		// print(1);
+		// $dax = date('Y-m-d');
+
+		$request		= $this->request;
+		
+		$method			= $request->getMethod();
+		$konsultasi = new \App\Models\KonsultasiModel();	
+		
+		if($method == 'post'){
+			if(array_key_exists("d_file",$_FILES)){
+				$d_file = $this->uploadfiledokumen('./object-storage/dekill/Requirement/', $this->request->getFile('d_file'));
+			};
+
+			$dataPersyaratan = array(
+				'id' => $request->getVar('id'),
+				'dir_file' => $d_file,
+				'id_persyaratan' => $request->getVar('kode_jenis_syarat'),
+				'id_persyaratan_detail' =>  $request->getVar('id_syarat')
+			);
+			
+			$konsultasi->insertData('tmpersyaratankonsultasi', $dataPersyaratan );
+			$lastid = $konsultasi->insertID();
+			$dataPersyaratan['nm_data'] = $request->getVar('nm_data');
+		}
+		
+		$response = [
+			'status'   => 'sukses',
+			'code'     => 200,
+			'data'     => $this->konsulModel->getDataDokumen('a.*', $request->getVar('id'))
+		];
+
+		// return $response;
+		header('Content-Type: application/json');
+		echo json_encode($response);
+		exit;
+		// redirect('permohonan','refresh');
+		
+		// echo json_encode($response);
+	} catch (\Exception $e) {
+		die($e->getMessage());
+	}
+  }
 
 }
-
-
-
-//   public function getlog()
-//   {
-// 	  try {
-// 		  $request	= $this->request;
-
-// 		  $log = new \App\Models\LogModel();
-// 		  $data = $log->getLogs($request->getVar('length'), $request->getVar('start'), $request->getVar('search'));
-// 		  $count = $log->countLogs($request->getVar('search'));
-		  
-// 		  if($data){
-// 			  $response = [
-// 					'status'   => 'sukses',
-// 					'code'     => 200,
-// 					// 'draw' 		=> $request->getPost('draw'),
-// 					'recordsTotal' => $count,
-// 					// 'recordsFiltered' => $datatable->countFiltered(),
-// 					'data' => $data
-// 			  ];
-// 		  }else{
-// 			  $response = [
-// 				  'status'   => 'gagal',
-// 				  'code'     => '0',
-// 				  'data'     => [],
-// 			  ];
-// 		  }
-
-// 	  header('Content-Type: application/json');
-// 	  echo json_encode($response);
-// 	  exit;
-// 	  } catch (\Exception $e) {
-// 		  die($e->getMessage());
-// 	  }
-//   }
-
-//   public function getpenyesuaiangrafik()
-//   {
-// 	  try {
-// 		  $request	= $this->request;
-
-// 		  $statistik = new \App\Models\StatistikModel();
-// 		  $data = $statistik->getpenyesuaian();
-		  
-// 		  if($data){
-// 			  $response = [
-// 					'status'   => 'sukses',
-// 					'code'     => 200,
-// 					'data' 	   => $data
-// 			  ];
-// 		  }else{
-// 			  $response = [
-// 				  'status'   => 'gagal',
-// 				  'code'     => '0',
-// 				  'data'     => [],
-// 			  ];
-// 		  }
-
-// 	  header('Content-Type: application/json');
-// 	  echo json_encode($response);
-// 	  exit;
-// 	  } catch (\Exception $e) {
-// 		  die($e->getMessage());
-// 	  }
-//   }
-
-//   public function addpenyesuaiangrafik()
-//   {
-// 	try {
-// 		$request		= $this->request;
-// 		$method			= $request->getMethod();
-// 		$statistik = new \App\Models\StatistikModel();
-
-// 		if($method == 'post'){
-// 			if($request->getVar('id_grafik')){
-// 				$data = [
-// 					'penyesuaian' => $request->getVar('penyesuaian'),
-// 				];
-
-// 				$statistik->update($request->getVar('id_grafik'), $data);
-// 			}
-// 		}
-// 		$response = [
-// 			'status'   => 'success',
-// 			'code'     => 200,
-// 		];
-
-// 		header('Content-Type: application/json');
-// 		echo json_encode($response);
-// 		exit;
-// 	} catch (\Exception $e) {
-// 		die($e->getMessage());
-// 	}
-//   }
-
-//   public function getdatariwayatpnbp()
-//   {
-// 	  try {
-// 		  $request	= $this->request;
-
-// 		  $statistik = new \App\Models\StatistikModel();
-// 		  $data = $statistik->getdatariwayatpnbp();
-		  
-// 		  if($data){
-// 			  $response = [
-// 					'status'   => 'sukses',
-// 					'code'     => 200,
-// 					'data' 	   => $data
-// 			  ];
-// 		  }else{
-// 			  $response = [
-// 				  'status'   => 'gagal',
-// 				  'code'     => '0',
-// 				  'data'     => [],
-// 			  ];
-// 		  }
-
-// 	  header('Content-Type: application/json');
-// 	  echo json_encode($response);
-// 	  exit;
-// 	  } catch (\Exception $e) {
-// 		  die($e->getMessage());
-// 	  }
-//   }
-
-//   public function getbox()
-//   {
-// 	  try {
-// 		  $request	= $this->request;
-// 		  $box = $request->getVar('box');
-// 		  $component = new \App\Models\ComponentModel();
-// 		  if($box){
-// 			$data = $component->getBoxdetail($box);
-// 			$count = 0;
-// 		  }else{
-// 			$data = $component->getBox($request->getVar('length'), $request->getVar('start'), $request->getVar('search'));
-// 			$count = count($data);
-// 		  }
-		  
-// 		  if($data){
-// 			  $response = [
-// 					'status'   		=> 'sukses',
-// 					'code'     		=> 200,
-// 					'recordsTotal' 	=> $count,
-// 					'data' 			=> $data
-// 			  ];
-// 		  }else{
-// 			  $response = [
-// 				  'status'   => 'gagal',
-// 				  'code'     => '0',
-// 				  'data'     => [],
-// 			  ];
-// 		  }
-
-// 	  header('Content-Type: application/json');
-// 	  echo json_encode($response);
-// 	  exit;
-// 	  } catch (\Exception $e) {
-// 		  die($e->getMessage());
-// 	  }
-//   }
-
-//   public function replytiket()
-//   {
-// 	try {
-// 		$request		= $this->request;
-// 		$id		= $request->getVar('ids');
-		
-// 		$method			= $request->getMethod();
-// 		$komunikasi = new \App\Models\KomunikasiModel();
-		
-// 		if($method == 'post'){
-// 			if($id){
-// 				$data = [
-// 					'id_tiket'		=> $id,
-// 					'isi_reply'		=> $request->getVar('reply'),
-// 					'created_at'	=> date('Y-m-d H:i:s'),
-// 					'created_by'	=> $this->session->get('id'),
-// 					'updated_at'	=> date('Y-m-d H:i:s'),
-// 					'updated_by'	=> $this->session->get('id')
-// 				];
-				
-// 				$kom = $komunikasi->insertReply($data);
-// 				if($kom){
-// 					$datatiket = [
-// 						'updated_at'	=> date('Y-m-d H:i:s'),
-// 						'updated_by'	=> $this->session->get('id')
-// 					];
-	
-// 					$komunikasi->updateTiket($id, $datatiket);
-// 				}
-				
-
-// 			}
-// 		}
-// 		header("Status: 301 Moved Permanently");
-// 		header("Location:komunikasi?detail=". $id);
-// 		exit;
-// 	} catch (\Exception $e) {
-// 		die($e->getMessage());
-// 	}
-//   }
-
-//   public function deletetiket()
-//   {
-// 	try {
-// 		$request		= $this->request;
-// 		$param			= $request->getVar('param');
-// 		$method			= $request->getMethod();
-// 		$komunikasi 	= new \App\Models\KomunikasiModel();
-		
-// 		$komunikasi->deletekomunikasi($request->getVar('id'));
-		
-// 		$response = [
-// 			'status'   => 'success',
-// 			'code'     => 200,
-// 		];
-
-// 		header("Status: 301 Moved Permanently");
-// 		header("Location:komunikasi");
-// 		exit;
-// 	} catch (\Exception $e) {
-// 		die($e->getMessage());
-// 	}
-//   }
-
-//   public function getcicilan()
-//   {
-// 	  try {
-		
-// 		  $request		= $this->request;
-// 		  $param		= $request->getVar('param');
-// 		  $req = [
-// 				'hdno'		=> $request->getVar('hdno'),
-// 				'nama' 		=> $request->getVar('nama'),
-// 				'alamat' 		=> $request->getVar('alamat'),
-// 				'provinsi' 	=> $request->getVar('provinsi'),
-// 				'kecamatan' 	=> $request->getVar('kecamatan'),
-// 				'kabupaten' 	=> $request->getVar('kabupaten'),
-// 				'lembaga' 	=> $request->getVar('lembaga'),
-// 				'status' 		=> $request->getVar('status')
-// 		  ];
-
-// 		  $cicilan = new \App\Models\CicilanModel();
-// 		  $data = $cicilan->getcicilan($request->getVar('length'), $request->getVar('start'), $request->getVar('search'), $req);
-// 		  $count = $cicilan->countcicilan($request->getVar('search'), $req);
-		  
-// 		  if($data){
-// 			  $response = [
-// 					'status'   => 'sukses',
-// 					'code'     => 200,
-// 					// 'draw' 		=> $request->getPost('draw'),
-// 					'recordsTotal' => $count->jumlah,
-// 					// 'recordsFiltered' => $datatable->countFiltered(),
-// 					'data' => $data
-// 			  ];
-// 		  }else{
-// 			  $response = [
-// 				  'status'   => 'gagal',
-// 				  'code'     => '0',
-// 				  'data'     => [],
-// 			  ];
-// 		  }
-
-// 	  header('Content-Type: application/json');
-// 	  echo json_encode($response);
-// 	  exit;
-// 	  } catch (\Exception $e) {
-// 		  die($e->getMessage());
-// 	  }
-//   }
-
-//   public function getwilayah()
-//   {
-// 	  try {
-// 		  $request	= $this->request;
-// 		  $param	= $request->getVar('param');
-// 		  $id		= $request->getVar('id');
-// 		  $user = new \App\Models\UserModel();
-// 		  if($param == 'kabupaten'){
-// 		  	$data = $user->getkabupaten($id);
-// 		  }else if($param == 'kecamatan'){
-// 			$data = $user->getkecamatan($id);
-// 		  }
-		  
-// 		  if($data){
-// 			  $response = [
-// 				  'status'   => 'sukses',
-// 				  'code'     => 200,
-// 				  'data' 	 => $data
-// 			  ];
-// 		  }else{
-// 			  $response = [
-// 				  'status'   => 'gagal',
-// 				  'code'     => '0',
-// 				  'data'     => [],
-// 			  ];
-// 		  }
-
-// 	  header('Content-Type: application/json');
-// 	  echo json_encode($response);
-// 	  exit;
-// 	  } catch (\Exception $e) {
-// 		  die($e->getMessage());
-// 	  }
-//   }
-
-//   public function ubahpembayaran()
-//   {
-// 	try {
-// 		$request		= $this->request;
-// 		$param		= $request->getVar('param');
-		
-// 		$method			= $request->getMethod();
-// 		$cicilan = new \App\Models\CicilanModel();
-
-// 		if($method == 'post'){
-// 			$data = [
-// 				'kode_billing' => $request->getVar('kode_billing'),
-// 				'ntpn' => $request->getVar('ntpn'),
-// 				'ntbp' => $request->getVar('ntbp'),
-// 				'setoran' => $request->getVar('setoran'),
-// 				'kode_akun' => $request->getVar('kode_akun'),
-// 				'keterangan' => $request->getVar('keterangan'),
-// 				'angsuran_ke' => $request->getVar('angsuran_ke'),
-// 				'status' => 1
-// 			];
-			
-// 			$cicilan->ubahpembayaran($request->getVar('id_rumah'), $request->getVar('id'), $data);
-// 			$this->logModel->insert([
-// 				'tgl' => date('Y-m-d H:i:s'), 
-// 				'username' => $this->session->get('username'), 
-// 				'keterangan' => "Mengubah data pembayaran ".$request->getVar('hdno'),
-// 			]);
-// 		}
-// 		$response = [
-// 					'status'   => 'success',
-// 					'code'     => '200',
-// 				];
-
-// 		header('Content-Type: application/json');
-// 		echo json_encode($response);
-// 		exit;
-// 	} catch (\Exception $e) {
-// 		die($e->getMessage());
-// 	}
-//   }
-
-//   public function pembayaran()
-//   {
-// 	try {
-// 		$request		= $this->request;
-		
-// 		$method			= $request->getMethod();
-// 		$cicilan = new \App\Models\CicilanModel();
-
-// 		if($method == 'post'){
-// 			$data = [
-// 				'id_rumah' => $request->getVar('id_rumah'),
-// 				'kode_billing' => $request->getVar('kode_billing'),
-// 				'ntpn' => $request->getVar('ntpn'),
-// 				'ntbp' => $request->getVar('ntbp'),
-// 				'setoran' => $request->getVar('setoran'),
-// 				'kode_akun' => $request->getVar('kode_akun'),
-// 				'keterangan' => $request->getVar('keterangan'),
-// 				'angsuran_ke' => $request->getVar('angsuran_ke'),
-// 				'tgl_bayar' => $this->now,
-// 				'status' => $request->getVar('status')
-// 			];
-			
-// 			$cicilan->pembayaran($data);
-// 			$this->logModel->insert([
-// 				'tgl' => date('Y-m-d H:i:s'), 
-// 				'username' => $this->session->get('username'), 
-// 				'keterangan' => "Menambahkan data pembayaran ".$request->getVar('hdno'),
-// 			]);
-// 		}
-// 		$response = [
-// 					'status'   => 'success',
-// 					'code'     => '200',
-// 				];
-
-// 		header('Content-Type: application/json');
-// 		echo json_encode($response);
-// 		exit;
-// 	} catch (\Exception $e) {
-// 		die($e->getMessage());
-// 	}
-//   }
-
-//   public function kodebilling()
-//   {
-// 	try {
-// 		$request		= $this->request;
-		
-// 		$method			= $request->getMethod();
-// 		$billing = new \App\Models\BillingModel();
-
-// 		if($method == 'post'){
-// 			$data = [
-// 						'id_rumah' => $request->getVar('id_rumah'),
-// 						'expired_date' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s'). ' + '.$request->getVar('batas').' days')),
-// 						'kode_kl' => '033',
-// 						'kode_eselon_1' => '05',
-// 						'kode_satker' => '452780',
-// 						'jenis_pnbp' => 'U',
-// 						'kode_mata_uang' => '1',
-// 						'total_nominal_billing' => $request->getVar('total'),
-// 						'nama_wajib_bayar' => $request->getVar('nama'),
-// 						'created_at' => $this->now,
-// 						'created_by' => $this->session->get('id')
-// 					];
-			
-// 			$lastid = $billing->save_billing($request->getVar('id_rumah'), $data);
-			
-// 			foreach ($request->getVar('detail') as $key => $value) {
-// 				//save billing
-// 				$data_bil = [
-// 					'id_billing' => $lastid,
-// 					'nama_wajib_bayar' => $value['namabayar'],
-// 					'kode_tarif_simponi' => $value['akunbayar'],
-// 					'kode_pp_simponi' => 'YYYYYYY',
-// 					'kode_akun' => $value['akunbayar'],
-// 					'nominal_tarif_pnbp' => $value['tarifbayar'],
-// 					'volume' => $value['volume'],
-// 					'satuan_tarif' => '-',
-// 					'total_tarif_per_record' => $value['totaltarifbayar'],
-// 					'keterangan' => $value['keteranganbayar']
-// 				];
-
-// 				//insert ke database
-// 				$billing->save_billing_detail($data_bil);
-// 			}
-// 			$this->logModel->insert([
-// 				'tgl' => date('Y-m-d H:i:s'), 
-// 				'username' => $this->session->get('username'), 
-// 				'keterangan' => "Membuat billing SIMPONI",
-// 			]);
-// 		}
-// 		$response = [
-// 					'status'   => 'success',
-// 					'code'     => '200',
-// 				];
-
-// 		header('Content-Type: application/json');
-// 		echo json_encode($response);
-// 		exit;
-// 	} catch (\Exception $e) {
-// 		die($e->getMessage());
-// 	}
-//   }
-
-//   public function addslider()
-//   {
-// 	try {
-// 		$request		= $this->request;
-// 		$param		= $request->getVar('param');
-		
-// 		$method			= $request->getMethod();
-// 		$image = new \App\Models\ImageModel();
-// 		if($method == 'post'){
-				
-// 				if($request->getVar('id')){
-// 					$data = [
-// 						'title' 		=> $request->getVar('title'),	
-// 						'status' 		=> 1,
-// 						'update_date' 	=> $this->now,
-// 						'update_by' 	=> $this->session->get('id'),
-// 						'type' 			=> 'slider'
-// 					];
-					
-// 					$image->updateImage($request->getVar('id'), $data);
-// 					if(array_key_exists("images",$_FILES)){
-
-// 						foreach ($_FILES as $key => $value) {
-							
-// 							$basepath = './uploads/slider/'.$request->getVar('id').'/';
-// 							if(!is_dir($basepath)){
-// 								mkdir($basepath, 0777, true);
-// 							}
-							
-// 							$tmp_name = $value['tmp_name'][0];
-// 							if($tmp_name){
-// 								$files = glob("$basepath*"); // get all file names
-// 								foreach($files as $file){ // iterate files
-// 									if(is_file($file)) {
-// 										unlink($file); // delete file
-// 									}
-// 								}
-// 								$path = $value['name'][0];
-// 								$ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-// 								$imgname = "slider-".$request->getVar('id')."-".$path;
-// 								$terupload = move_uploaded_file($tmp_name, $basepath.$imgname);
-// 								$image->updateImage($request->getVar('id'), ['path' => $basepath.$imgname]);
-// 							}
-// 						}
-
-// 					};
-					
-// 				}else{
-// 					$data = [
-// 						'title' 		=> $request->getVar('title'),	
-// 						'status' 		=> 1,
-// 						'create_date' 	=> $this->now,
-// 						'update_date' 	=> $this->now,
-// 						'create_by' 	=> $this->session->get('id'),
-// 						'update_by' 	=> $this->session->get('id'),
-// 						'type' 			=> 'slider'
-// 					];
-// 					$image->insertImage($data);
-// 					$lastid = $image->insertID();
-
-// 					if(array_key_exists("images",$_FILES)){
-
-// 						foreach ($_FILES as $key => $value) {
-// 							$basepath = './uploads/slider/'.$lastid.'/';
-// 							if(!is_dir($basepath)){
-// 								mkdir($basepath, 0777, true);
-// 							}
-							
-// 							$tmp_name = $value['tmp_name'][0];
-// 							$path = $value['name'][0];
-// 							$ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-// 							$imgname = "slider-".$lastid."-".$path;
-// 							$terupload = move_uploaded_file($tmp_name, $basepath.$imgname);
-// 							$image->updateImage($lastid, ['path' => $basepath.$imgname]);
-// 						}
-
-// 					};
-// 				}
-// 		}
-// 		redirect('data_slider','refresh');
-// 	} catch (\Exception $e) {
-// 		die($e->getMessage());
-// 	}
-//   }
-
-//   public function addmahasiswa()
-//   {
-// 	try {
-// 		$request		= $this->request;
-// 		$param		= $request->getVar('param');
-		
-// 		$method			= $request->getMethod();
-// 		$mahasiswa = new \App\Models\MahasiswaModel();
-// 		if($method == 'post'){
-				
-// 				if($request->getVar('id')){
-// 					$data = [
-// 						'nama' 				=> $request->getVar('nama'),
-// 						'npm' 				=> $request->getVar('npm'),
-// 						'semester' 			=> $request->getVar('semester'),
-// 						'jurusan' 			=> $request->getVar('jurusan'),
-// 						'status_mahasiswa' => ($request->getVar('status_mahasiswa') == 'on') ? 1 : 0,
-// 						'status_perwalian' => ($request->getVar('status_perwalian') == 'on') ? 1 : 0,
-// 						'update_date' 	=> $this->now,
-// 						'update_by' 	=> $this->session->get('id')
-// 					];
-					
-// 					$mahasiswa->update($request->getVar('id'), $data);
-
-					
-// 				}else{
-// 					$data = [
-// 						'nama' => $request->getVar('nama'),
-// 						'npm' => $request->getVar('npm'),
-// 						'semester' => $request->getVar('semester'),
-// 						'jurusan' => $request->getVar('jurusan'),
-// 						'status_mahasiswa' => ($request->getVar('status_mahasiswa') == 'on') ? 1 : 0,
-// 						'status_perwalian' => ($request->getVar('status_perwalian') == 'on') ? 1 : 0,
-// 						'create_date' 	=> $this->now,
-// 						'update_date' 	=> $this->now,
-// 						'create_by' 	=> $this->session->get('id'),
-// 						'update_by' 	=> $this->session->get('id')
-// 					];
-					
-// 					$mahasiswa->insert($data);
-// 					$lastid = $mahasiswa->insertID();
-
-// 				}
-// 		}
-// 		redirect('data_mahasiswa','refresh');
-// 	} catch (\Exception $e) {
-// 		die($e->getMessage());
-// 	}
-//   }
-
-//   public function adddosen()
-//   {
-// 	try {
-// 		$request		= $this->request;
-// 		$param		= $request->getVar('param');
-		
-// 		$method			= $request->getMethod();
-// 		$dosen = new \App\Models\DosenModel();
-// 		if($method == 'post'){
-				
-// 				if($request->getVar('id')){
-// 					$data = [
-// 						'nama' 			=> $request->getVar('nama'),
-// 						'mata_kuliah' 	=> $request->getVar('mata_kuliah'),
-// 						'jadwal' 		=> $request->getVar('jadwal'),
-// 						'kelas' 		=> $request->getVar('kelas'),
-// 						'perkuliahan' 	=> ($request->getVar('perkuliahan') == 'on') ? 'online' : 'offline',
-// 						'status' 		=> 1,
-// 						'tugas' 		=> $request->getVar('tugas'),
-// 						'update_by' 	=> $this->session->get('id'),
-// 						'update_date' 	=> $this->now
-// 					];
-					
-// 					$dosen->update($request->getVar('id'), $data);
-
-					
-// 				}else{
-// 					$data = [
-// 						'nama' 			=> $request->getVar('nama'),
-// 						'mata_kuliah' 	=> $request->getVar('mata_kuliah'),
-// 						'jadwal' 		=> $request->getVar('jadwal'),
-// 						'kelas' 		=> $request->getVar('kelas'),
-// 						'perkuliahan' 	=> ($request->getVar('perkuliahan') == 'on') ? 'online' : 'offline',
-// 						'status' 		=> 1,
-// 						'tugas' 		=> $request->getVar('tugas'),
-// 						'create_by' 	=> $this->session->get('id'),
-// 						'create_date' 	=> $this->now,
-// 						'update_by' 	=> $this->session->get('id'),
-// 						'update_date' 	=> $this->now
-// 					];
-					
-					
-// 					$dosen->insert($data);
-// 					$lastid = $dosen->insertID();
-
-// 				}
-// 		}
-// 		redirect('data_dosen','refresh');
-// 	} catch (\Exception $e) {
-// 		die($e->getMessage());
-// 	}
-//   }
-
-//   public function addkegiatan()
-//   {
-// 	try {
-// 		$request		= $this->request;
-// 		$param		= $request->getVar('param');
-		
-// 		$method			= $request->getMethod();
-// 		$kegiatan = new \App\Models\KegiatanModel();
-// 		if($method == 'post'){
-				
-// 				if($request->getVar('id')){
-// 					$data = [
-// 						'kegiatan' => $request->getVar('kegiatan'),
-// 						'tanggal_kegiatan' => $request->getVar('tanggal_kegiatan'),
-// 						'keterangan' => $request->getVar('keterangan'),
-// 						'update_date' => $this->now,
-// 						'update_by' => $this->session->get('id'),
-// 						'status' => 1
-
-// 					];
-					
-// 					$kegiatan->update($request->getVar('id'), $data);
-// 					if(array_key_exists("images",$_FILES)){
-
-// 						foreach ($_FILES as $key => $value) {
-							
-// 							$basepath = './uploads/kegiatan/'.$request->getVar('id').'/';
-// 							if(!is_dir($basepath)){
-// 								mkdir($basepath, 0777, true);
-// 							}
-							
-// 							$tmp_name = $value['tmp_name'][0];
-// 							if($tmp_name){
-// 								$files = glob("$basepath*"); // get all file names
-// 								foreach($files as $file){ // iterate files
-// 									if(is_file($file)) {
-// 										unlink($file); // delete file
-// 									}
-// 								}
-// 								$path = $value['name'][0];
-// 								$ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-// 								$imgname = "kegiatan-".$request->getVar('id')."-".$path;
-// 								$terupload = move_uploaded_file($tmp_name, $basepath.$imgname);
-// 								$kegiatan->update($request->getVar('id'), ['path' => $basepath.$imgname]);
-// 							}
-// 						}
-
-// 					};
-					
-// 				}else{
-
-// 					$data = [
-// 						'kegiatan' => $request->getVar('kegiatan'),
-// 						'tanggal_kegiatan' => $request->getVar('tanggal_kegiatan'),
-// 						'keterangan' => $request->getVar('keterangan'),
-// 						'create_date' 	=> $this->now,
-// 						'update_date' => $this->now,
-// 						'create_by' 	=> $this->session->get('id'),
-// 						'update_by' => $this->session->get('id'),
-// 						'status' => 1
-// 					];
-// 					$kegiatan->insert($data);
-// 					$lastid = $kegiatan->insertID();
-					
-// 					if(array_key_exists("images",$_FILES)){
-
-// 						foreach ($_FILES as $key => $value) {
-// 							$basepath = './uploads/kegiatan/'.$lastid.'/';
-// 							if(!is_dir($basepath)){
-// 								mkdir($basepath, 0777, true);
-// 							}
-							
-// 							$tmp_name = $value['tmp_name'][0];
-// 							$path = $value['name'][0];
-// 							$ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-// 							$imgname = "kegiatan-".$lastid."-".$path;
-// 							$terupload = move_uploaded_file($tmp_name, $basepath.$imgname);
-// 							$kegiatan->update($lastid, ['path' => $basepath.$imgname]);
-// 						}
-
-// 					};
-// 				}
-// 		}
-// 		redirect('data_kampus','refresh');
-// 	} catch (\Exception $e) {
-// 		die($e->getMessage());
-// 	}
-//   }
-
-//   public function addberita()
-//   {
-// 	try {
-// 		$request		= $this->request;
-// 		$param		= $request->getVar('param');
-		
-// 		$method			= $request->getMethod();
-// 		$berita = new \App\Models\BeritaModel();
-// 		if($method == 'post'){
-				
-// 				if($request->getVar('id')){
-// 					$data = [
-// 						'title' => $request->getVar('title'),
-// 						'redaksi' => $request->getVar('redaksi'),
-// 						'tanggal' => $request->getVar('tanggal'),
-// 						'update_date' => $this->now,
-// 						'update_by' => $this->session->get('id'),
-// 						'status' => 1
-
-// 					];
-					
-// 					$berita->update($request->getVar('id'), $data);
-// 					if(array_key_exists("images",$_FILES)){
-
-// 						foreach ($_FILES as $key => $value) {
-							
-// 							$basepath = './uploads/berita/'.$request->getVar('id').'/';
-// 							if(!is_dir($basepath)){
-// 								mkdir($basepath, 0777, true);
-// 							}
-							
-// 							$tmp_name = $value['tmp_name'][0];
-// 							if($tmp_name){
-// 								$files = glob("$basepath*"); // get all file names
-// 								foreach($files as $file){ // iterate files
-// 									if(is_file($file)) {
-// 										unlink($file); // delete file
-// 									}
-// 								}
-// 								$path = $value['name'][0];
-// 								$ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-// 								$imgname = "berita-".$request->getVar('id')."-".$path;
-// 								$terupload = move_uploaded_file($tmp_name, $basepath.$imgname);
-// 								$berita->update($request->getVar('id'), ['path' => $basepath.$imgname]);
-// 							}
-// 						}
-
-// 					};
-					
-// 				}else{
-
-// 					$data = [
-// 						'title' => $request->getVar('title'),
-// 						'redaksi' => $request->getVar('redaksi'),
-// 						'tanggal' => $request->getVar('tanggal'),
-// 						'create_date' 	=> $this->now,
-// 						'update_date' => $this->now,
-// 						'create_by' 	=> $this->session->get('id'),
-// 						'update_by' => $this->session->get('id'),
-// 						'status' => 1
-// 					];
-// 					$berita->insert($data);
-// 					$lastid = $berita->insertID();
-					
-// 					if(array_key_exists("images",$_FILES)){
-
-// 						foreach ($_FILES as $key => $value) {
-// 							$basepath = './uploads/berita/'.$lastid.'/';
-// 							if(!is_dir($basepath)){
-// 								mkdir($basepath, 0777, true);
-// 							}
-							
-// 							$tmp_name = $value['tmp_name'][0];
-// 							$path = $value['name'][0];
-// 							$ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-// 							$imgname = "berita-".$lastid."-".$path;
-// 							$terupload = move_uploaded_file($tmp_name, $basepath.$imgname);
-// 							$berita->update($lastid, ['path' => $basepath.$imgname]);
-// 						}
-
-// 					};
-// 				}
-// 		}
-// 		redirect('data_berita','refresh');
-// 	} catch (\Exception $e) {
-// 		die($e->getMessage());
-// 	}
-//   }
-
-//   public function addbuku()
-//   {
-// 	try {
-// 		$request		= $this->request;
-// 		$param		= $request->getVar('param');
-		
-// 		$method			= $request->getMethod();
-// 		$buku = new \App\Models\BukuModel();
-// 		if($method == 'post'){
-				
-// 				if($request->getVar('id')){
-// 					$data = [
-// 						'title' => $request->getVar('title'),
-// 						'keterangan' => $request->getVar('redaksi'),
-// 						'ketersediaan' => $request->getVar('ketersediaan'),
-// 						'update_date' => $this->now,
-// 						'update_by' => $this->session->get('id'),
-// 						'status' => 1
-
-// 					];
-					
-// 					$buku->update($request->getVar('id'), $data);
-// 					if(array_key_exists("images",$_FILES)){
-
-// 						foreach ($_FILES as $key => $value) {
-							
-// 							$basepath = './uploads/buku/'.$request->getVar('id').'/';
-// 							if(!is_dir($basepath)){
-// 								mkdir($basepath, 0777, true);
-// 							}
-							
-// 							$tmp_name = $value['tmp_name'][0];
-// 							if($tmp_name){
-// 								$files = glob("$basepath*"); // get all file names
-// 								foreach($files as $file){ // iterate files
-// 									if(is_file($file)) {
-// 										unlink($file); // delete file
-// 									}
-// 								}
-// 								$path = $value['name'][0];
-// 								$ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-// 								$imgname = "buku-".$request->getVar('id')."-".$path;
-// 								$terupload = move_uploaded_file($tmp_name, $basepath.$imgname);
-// 								$buku->update($request->getVar('id'), ['path' => $basepath.$imgname]);
-// 							}
-// 						}
-
-// 					};
-					
-// 				}else{
-
-// 					$data = [
-// 						'title' => $request->getVar('title'),
-// 						'keterangan' => $request->getVar('keterangan'),
-// 						'ketersediaan' => $request->getVar('ketersediaan'),
-// 						'create_date' 	=> $this->now,
-// 						'update_date' => $this->now,
-// 						'create_by' 	=> $this->session->get('id'),
-// 						'update_by' => $this->session->get('id'),
-// 						'status' => 1
-// 					];
-// 					$buku->insert($data);
-// 					$lastid = $buku->insertID();
-					
-// 					if(array_key_exists("images",$_FILES)){
-
-// 						foreach ($_FILES as $key => $value) {
-// 							$basepath = './uploads/buku/'.$lastid.'/';
-// 							if(!is_dir($basepath)){
-// 								mkdir($basepath, 0777, true);
-// 							}
-							
-// 							$tmp_name = $value['tmp_name'][0];
-// 							$path = $value['name'][0];
-// 							$ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-// 							$imgname = "buku-".$lastid."-".$path;
-// 							$terupload = move_uploaded_file($tmp_name, $basepath.$imgname);
-// 							$buku->update($lastid, ['path' => $basepath.$imgname]);
-// 						}
-
-// 					};
-// 				}
-// 		}
-// 		redirect('data_buku','refresh');
-// 	} catch (\Exception $e) {
-// 		die($e->getMessage());
-// 	}
-//   }
-
-//   public function getdata()
-//   {
-// 	  try {
-// 		  $request	= $this->request;
-// 		  $table	= $request->getVar('table');
-// 		  $id	= $request->getVar('id');
-// 		  $user = new \App\Models\UserModel();
-// 		  $data = $user->getData($table, $id);
-		  
-// 		  if($data){
-// 			  $response = [
-// 				  'status'   => 'sukses',
-// 				  'code'     => 200,
-// 				  'data' 	 => $data
-// 			  ];
-// 		  }else{
-// 			  $response = [
-// 				  'status'   => 'gagal',
-// 				  'code'     => '0',
-// 				  'data'     => 'tidak ada data',
-// 			  ];
-// 		  }
-
-// 	  header('Content-Type: application/json');
-// 	  echo json_encode($response);
-// 	  exit;
-// 	  } catch (\Exception $e) {
-// 		  die($e->getMessage());
-// 	  }
-//   }
-
-//   public function deletedata()
-//   {
-// 	try {
-// 		$request		= $this->request;
-// 		$method			= $request->getMethod();
-// 		$user = new \App\Models\UserModel();
-
-// 		$user->deleteData($request->getVar('id'), $request->getVar('table'));
-// 		if (file_exists($request->getVar('path'))) {
-// 			unlink($request->getVar('path'));
-// 		}
-
-// 		$response = [
-// 			'status'   => 'success',
-// 			'code'     => 200,
-// 		];
-
-// 		header('Content-Type: application/json');
-// 	  	echo json_encode($response);
-// 		exit;
-// 	} catch (\Exception $e) {
-// 		die($e->getMessage());
-// 	}
-//   }
-
-// }

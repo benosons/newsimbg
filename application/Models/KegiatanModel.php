@@ -8,26 +8,6 @@ class KegiatanModel extends Model{
     protected $primaryKey = 'id';
     protected $allowedFields = [ 'kegiatan', 'tanggal_kegiatan', 'keterangan', 'create_date', 'create_by', 'update_date', 'update_by', 'status', 'path' ];
 
-    public function getjenis($id = null)
-    {
-      $builder = $this->db->table('tm_jenis_permohonan');
-      $builder->select("*");
-    //   $builder->where('status <> 0');
-      $query   = $builder->get();
-      // echo $this->db->getLastQuery();die;
-      return $query->getResult();
-    }
-
-    public function getfungsi($id = null)
-    {
-      $builder = $this->db->table('tr_fungsi_bg');
-      $builder->select("*");
-      // $builder->where('status <> 0');
-      $query   = $builder->get();
-      // echo $this->db->getLastQuery();die;
-      return $query->getResult();
-    }
-
     public function getjbg($id)
     {
       $builder = $this->db->table('tm_jenis_bg');
@@ -49,40 +29,6 @@ class KegiatanModel extends Model{
         $query   = $builder->get();
       
       // echo $this->db->getLastQuery();
-      return $query->getResult();
-    }
-    public function getprov($id = null)
-    {
-      $builder = $this->db->table('tm_prov');
-      $builder->select("*");
-      $query   = $builder->get();
-      return $query->getResult();
-    }
-
-    public function getkabkot($id)
-    {
-      $builder = $this->db->table('tr_kabkot');
-      $builder->select("*");
-      $builder->where('id_provinsi', $id);
-      $query   = $builder->get();
-      return $query->getResult();
-    }
-
-    public function getkecamatan($id)
-    {
-      $builder = $this->db->table('tr_kecamatan');
-      $builder->select("*");
-      $builder->where('id_kabkot', $id);
-      $query   = $builder->get();
-      return $query->getResult();
-    }
-
-    public function getkelurahan($id)
-    {
-      $builder = $this->db->table('tr_kelurahan');
-      $builder->select("*");
-      $builder->where('id_kecamatan', $id);
-      $query   = $builder->get();
       return $query->getResult();
     }
 

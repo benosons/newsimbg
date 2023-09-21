@@ -115,6 +115,7 @@ $routes->add('validasi_hasil_inspeksi', 'View::validasi_hasil_inspeksi');
 $routes->add('penagihan_retribusi', 'View::penagihan_retribusi');
 $routes->add('penyerahan_dokumen', 'View::penyerahan_dokumen');
 $routes->add('penerbitan_dokumen', 'View::penerbitan_dokumen');
+$routes->add('FormPendaftaran', 'View::FormPendaftaran');
 
 $routes->add('data_mahasiswa', 'View::data_mahasiswa');
 $routes->add('data_dosen', 'View::data_dosen');
@@ -145,6 +146,7 @@ $routes->add('auth', 'Auth::auth');
 $routes->add('reg', 'Auth::reg');
 $routes->add('logout', 'Auth::logout');
 
+$routes->add('dataprofile', 'View::dataprofile');
 $routes->post('getalluser', 'Jsondata::getalluser');
 $routes->post('getuser', 'Jsondata::getuser');
 $routes->post('adduser', 'Jsondata::adduser');
@@ -190,6 +192,17 @@ $routes->post('adddosen', 'Jsondata::adddosen');
 $routes->post('addkegiatan', 'Jsondata::addkegiatan');
 $routes->post('addberita', 'Jsondata::addberita');
 $routes->post('addbuku', 'Jsondata::addbuku');
+
+
+$routes->post('savepermohonan', 'Jsondata::savepermohonan');
+$routes->post('getwil', 'Jsondata::getwil');
+$routes->post('getpemilik', 'Jsondata::getpemilik');
+$routes->post('savedata', 'Jsondata::savedata');
+$routes->post('savealamatbangunan', 'Jsondata::savealamatbangunan');
+$routes->post('getdatajnskonsultasi', 'Jsondata::getdatajnskonsultasi');
+$routes->post('saveTanah', 'Jsondata::saveTanah');
+$routes->post('getdatadokumen', 'Jsondata::getdatadokumen');
+$routes->post('SaveDokumen', 'Jsondata::SaveDokumen');
 /**
  * --------------------------------------------------------------------
  * Additional Routing

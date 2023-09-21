@@ -49,6 +49,7 @@ class Database extends \CodeIgniter\Database\Config
 		'strictOn'     => false,
 		'failover'     => [],
 		'saveQueries' => true,
+		'port' 		=> ''
 	];
 
 	/**
