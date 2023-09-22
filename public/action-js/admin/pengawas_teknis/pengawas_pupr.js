@@ -15,6 +15,55 @@ $(() => {
     var urlpenugasan = "/savePenugasanTpt";
     savepenugasan(val, id_permohonan, urlpenugasan);
   });
+
+  // Penjadwalan
+  $("#tipe_konsultasi").change(function () {
+    let tipe = $(this).val();
+    if (tipe == 1) {
+      $("#field-tempat").removeClass("d-none");
+      $("#field-link").addClass("d-none");
+      $("#field-pass-daring").addClass("d-none");
+    } else if (tipe == 2) {
+      $("#field-tempat").addClass("d-none");
+      $("#field-link").removeClass("d-none");
+      $("#field-pass-daring").removeClass("d-none");
+    }
+  });
+
+  $("#simpanpenjadwalan").click(function () {
+    let tanggal_konsultasi = $("#tanggal_konsultasi").val();
+    let jam_konsultasi = $("#jam_konsultasi").val();
+    let tipe_konsultasi = $("#tipe_konsultasi").val();
+    let file = $("#file");
+
+    if (tanggal_konsultasi == "") {
+      Swal.fire({
+        html: "Tanggal Konsultasi Perlu Diisi",
+        icon: "error",
+        buttonsStyling: true,
+      });
+    } else if (jam_konsultasi == "") {
+      Swal.fire({
+        html: "Jam Konsultasi Perlu Diisi",
+        icon: "error",
+        buttonsStyling: true,
+      });
+    } else if (tipe_konsultasi == "") {
+      Swal.fire({
+        html: "Tipe Konsultasi Perlu Diisi",
+        icon: "error",
+        buttonsStyling: true,
+      });
+    } else if (file.val() == "") {
+      Swal.fire({
+        html: "Undangan Konsultasi Perlu Diupload",
+        icon: "error",
+        buttonsStyling: true,
+      });
+    }
+
+    savepenjadwalan(tanggal_konsultasi, jam_konsultasi, tipe_konsultasi, file);
+  });
 });
 
 $(document).ready(function () {
@@ -147,7 +196,11 @@ function loadpermohonanpenjadwalan() {
   $.ajax({
     type: "post",
     dataType: "json",
-    data: { param: { "data_permohonan.status": 5 } },
+    // data: { param: { "data_permohonan.status": 5 } },
+    data: {
+      param:
+        "data_permohonan.status = 5 OR data_permohonan.status = 6 OR data_permohonan.status = 7 OR data_permohonan.status = 8",
+    },
     url: "/getallpermohonan",
     success: function (result) {
       let data = result.data;
@@ -304,7 +357,7 @@ function action(mode, id, username) {
   } else if (mode == "penjadwalan") {
     getdatapermohonanpenjadwalan(id);
     gettpatpt(id);
-    $("#id_permohonan_penugasan").val(id);
+    $("#id_permohonan_penjadwalan").val(id);
     $("#exampleExtraLargeModal3").modal("toggle");
     $("#exampleExtraLargeModal3").modal("show");
     // $.ajax({
@@ -549,6 +602,53 @@ function savepenugasan(val, id_permohonan, urlpenugasan) {
           },
         }).then((result) => {
           loadpermohonanpenugasan();
+          loadpermohonanpenjadwalan();
+        });
+      }
+    },
+  });
+}
+
+function savepenjadwalan(
+  tanggal_konsultasi,
+  jam_konsultasi,
+  tipe_konsultasi,
+  file
+) {
+  let fd = new FormData();
+  fd.append("tanggal_konsultasi", tanggal_konsultasi);
+  fd.append("jam_konsultasi", jam_konsultasi);
+  fd.append("tipe_konsultasi", tipe_konsultasi);
+  fd.append("file", file.prop("files")[0]);
+  fd.append("id_permohonan", $("#id_permohonan_penjadwalan").val());
+
+  if (tipe_konsultasi == 1) {
+    fd.append("tempat", $("#tempat").val());
+  } else if (tipe_konsultasi == 2) {
+    fd.append("link", $("#link").val());
+    fd.append("passdaring", $("#passdaring").val());
+  }
+
+  $.ajax({
+    type: "post",
+    dataType: "json",
+    data: fd,
+    processData: false,
+    contentType: false,
+    url: "/savepenjadwalan",
+    success: function (response) {
+      if (response.code == 200) {
+        Swal.fire({
+          html: response.msg,
+          icon: "success",
+          buttonsStyling: true,
+          cancelButtonText: "Close",
+          customClass: {
+            cancelButton: "btn btn-success btn-sm",
+          },
+        }).then((result) => {
+          $("#exampleExtraLargeModal3").modal("toggle");
+          $("#exampleExtraLargeModal3").modal("hide");
           loadpermohonanpenjadwalan();
         });
       }

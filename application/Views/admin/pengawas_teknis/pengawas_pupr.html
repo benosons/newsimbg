@@ -357,7 +357,7 @@
                 </div>
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-4">
+                    <div class="col-4 mb-3">
                       <div class="form-group">
                         <label for="" class="form-control-label"
                           >Konsultasi ke
@@ -370,7 +370,7 @@
                         />
                       </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-4 mb-3">
                       <div class="form-group">
                         <label for="" class="form-control-label">Tanggal</label>
                         <input
@@ -380,17 +380,17 @@
                         />
                       </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-4 mb-3">
                       <div class="form-group">
                         <label for="" class="form-control-label">Jam</label>
                         <input
-                          type="date"
+                          type="time"
                           class="form-control"
                           id="jam_konsultasi"
                         />
                       </div>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 mb-3">
                       <div class="form-group">
                         <label for="" class="form-control-label"
                           >Tipe Konsultasi</label
@@ -401,6 +401,61 @@
                           <option value="2">Online</option>
                         </select>
                       </div>
+                    </div>
+                    <div class="col-12 mb-3 d-none" id="field-tempat">
+                      <div class="form-group">
+                        <label for="" class="form-control-label"
+                          >Tempat / Keterangan</label
+                        >
+                        <textarea
+                          id="tempat"
+                          cols="30"
+                          rows="3"
+                          class="form-control"
+                          placeholder="Masukan Tempat / Keterangan Konsultasi"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3 d-none" id="field-link">
+                      <div class="form-group">
+                        <label for="" class="form-control-label"
+                          >Link Konsultasi Daring</label
+                        >
+                        <textarea
+                          id="link"
+                          cols="30"
+                          rows="3"
+                          class="form-control"
+                          placeholder="Masukan Link Konsultasi"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3 d-none" id="field-pass-daring">
+                      <div class="form-group">
+                        <label for="" class="form-control-label"
+                          >Password Konsultasi Daring</label
+                        >
+                        <textarea
+                          id="passdaring"
+                          cols="30"
+                          rows="3"
+                          class="form-control"
+                          placeholder="Masukan Password Konsultasi"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="form-group">
+                        <label for="" class="form-control-label"
+                          >Unggah Undangan Konsultasi</label
+                        >
+                        <input type="file" id="file" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-1">
+                      <button id="simpanpenjadwalan" class="btn btn-primary">
+                        Simpan
+                      </button>
                     </div>
                   </div>
                 </div>

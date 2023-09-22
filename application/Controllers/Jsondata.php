@@ -477,7 +477,7 @@ class Jsondata extends \CodeIgniter\Controller
 				$response = [
 					'status'   => 'gagal',
 					'code'     => '0',
-					'data'     => 'tidak ada data',
+					'data'     => [],
 				];
 			}
 
@@ -514,112 +514,6 @@ class Jsondata extends \CodeIgniter\Controller
 			header('Content-Type: application/json');
 			echo json_encode($response);
 			exit;
-		} catch (\Exception $e) {
-			die($e->getMessage());
-		}
-	}
-
-	public function listDataPersonilAsn()
-	{
-		try {
-			$request	= $this->request;
-			$param	= $request->getVar('param');
-			$user = new \App\Models\KegiatanModel();
-			$data = $user->getListDataAsn($param);
-
-			if ($data) {
-				$response = [
-					'status'   => 'sukses',
-					'code'     => 200,
-					'data' 	 => $data
-				];
-			} else {
-				$response = [
-					'status'   => 'gagal',
-					'code'     => '0',
-					'data'     => 'tidak ada data',
-				];
-			}
-
-			header('Content-Type: application/json');
-			echo json_encode($response);
-			exit;
-		} catch (\Exception $e) {
-			die($e->getMessage());
-		}
-	}
-
-	public function savePenugasanTpt()
-	{
-		try {
-
-			$request		= $this->request;
-			$kegiatan = new \App\Models\KegiatanModel();
-
-			$val = explode(',', $request->getVar('val'));
-
-			for ($i = 0; $i < count($val); $i++) {
-				$data = array(
-					'id_permohonan' => $request->getVar('id_permohonan'),
-					'id_personal' => $val[$i]
-				);
-
-				$insertpenugasan = $kegiatan->savePenugasanTpt($data);
-			}
-
-			$updatePermohonan = $kegiatan->updatePermohonan(array('status' => $request->getVar('status')), array('id' => $request->getVar('id_permohonan')));
-
-			if ($insertpenugasan && $updatePermohonan) {
-				$response = array(
-					'code' => 200,
-					'msg' => 'Penugasan Berhasil, Perlu Melakukan Penjadwalan Konsultasi'
-				);
-			} else {
-				$response = array(
-					'code' => 0,
-					'msg' => 'Penugasan Gagal, Silahkan Coba Kembali'
-				);
-			}
-
-			echo json_encode($response);
-		} catch (\Exception $e) {
-			die($e->getMessage());
-		}
-	}
-
-	public function getTpaTptPenugasan()
-	{
-		try {
-
-			$request		= $this->request;
-			$kegiatan = new \App\Models\KegiatanModel();
-
-			$id_permohonan = $request->getVar('id_permohonan');
-
-			$getPenugasanTpt = $kegiatan->getPenugasanTpt(array('id_permohonan' => $id_permohonan));
-			if (count($getPenugasanTpt) == 0) {
-				$getPenugasanTpa = $kegiatan->getPenugasanTpa(array('id_permohonan' => $id_permohonan));
-				if (count($getPenugasanTpa) > 0) {
-					$response = array(
-						'code' => 200,
-						'thead' => 'Nama Tim TPA',
-						'data' => $getPenugasanTpa
-					);
-				} else {
-					$response = array(
-						'code' => 0,
-						'msg' => 'Data Tidak Tersedia !'
-					);
-				}
-			} else {
-				$response = array(
-					'code' => 200,
-					'thead' => 'Nama Tim TPT',
-					'data' => $getPenugasanTpt
-				);
-			}
-
-			echo json_encode($response);
 		} catch (\Exception $e) {
 			die($e->getMessage());
 		}
@@ -1208,6 +1102,193 @@ class Jsondata extends \CodeIgniter\Controller
 				$response = array(
 					'code' => 200,
 					'msg' => 'Data Gagal Disimpan'
+				);
+			}
+
+			echo json_encode($response);
+		}
+	}
+
+	public function listDataPersonilAsn()
+	{
+		try {
+			$request	= $this->request;
+			$param	= $request->getVar('param');
+			$user = new \App\Models\KegiatanModel();
+			$data = $user->getListDataAsn($param);
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function savePenugasanTpt()
+	{
+		try {
+
+			$request		= $this->request;
+			$kegiatan = new \App\Models\KegiatanModel();
+
+			$val = explode(',', $request->getVar('val'));
+
+			for ($i = 0; $i < count($val); $i++) {
+				$data = array(
+					'id_permohonan' => $request->getVar('id_permohonan'),
+					'id_personal' => $val[$i]
+				);
+
+				$insertpenugasan = $kegiatan->savePenugasanTpt($data);
+			}
+
+			$updatePermohonan = $kegiatan->updatePermohonan(array('status' => $request->getVar('status')), array('id' => $request->getVar('id_permohonan')));
+
+			if ($insertpenugasan && $updatePermohonan) {
+				$response = array(
+					'code' => 200,
+					'msg' => 'Penugasan Berhasil, Perlu Melakukan Penjadwalan Konsultasi'
+				);
+			} else {
+				$response = array(
+					'code' => 0,
+					'msg' => 'Penugasan Gagal, Silahkan Coba Kembali'
+				);
+			}
+
+			echo json_encode($response);
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getTpaTptPenugasan()
+	{
+		try {
+
+			$request		= $this->request;
+			$kegiatan = new \App\Models\KegiatanModel();
+
+			$id_permohonan = $request->getVar('id_permohonan');
+
+			$getPenugasanTpt = $kegiatan->getPenugasanTpt(array('id_permohonan' => $id_permohonan));
+			if (count($getPenugasanTpt) == 0) {
+				$getPenugasanTpa = $kegiatan->getPenugasanTpa(array('id_permohonan' => $id_permohonan));
+				if (count($getPenugasanTpa) > 0) {
+					$response = array(
+						'code' => 200,
+						'thead' => 'Nama Tim TPA',
+						'data' => $getPenugasanTpa
+					);
+				} else {
+					$response = array(
+						'code' => 0,
+						'msg' => 'Data Tidak Tersedia !'
+					);
+				}
+			} else {
+				$response = array(
+					'code' => 200,
+					'thead' => 'Nama Tim TPT',
+					'data' => $getPenugasanTpt
+				);
+			}
+
+			echo json_encode($response);
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	// PENJADWALAN
+	public function savePenjadwalan()
+	{
+		$request = $this->request;
+		$perm = new \App\Models\KegiatanModel();
+		$tgl_konsultasi = $request->getVar('tanggal_konsultasi');
+		$jam_konsultasi = $request->getVar('jam_konsultasi');
+		$tipe_konsultasi = $request->getVar('tipe_konsultasi');
+		$id_permohonan 	= $request->getVar('id_permohonan');
+
+		if (!file_exists($_FILES['file']['tmp_name']) || !is_uploaded_file($_FILES['file']['tmp_name'])) {
+			$response = array(
+				'code' => 0,
+				'msg' => 'File Undangan Konsultasi Perlu Diunggah'
+			);
+			echo json_encode($response);
+			exit;
+		} else {
+			if (array_key_exists("file", $_FILES)) {
+				foreach ($_FILES as $key => $value) {
+					$basepath = './uploads/filepenjadwalan/';
+					if (!is_dir($basepath)) {
+						mkdir($basepath, 0777, true);
+					}
+
+					// for ($i = 0; $i < count($value['tmp_name']); $i++) {
+					$tmp_name = $value['tmp_name'];
+					if ($tmp_name) {
+						$path = $value['name'];
+						$ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+						$imgname = "SuratUndangan-" . date('dmYHis') . "-" . $path;
+						$terupload = move_uploaded_file($tmp_name, $basepath . $imgname);
+						if (!$terupload) {
+							$response = array(
+								'code' => 0,
+								'msg' => 'File Gagal Terupload '
+							);
+							echo json_encode($response);
+							exit;
+						}
+					}
+				}
+			}
+
+			$data = array(
+				'id' => $id_permohonan,
+				'tgl_konsultasi' => $tgl_konsultasi,
+				'jam_konsultasi' => $jam_konsultasi,
+				'tipe_konsultasi' => $tipe_konsultasi,
+				'dir_file_undangan' => $imgname,
+				'post_date' => date('Y-m-d'),
+				'post_by' => 1,
+				'post_created' => date('Y-m-d H:i:s')
+			);
+			if ($tipe_konsultasi == 1) {
+				$data['ket_konsultasi'] = $request->getVar('tempat');
+			} else if ($tipe_konsultasi == 2) {
+				$data['link_meeting'] = $request->getVar('link');
+				$data['password_meeting'] = $request->getVar('passdaring');
+			}
+
+			// insert tmdatajadwal
+			$insertpenjadwalan = $perm->insertpenjadwalan($data);
+			$updatepermohonan = $perm->updatePermohonan(['status' => 6], ['id' => $id_permohonan]);
+
+			if ($insertpenjadwalan && $updatepermohonan) {
+				$response = array(
+					'code' => 200,
+					'msg' => 'Penjadwalan Konsultasi Berhasil Dibuat'
+				);
+			} else {
+				$response = array(
+					'code' => 0,
+					'msg' => 'Penjadwalan Konsultasi Gagal Dibuat'
 				);
 			}
 

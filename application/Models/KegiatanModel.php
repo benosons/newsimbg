@@ -191,4 +191,12 @@ class KegiatanModel extends Model
     $query = $builder->insert($data);
     return $query;
   }
+
+  // Penjadwalan
+  public function insertpenjadwalan($data)
+  {
+    $builder = $this->db->table('tmdatajadwal');
+    $query = $builder->insert($data);
+    return $query;
+  }
 }

@@ -173,6 +173,9 @@ $routes->post('listDataPersonilAsn', 'Jsondata::listDataPersonilAsn');
 $routes->post('savePenugasanTpt', 'Jsondata::savePenugasanTpt');
 $routes->post('getTpaTptPenugasan', 'Jsondata::getTpaTptPenugasan');
 
+// PENJADWALAN 
+$routes->post('savepenjadwalan', 'Jsondata::savePenjadwalan');
+
 
 $routes->post('getallDealerData', 'Jsondata::getallDealerData');
 $routes->post('getDealerData', 'Jsondata::getDealerData');
