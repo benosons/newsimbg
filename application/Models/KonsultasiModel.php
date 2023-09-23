@@ -211,4 +211,10 @@ class KonsultasiModel extends Model{
 		$query 	= $builder->get();
 		return $query->getResult();
 	}
+
+	function RemoveTeknisTanah($id_detail)
+	{
+		$res = $this->db->table('tmpersyaratankonsultasi')->where('id_detail', $id_detail)->delete();
+        return  $res;
+	}
 }

@@ -35,7 +35,7 @@ $(document).ready(function() {
   // table.buttons().container()
   //   .appendTo( '#example2_wrapper .col-md-6:eq(0)' );
   // loadpermohonan()
-  nextdokumen()
+  // modalkonfirmasi()
   
   // $('#modal-data-kelengkapan').modal('show')
   
@@ -1276,88 +1276,183 @@ function nextdokumen() {
           let DataStruktur = data.DataStruktur
           let DataMPE	 = data.DataMPE
           let no = 1
-          let el = ''
-          let opt_umum = '<option value="0" selected>Pilih...</option>'
-          let opt_arsi = '<option value="0" selected>Pilih...</option>'
-          let opt_struk = '<option value="0" selected>Pilih...</option>'
-          let opt_mep = '<option value="0" selected>Pilih...</option>'
-          let nm_dok = []
-          
-          DokumenUmum.forEach(element => {
+          let no2 = 1
+          let no3 = 1
 
-            opt_umum += `<option value="${element.nm_dokumen}" idutama="${data.id}" idsyarat="${element.id_detail}" kodejenis="5" >${element.nm_dokumen}</option>`
-            nm_dok.push({
-              'id' : element.id_detail,
-              'nm' : element.nm_dokumen,
-              'kode': 5
+          let opt_umum = ''
+          let opt_arsi = ''
+          let opt_struk = ''
+          let opt_mep = ''
+          
+
+          DokumenUmum.forEach(element => {
+            let id_teknis = ''
+            let dir_file = ''
+            let btn = ''
+            let idutama = ''
+            let id_detail_persyaratan = ''
+            DataFile.forEach(ele => {
+              idutama = ele.id
+              id_detail_persyaratan = ele.id_detail
+              if(ele.id_persyaratan == 5){
+                if (element.id_detail == ele.id_persyaratan_detail) {
+                  dir_file = ele.dir_file
+                  id_teknis = element.id_detail;
+                  
+                }
+
+              }
             })
+            if(dir_file){
+              btn = `<div class="btn-group" role="group" aria-label="Basic example">
+                      <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${idutama}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail})"><i class="bx bx-trash"></i></button>
+                    </div>`
+            }else{
+              btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${idutama}', '5', '${element.id_detail}', '${id_teknis}', '${element.nm_dokumen}')">`
+
+            }
+            opt_umum +=  `<tr class="<?= $clss ?>">
+                      <td align="center">${no++}</td>
+                      <td align="left">${element.nm_dokumen}</td>
+                      <td align="left">${element.keterangan ? element.keterangan : ''}</td>
+                      <td align="center" id="upload_${element.id_detail}">
+                        ${btn}
+                      </td>
+                    </tr>`
           });
 
           DataArsitektur.forEach(element => {
 
-            opt_arsi += `<option value="${element.nm_dokumen}" idutama="${data.id}" idsyarat="${element.id_detail}" kodejenis="5" >${element.nm_dokumen}</option>`
-            nm_dok.push({
-              'id' : element.id_detail,
-              'nm' : element.nm_dokumen,
-              'kode': 2
+            let id_teknis = ''
+            let dir_file = ''
+            let idutama = ''
+                        let id_detail_persyaratan = ''
+
+            DataFile.forEach(ele => {
+              idutama = ele.id
+                            id_detail_persyaratan = ele.id_detail
+
+              if(ele.id_persyaratan == 2){
+                if (element.id_detail == ele.id_persyaratan_detail) {
+                  dir_file = ele.dir_file
+                }
+
+              }
             })
+
+            if(dir_file){
+              btn = `<div class="btn-group" role="group" aria-label="Basic example">
+                      <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${idutama}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail})"><i class="bx bx-trash"></i></button>
+                    </div>`
+            }else{
+              btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${idutama}', '2', '${element.id_detail}', '${id_teknis}')">`
+
+            }
+
+            opt_arsi +=  `<tr class="<?= $clss ?>">
+                      <td align="center">${no2++}</td>
+                      <td align="left">${element.nm_dokumen}</td>
+                      <td align="left">${element.keterangan ? element.keterangan : ''}</td>
+                      <td align="center" id="upload_${element.id_detail}">
+                      ${btn}
+                      </td>
+                    </tr>`
           });
 
           DataStruktur.forEach(element => {
 
-            opt_struk += `<option value="${element.nm_dokumen}" idutama="${data.id}" idsyarat="${element.id_detail}" kodejenis="5" >${element.nm_dokumen}</option>`
-            nm_dok.push({
-              'id' : element.id_detail,
-              'nm' : element.nm_dokumen,
-              'kode': 3
+            let id_teknis = ''
+            let dir_file = ''
+            let idutama = ''
+                        let id_detail_persyaratan = ''
+
+            DataFile.forEach(ele => {
+              idutama = ele.id
+                            id_detail_persyaratan = ele.id_detail
+
+              if(ele.id_persyaratan == 3){
+                if (element.id_detail == ele.id_persyaratan_detail) {
+                  dir_file = ele.dir_file
+                }
+
+              }
             })
+            if(dir_file){
+              btn = `<div class="btn-group" role="group" aria-label="Basic example">
+                      <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}',' ${idutama}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail})"><i class="bx bx-trash"></i></button>
+                    </div>`
+            }else{
+              btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${idutama}', '3', '${element.id_detail}', '${id_teknis}')">`
+
+            }
+            opt_struk +=  `<tr class="<?= $clss ?>">
+                      <td align="center">${no3++}</td>
+                      <td align="left">${element.nm_dokumen}</td>
+                      <td align="left">${element.keterangan ? element.keterangan : ''}</td>
+                      <td align="center" id="upload_${element.id_detail}">
+                      ${btn}
+                      </td>
+                    </tr>`
           });
 
           DataMPE.forEach(element => {
 
-            opt_mep += `<option value="${element.nm_dokumen}" idutama="${data.id}" idsyarat="${element.id_detail}" kodejenis="5" >${element.nm_dokumen}</option>`
-            nm_dok.push({
-              'id' : element.id_detail,
-              'nm' : element.nm_dokumen,
-              'kode': 4
-            })
-          });
-          
-          DataFile.forEach(element => {
-            let nm = ''
-            nm_dok.forEach(el => {
-              if(el.id == element.id_persyaratan_detail){
-                  nm = el.nm
-              }
-            });
-            el +=  `<tr class="<?= $clss ?>">
-               <td align="center">${no++}</td>
-               <td align="left">${nm}</td>
-               <td align="left">${element.catatan}</td>
-               <td align="center">
-               ${element.dir_file}
-               </td>
-             </tr>`
- 
-           });
+            let id_teknis = ''
+            let dir_file = ''
+            let idutama = ''
+                        let id_detail_persyaratan = ''
 
-          $('#body-umum').html(el)
-          $('#file_data_umum').html(opt_umum)
-          $('#file_data_arsitektur').html(opt_arsi)
-          $('#file_data_struktur').html(opt_struk)
-          $('#file_data_mep').html(opt_mep)
+            DataFile.forEach(ele => {
+              idutama = ele.id
+                            id_detail_persyaratan = ele.id_detail
+
+              if(ele.id_persyaratan == 4){
+                if (element.id_detail == ele.id_persyaratan_detail) {
+                  dir_file = ele.dir_file
+                }
+
+              }
+            })
+            if(dir_file){
+              btn = `<div class="btn-group" role="group" aria-label="Basic example">
+                      <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${idutama}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail})"><i class="bx bx-trash"></i></button>
+                    </div>`
+            }else{
+              btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${idutama}', '4', '${element.id_detail}', '${id_teknis}')">`
+
+            }
+            opt_mep +=  `<tr class="<?= $clss ?>">
+                      <td align="center">${no3++}</td>
+                      <td align="left">${element.nm_dokumen}</td>
+                      <td align="left">${element.keterangan ? element.keterangan : ''}</td>
+                      <td align="center" id="upload_${element.id_detail}">
+                      ${btn}
+                      </td>
+                    </tr>`
+          });
+    
+
+          $('#body-umum').html(opt_umum)
+          $('#body-arsitek').html(opt_arsi)
+          $('#body-struktur').html(opt_struk)
+          $('#body-mep').html(opt_mep)
+
         }
       })
 }
 
-function savedok(isthis, kategori) {
+function savedok(isthis, idutama, kategori, id_detail, teknis, nm) {
   var form_data = new FormData(); 
-  form_data.append('id', $('#file_data_umum option:selected').attr("idutama"))
-  form_data.append('id_syarat', $('#file_data_umum option:selected').attr("idsyarat"))
+  form_data.append('id', idutama)
+  form_data.append('id_syarat', id_detail)
   
-  form_data.append('kode_jenis_syarat', $('#file_data_umum option:selected').attr("kodejenis"))
+  form_data.append('kode_jenis_syarat', kategori)
   form_data.append('d_file', $(isthis)[0].files[0])
-  form_data.append('nm_data', $('#file_data_umum option:selected').val())
+  form_data.append('nm_data', nm)
   $.ajax({
         type: "post",
         dataType: "json",
@@ -1367,6 +1462,40 @@ function savedok(isthis, kategori) {
         url: "/SaveDokumen",
         data: form_data,
         success: function (result) {
+          let data = result.data
+          data.forEach(element => {
+            // let btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, ${$("#is_id").val()}, ${element.id_persyaratan}, '${element.id_persyaratan_detail}', '')">`
+            let btn = `<div class="btn-group" role="group" aria-label="Basic example">
+                         <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${element.dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                         <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${element.dir_file}', ${$("#is_id").val()}, '${element.id_persyaratan}', '${element.id_detail}', '${element.id_persyaratan_detail}')"><i class="bx bx-trash"></i></button>
+                       </div>`
+            $(`#upload_${element.id_persyaratan_detail}`).html(btn)
+          });
         }
       })
+}
+
+function deletedoc(path, idutama, id_persyaratan, id_detail, syarat_detail) {
+  var form_data = new FormData(); 
+  form_data.append('id_detail', id_detail)
+  form_data.append('path', path)
+
+  $.ajax({
+        type: "post",
+        dataType: "json",
+        cache: false,
+        contentType: false,
+        processData: false,
+        url: "/deleteDokumen",
+        data: form_data,
+        success: function (result) {
+          let btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, ${$("#is_id").val()}, ${id_persyaratan}, '${id_detail}', '')">`
+          $(`#upload_${syarat_detail}`).html(btn)
+        }
+      })
+}
+
+function modalkonfirmasi(params) {
+  $('#modal-data-kelengkapan').modal('hide')
+  $('#modal-konfirmasi').modal('show')
 }

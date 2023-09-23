@@ -1337,7 +1337,6 @@ class Jsondata extends \CodeIgniter\Controller
 				$data['DataStruktur']	= json_decode( json_encode($this->konsulModel->getDataStruktur($filterQuery, $id_jenis_permohonan)), true);
 				$filterQuery				= 'b.id_detail, b.id_syarat, c.nm_dokumen,c.keterangan';
 				$data['DataMPE']		= json_decode( json_encode($this->konsulModel->getDataMEP($filterQuery, $id_jenis_permohonan)), true);
-				//End Data Teknis Struktur
 			}
 		}
 
@@ -1395,6 +1394,42 @@ class Jsondata extends \CodeIgniter\Controller
 			'status'   => 'sukses',
 			'code'     => 200,
 			'data'     => $this->konsulModel->getDataDokumen('a.*', $request->getVar('id'))
+		];
+
+		// return $response;
+		header('Content-Type: application/json');
+		echo json_encode($response);
+		exit;
+		// redirect('permohonan','refresh');
+		
+		// echo json_encode($response);
+	} catch (\Exception $e) {
+		die($e->getMessage());
+	}
+  }
+
+  public function deleteDokumen()
+  {
+	try {
+
+		$request		= $this->request;
+		
+		$method			= $request->getMethod();
+		$konsultasi = new \App\Models\KonsultasiModel();	
+		$id_detail 		= $request->getVar('id_detail');
+		$path 			= $request->getVar('path');
+
+		if($method == 'post'){
+
+			if (file_exists($path)) {
+				unlink($path);
+			}
+			$konsultasi->RemoveTeknisTanah($id_detail);
+		}
+		
+		$response = [
+			'status'   => 'sukses',
+			'code'     => 200
 		];
 
 		// return $response;

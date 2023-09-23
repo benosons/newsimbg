@@ -1777,7 +1777,7 @@
         <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
       </div>
       <div class="modal-body">
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-sm-6">
               <label class="form-label">Data Umum</label>
               <select class="form-select" id="file_data_umum" required>
@@ -1824,8 +1824,9 @@
               <label class="form-label">Pilih File</label>
               <input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, 'mep')">
             </div>
-          </div>
-          <div class="row mt-3">
+          </div> -->
+
+          <div class="row">
             <table class="table table-bordered table-striped table-hover">
               <thead class="table-dark">
                 <tr class="warning">
@@ -1870,6 +1871,117 @@
               </tbody>
             </table>
           </div>
+          <div class="row mt-3">
+            <table class="table table-bordered table-striped table-hover">
+              <thead class="table-dark">
+                <tr class="warning">
+                  <th width="5%">No</th>
+                  <th width="35%">Data Teknis Mekanikal, Elektrikal, dan Plambing</th>
+                  <th width="30%">Keterangan</th>
+                  <th width="30%">Berkas</th>
+                </tr>
+              </thead>
+              <tbody id="body-mep">
+               
+              </tbody>
+            </table>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="modalkonfirmasi()"><i class="bx bx-check-double"></i> Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-konfirmasi" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Konfirmasi Pernyataan Permohonan</h5>
+      </div>
+      <div class="modal-body">
+        <div class="card shadow-none border radius-15">
+          <div class="card-body">
+            <h6>Sebelum anda mengkonfirmasi, Mohon memperhatikan informasi berikut:</h6>
+            <ul>
+              <li>Data yang anda berikan adalah benar dan dapat dipertanggungjawabkan.</li>
+              <li>Anda dapat melengkapi data persyaratan dengan cara diunggah melalui situs SIMBG.</li>
+              <li>Dokumen harus dilengkapi dalam waktu 20 hari terhitung mulai tanggal pendaftaran.</li>
+              <li>Apabila terjadi kesalahan data setelah dilakukan konfirmasi, Anda dapat memperbaikinya setelah dikembalikan oleh Dinas Teknis</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="card shadow-none border radius-15">
+          <div class="card-body">
+            <h6>Berdasarkan konfirmasi setuju yang saya nyatakan:</h6>
+            <ul>
+              <li>Seluruh data dalam berkas/dokumen yang telah saya unggah dan isi, serta saya sampaikan adalah benar.</li>
+              <li>Data yang saya berikan tunduk pada peraturan perundang-undangan.</li>
+              <li>Apabila di kemudian hari terjadi kesalahan terhadap data yang saya sampaikan, maka saya bersedia menerima sanksi sesuai peraturan perundang-undangan.</li>
+            </ul>  
+          </div>
+        </div>
+
+        <div class="card shadow-none border radius-15">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-check form-check-success">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedSuccess" >
+                  <label class="form-check-label text-success" for="flexCheckCheckedSuccess">
+                    Pernyataan mematuhi KRK/KKPR
+                  </label> 
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-check form-check-success">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedSuccess" >
+                  <label class="form-check-label text-success" for="flexCheckCheckedSuccess">
+                    Pernyataan menggunakan Pelaksana Konstruksi
+                  </label> 
+                  </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-check form-check-success">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedSuccess" >
+                  <label class="form-check-label text-success" for="flexCheckCheckedSuccess">
+                    Pernyataan menggunakan Pengawas/ Manajemen Konstruksi bersertifikat
+                  </label> 
+                  </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-check form-check-success">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedSuccess" >
+                  <label class="form-check-label text-success" for="flexCheckCheckedSuccess">
+                    Pernyataan bahwa tanah tidak dalam status sengketa
+                  </label> 
+                  </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-check form-check-success">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedSuccess" >
+                  <label class="form-check-label text-success" for="flexCheckCheckedSuccess">
+                    Pernyataan memenuhi ketentuan pokok tahan gempa
+                  </label> 
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr/>
+        <div class="row">
+          <div class="col-lg-4"></div>
+          <div class="col-lg-4"><div class="form-check form-check-success">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedSuccess" >
+            <label class="form-check-label text-success" for="flexCheckCheckedSuccess">
+              Ceklis Jika Setuju
+            </label> 
+          </div></div>
+          <div class="col-lg-4"></div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" onclick="nextdokumen()"><i class="bx bx-check-double"></i> Simpan</button>
