@@ -38,9 +38,7 @@ $(document).ready(function() {
   // $('#is_id').val(563816)
   // nextdokumen()
   // getDataJnsKonsultasi(563806)
-  
-  // $('#modal-data-kelengkapan').modal('show')
-  
+    
   if(data_profile['id_provinsi']){
     $('#id_nama_provinsi').val(data_profile['id_provinsi']).trigger('change.select2')
   }
@@ -110,7 +108,8 @@ function loadpermohonan() {
           mRender: function (data, type, row) {
             if(row.status == 1){
             var elem = `<div class="btn-group" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-primary btn-sm btn-icon" onclick="actionlanjutkan(${row.id})"><i class="bx bx-edit me-0 fs-6"></i></button>
+                          <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="actionlanjutkan(${row.id})"><i class="bx bx-file me-0 fs-6"></i></button>
+                          <button type="button" class="btn btn-primary btn-sm btn-icon"><i class="bx bx-edit me-0 fs-6"></i></button>
                           <button type="button" class="btn btn-danger btn-sm btn-icon" onclick="action('delete', ${row.id_permohonan_slf})"><i class="bx bx-trash me-0 fs-6"></i></button>
                         </div>`
             }else if (row.status == 3){
@@ -1608,7 +1607,242 @@ function actionlanjutkan(id) {
       url: "/getdatajnskonsultasiall",
       data: form_data,
       success: function (result) {
+        let data = result.data
+        let no_konsultasi = data.no_konsultasi
+        let DataTanah = data.DataTanah
+        let DataFile = data.DataFile
+        let DataTkTanah = data.DataTkTanah
+        let DokumenUmum = data.DokumenUmum
+        let DataArsitektur = data.DataArsitektur
+        let DataStruktur = data.DataStruktur
+        let DataMPE = data.DataMPE
+
+        let DataBangunan = data.DataBangunan
         
+        let nm_pemilik = data.DataPemilik.nm_pemilik
+        let alamat = data.DataPemilik.alamat
+        let no_ktp = data.DataPemilik.no_ktp
+        let no_hp = data.DataPemilik.no_hp
+        let email = data.DataPemilik.email
+        let nm_konsultasi = data.DataBangunan.nm_konsultasi
+        let id_izin = data.id_izin
+        let list_izin = [
+          "",
+          "Persetujuan Bangunan Gedung",
+          "Bangunan Gedung Existing Belum Memiliki Izin",
+          "Bangunan Gedung Perubahan",
+          "Bangunan Gedung Kolektif",
+          "Bangunan Gedung Prasarana",
+          "Bangunan Gudang 1300 Meter Persegi",
+          "Desain Prototipe/Purwarupa SPBU Mikro 3 (TIGA) Kiloliter"
+        ];
+
+        $('#sum-no_konsultasi').html(no_konsultasi)
+        $('#sum-nm_pemilik').html(nm_pemilik)
+        $('#sum-alamat').html(alamat)
+        $('#sum-no_ktp').html(no_ktp)
+        $('#sum-no_hp').html(no_hp)
+        $('#sum-email').html(email)
+        $('#sum-nm_konsultasi').html(nm_konsultasi)
+        $('#sum-jenis_permohonan').html(list_izin[id_izin])
+
+        let luastinggi = `${DataBangunan.luas_bgn ? DataBangunan.luas_bgn : ''} m<sup>2</sup>, dengan tinggi ${DataBangunan.tinggi_bgn ? DataBangunan.tinggi_bgn : ''} meter dan berjumlah ${DataBangunan.jml_lantai ? DataBangunan.jml_lanta : ''} lantai.`
+        let luaslapis = `${ DataBangunan.luas_basement ? DataBangunan.luas_basement : '' } m<sup>2</sup> dan berjumlah ${ DataBangunan.lapis_basement ? DataBangunan.lapis_basement : ''} lapis`
+
+        $('#sum-luas_tinggi').html(luastinggi)
+        $('#sum-luas_lapis').html(luaslapis)
+        $('#sum-fungsi_bg').html(DataBangunan.fungsi_bg)
+        let alamat_bgn = `${DataBangunan.almt_bgn ? DataBangunan.almt_bgn : ''}, Kel. ${ DataBangunan.nm_kelurahan ? DataBangunan.nm_kelurahan : '' }, Kec. ${DataBangunan.nama_kec_bg ? DataBangunan.nama_kec_bg : '' }, ${DataBangunan.nama_kabkota_bg ? DataBangunan.nama_kabkota_bg : ''}, ${DataBangunan.nama_provinsi_bg ? DataBangunan.nama_provinsi_bg : ''}`
+
+        $('#sum-lokasi_bangunan').html(alamat_bgn)
+
+        let eltanah = ''
+        let noeltanah = 1
+        DataTanah.forEach(element => {
+            eltanah += `<tr>
+                            <td align="center"> ${noeltanah++} </td>
+                            <td align="center"> ${element.Jns_dok}</td>
+                            <td align="center"> ${element.no_dok} | ${element.tanggal_dok}</td>
+                            <td align="center"> ${element.luas_tanah}</td>
+                            <td align="center"> ${element.atas_nama_dok}d>
+                            <td align="center">
+                              <a type="button" class="btn btn-icon btn-info btn-sm" target="_blank" href="./object-storage/dekill/Earth/${element.dir_file}" class="btn default btn-xs blue-stripe"><i class="bx bx-show"></i></a>
+                            </td>
+                            <td align="center">
+                              <a type="button" class="btn btn-icon btn-info btn-sm" target="_blank" href="./object-storage/dekill/Earth/${element.dir_file_phat}" class="btn default btn-xs blue-stripe"><i class="bx bx-show"></i></a>
+                            </td>
+                        </tr>`
+        });
+
+        $('#body-eltanah').html(eltanah)
+
+        let notanah = 1
+        let opt_tanah = ''
+        DataTkTanah.forEach(element => {
+          let dir_file = ''
+          let btn = ''
+          DataFile.forEach(ele => {
+            if(ele.id_persyaratan == 1){
+              if (element.id_detail == ele.id_persyaratan_detail) {
+                dir_file = ele.dir_file                
+              }
+
+            }
+          })
+          if(dir_file){
+            btn = `<div class="btn-group" role="group" aria-label="Basic example">
+                    <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                  </div>`
+          }else{
+            btn = `Tidak Ada Dokumen`
+
+          }
+          opt_tanah +=  `<tr>
+                    <td align="center">${notanah++}</td>
+                    <td align="left">${element.nm_dokumen}</td>
+                    <td align="left">${element.keterangan ? element.keterangan : ''}</td>
+                    <td align="center" id="upload_${element.id_detail}">
+                      ${btn}
+                    </td>
+                  </tr>`
+        });
+
+        $('#data-teknis-tanah').html(opt_tanah)
+
+        let noumum = 1
+        let opt_umum = ''
+        DokumenUmum.forEach(element => {
+          let dir_file = ''
+          let btn = ''
+          DataFile.forEach(ele => {
+            if(ele.id_persyaratan == 5){
+              if (element.id_detail == ele.id_persyaratan_detail) {
+                dir_file = ele.dir_file                
+              }
+
+            }
+          })
+          if(dir_file){
+            btn = `<div class="btn-group" role="group" aria-label="Basic example">
+                    <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                  </div>`
+          }else{
+            btn = `Tidak Ada Dokumen`
+
+          }
+          opt_umum +=  `<tr>
+                    <td align="center">${noumum++}</td>
+                    <td align="left">${element.nm_dokumen}</td>
+                    <td align="left">${element.keterangan ? element.keterangan : ''}</td>
+                    <td align="center" id="upload_${element.id_detail}">
+                      ${btn}
+                    </td>
+                  </tr>`
+        });
+
+        $('#data-umum').html(opt_umum)
+
+        let noarsitek = 1
+        let opt_arsitek = ''
+        DataArsitektur.forEach(element => {
+          let dir_file = ''
+          let btn = ''
+          DataFile.forEach(ele => {
+            if(ele.id_persyaratan == 2){
+              if (element.id_detail == ele.id_persyaratan_detail) {
+                dir_file = ele.dir_file                
+              }
+
+            }
+          })
+          if(dir_file){
+            btn = `<div class="btn-group" role="group" aria-label="Basic example">
+                    <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                  </div>`
+          }else{
+            btn = `Tidak Ada Dokumen`
+
+          }
+          opt_arsitek +=  `<tr>
+                    <td align="center">${noarsitek++}</td>
+                    <td align="left">${element.nm_dokumen}</td>
+                    <td align="left">${element.keterangan ? element.keterangan : ''}</td>
+                    <td align="center" id="upload_${element.id_detail}">
+                      ${btn}
+                    </td>
+                  </tr>`
+        });
+
+        $('#data-arsitektur').html(opt_arsitek)
+
+        let nostruktur = 1
+        let opt_struktur = ''
+        DataStruktur.forEach(element => {
+          let dir_file = ''
+          let btn = ''
+          DataFile.forEach(ele => {
+            if(ele.id_persyaratan == 3){
+              if (element.id_detail == ele.id_persyaratan_detail) {
+                dir_file = ele.dir_file                
+              }
+
+            }
+          })
+          if(dir_file){
+            btn = `<div class="btn-group" role="group" aria-label="Basic example">
+                    <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                  </div>`
+          }else{
+            btn = `Tidak Ada Dokumen`
+
+          }
+          opt_struktur +=  `<tr>
+                    <td align="center">${nostruktur++}</td>
+                    <td align="left">${element.nm_dokumen}</td>
+                    <td align="left">${element.keterangan ? element.keterangan : ''}</td>
+                    <td align="center" id="upload_${element.id_detail}">
+                      ${btn}
+                    </td>
+                  </tr>`
+        });
+
+        $('#data-struktur').html(opt_struktur)
+
+        let nomep = 1
+        let opt_mep = ''
+        DataMPE.forEach(element => {
+          let dir_file = ''
+          let btn = ''
+          DataFile.forEach(ele => {
+            if(ele.id_persyaratan == 4){
+              if (element.id_detail == ele.id_persyaratan_detail) {
+                dir_file = ele.dir_file                
+              }
+
+            }
+          })
+          if(dir_file){
+            btn = `<div class="btn-group" role="group" aria-label="Basic example">
+                    <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                  </div>`
+          }else{
+            btn = `Tidak Ada Dokumen`
+
+          }
+          opt_mep +=  `<tr>
+                    <td align="center">${nomep++}</td>
+                    <td align="left">${element.nm_dokumen}</td>
+                    <td align="left">${element.keterangan ? element.keterangan : ''}</td>
+                    <td align="center" id="upload_${element.id_detail}">
+                      ${btn}
+                    </td>
+                  </tr>`
+        });
+
+        $('#data-mep').html(opt_mep)
+
+        $('#exampleExtraLargeModal2').modal('show')
+
       }
   })
 }

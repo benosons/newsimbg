@@ -1540,7 +1540,7 @@ class Jsondata extends \CodeIgniter\Controller
 		if ($id != '') {
 			$filterPemilik	= '	a.*,b.nama_kecamatan,c.nama_kabkota,d.nama_provinsi';
 			$data['DataPemilik']	= json_decode( json_encode($this->konsulModel->getPemilik($filterPemilik, $id)), true);
-			$data['DataTanah']		= json_decode( json_encode($this->konsulModel->getTanah('a.*', $id)), true);
+			$data['DataTanah']		= json_decode( json_encode($this->konsulModel->getTanah('a.*, b.Jns_dok', $id)), true);
 			$filterBangunan			= '	a.*,b.nama_kecamatan,c.nama_kabkota,d.nama_provinsi,e.nm_konsultasi';
 			$data['DataBangunan']	= json_decode( json_encode($this->konsulModel->getBangunan($filterBangunan, $id)), true);
 			

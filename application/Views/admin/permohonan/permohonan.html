@@ -927,9 +927,9 @@
                 <div class="card-body">
                   <div class="d-flex align-items-center">
                     <div>
-                      <h4 class="mb-0 text-white">DATA PBG-110101-23082023-01</h4>
+                      <h4 class="mb-0 text-white">DATA <span id="sum-no_konsultasi"></span></h4>
                     </div>
-                    <div class="widgets-icons bg-light-white text-secondary ms-auto"><i class='bx bxs-file'></i>
+                    <div class="widgets-icons bg-light-white text-white ms-auto" style="background-color: #fefeff00;"><i class='bx bxs-file'></i>
                     </div>
                   </div>
                 </div>
@@ -937,58 +937,53 @@
 
               <div class="row mb-1"> 
                 <div class="col-1"></div> 
-                <div class="col-4">Jenis Konsultasi</div> 
-                <div class="col-7" id="sum-jenis_konsul"> Bangunan Fungsi Hunian</div> 
-              </div>
-              <div class="row mb-1"> 
-                <div class="col-1"></div> 
                 <div class="col-4">Nama Pemilik</div> 
-                <div class="col-7" id="sum-nama_pemilik"> Tukang</div> 
+                <div class="col-7" id="sum-nm_pemilik"></div> 
               </div>
               <div class="row mb-1"> 
                 <div class="col-1"></div> 
                 <div class="col-4">No Identitas</div> 
-                <div class="col-7" id="sum-nama_pemilik"> 12345678909876543</div> 
+                <div class="col-7" id="sum-no_ktp"> </div> 
               </div>
               <div class="row mb-1"> 
                 <div class="col-1"></div> 
                 <div class="col-4">Alamat Pemilik Bangunan</div> 
-                <div class="col-7" id="sum-alamat_pemilik"> Jl.Tes</div> 
+                <div class="col-7" id="sum-alamat"> </div> 
               </div>
               <div class="row mb-1"> 
                 <div class="col-1"></div> 
                 <div class="col-4">No Kontak</div> 
-                <div class="col-7" id="sum-kontak_pemilik"> 081357385566</div> 
+                <div class="col-7" id="sum-no_hp"></div> 
               </div>
               <div class="row mb-1"> 
                 <div class="col-1"></div> 
                 <div class="col-4">E-mail</div> 
-                <div class="col-7" id="sum-email_pemilik"> p@simbg.pu.go.id</div> 
+                <div class="col-7" id="sum-email"></div> 
               </div>
               <div class="row mb-1"> 
                 <div class="col-1"></div> 
                 <div class="col-4">Jenis Konsultasi</div> 
-                <div class="col-7" id="sum-jenis_konsultasi"> Rumah Tinggal Tidak Sederhana</div> 
+                <div class="col-7" id="sum-nm_konsultasi"></div> 
               </div>
               <div class="row mb-1"> 
                 <div class="col-1"></div> 
                 <div class="col-4">Jenis Permohonan</div> 
-                <div class="col-7" id="sum-jenis_permohonan"> Persetujuan Bangunan Gedung</div> 
+                <div class="col-7" id="sum-jenis_permohonan"> </div> 
               </div>
-              <div class="row mb-4"> 
+              <div class="row mb-1"> 
                 <div class="col-1"></div> 
                 <div class="col-4">Luas, Tinggi & Jumlah Lantai</div> 
-                <div class="col-7" id="sum-data_bangunan"> Luas : 150.00m2, Tinggi : 4.00 Meter, Jumlah Lantai : 1 Lantai</div> 
+                <div class="col-7" id="sum-luas_tinggi"> </div> 
               </div>
-              <div class="row mb-4"> 
+              <div class="row mb-1"> 
                 <div class="col-1"></div> 
                 <div class="col-4">Luas & Lapis Basement</div> 
-                <div class="col-7" id="sum-luaslapis"> 0 m2 dan berjumlah 0 lapis.</div> 
+                <div class="col-7" id="sum-luas_lapis"></div> 
               </div>
-              <div class="row mb-4"> 
+              <div class="row mb-1"> 
                 <div class="col-1"></div> 
                 <div class="col-4">Fungsi Bangunan Gedung</div> 
-                <div class="col-7" id="sum-fungsi_bangunan"> Fungsi Hunian</div> 
+                <div class="col-7" id="sum-fungsi_bg"> Fungsi Hunian</div> 
               </div>
               <div class="row mb-1"> 
                 <div class="col-1"></div> 
@@ -1064,23 +1059,8 @@
                             <th scope="col">Izin Pemanfaatan</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row"></th>
-                            <td>Bukti Lain - Lain</td>
-                            <td>
-                              tes1234
-                              2023-08-04
-                            </td>
-                            <td>10.00</td>
-                            <td>tes</td>
-                            <td>
-                              <button type="button" class="btn btn-primary btn-sm btn-icon"><i class="bx bx-file me-0 fs-6"></i></button>
-                            </td>
-                            <td>
-                              Tidak Ada Dokumen
-                            </td>
-                          </tr>
+                        <tbody id="body-eltanah">
+                          
                         </tbody>
                       </table>
                     </div>
@@ -1093,10 +1073,11 @@
                           <tr>
                             <th scope="col">#</th>
                             <th scope="col">Data Teknis Tanah</th>
+                            <th scope="col">Keterangan</th>
                             <th scope="col">Berkas</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="data-teknis-tanah">
                           <tr>
                             <th scope="row"></th>
                             <td>Gambar dan Informasi tentang hasil penyelidikan Tanah untuk bangunan sederhana</td>
@@ -1118,10 +1099,11 @@
                           <tr>
                             <th scope="col">#</th>
                             <th scope="col">Data Umum</th>
+                            <th scope="col">Keterangan</th>
                             <th scope="col">Berkas</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="data-umum">
                           <tr>
                             <th scope="row"></th>
                             <td>Informasi KTP/KITAS*</td>
@@ -1157,10 +1139,11 @@
                           <tr>
                             <th scope="col">#</th>
                             <th scope="col">Data Teknis Arsitektur</th>
+                            <th scope="col">Keterangan</th>
                             <th scope="col">Berkas</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="data-arsitektur">
                           <tr>
                             <th scope="row"></th>
                             <td>Gambar Situasi</td>
@@ -1214,10 +1197,11 @@
                           <tr>
                             <th scope="col">#</th>
                             <th scope="col">Data Teknis Struktur</th>
+                            <th scope="col">Keterangan</th>
                             <th scope="col">Berkas</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="data-struktur">
                           <tr>
                             <th scope="row"></th>
                             <td>Gambar Rencana Fondasi</td>
@@ -1266,7 +1250,7 @@
                             <th scope="col">Berkas</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="data-mep">
                           <tr>
                             <th scope="row"></th>
                             <td>Gambar Rencana dan Perhitungan Teknis Jaringan Listrik</td>
