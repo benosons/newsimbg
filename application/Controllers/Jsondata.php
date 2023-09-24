@@ -1150,12 +1150,6 @@ class Jsondata extends \CodeIgniter\Controller
 		if ($id != '') {
 			$filterPemilik	= '	a.*,b.nama_kecamatan,c.nama_kabkota,d.nama_provinsi';
 			$data['DataPemilik']	= json_decode( json_encode($this->konsulModel->getPemilik($filterPemilik, $id)), true);
-			$data['DataTanah']		= json_decode( json_encode($this->konsulModel->getTanah('a.*', $id)), true);
-			$filterBangunan	= '	a.*,b.nama_kecamatan,c.nama_kabkota,d.nama_provinsi,e.nm_konsultasi';
-			$data['DataBangunan']	= json_decode( json_encode($this->konsulModel->getBangunan($filterBangunan, $id)), true);
-			$data['DataTeknisTanah']	=json_decode( json_encode( $this->konsulModel->getDataDokumen('a.*', $id)), true);
-			$filterQuery				= 'b.id_detail, b.id_syarat, c.nm_dokumen,c.keterangan';
-			$data['DataTkTanah']	= json_decode( json_encode($this->konsulModel->getDataTanah($filterQuery, $id_jenis_permohonan)), true);
 		}
 		$data['Konsultasi'] = json_decode( json_encode($this->konsulModel->getDataKonsultasi('a.*', $id)), true);
 		// print_r($data);die;
@@ -1328,7 +1322,8 @@ class Jsondata extends \CodeIgniter\Controller
 				$data['DataBangunan']	= json_decode( json_encode($this->konsulModel->getBangunan($filterBangunan, $id)), true);
 				//Begin Data Umum 
 				$data['DataFile']		= $this->konsulModel->getDataDokumen('a.*', $id);
-
+				$filterQuery				= 'b.id_detail, b.id_syarat, c.nm_dokumen,c.keterangan';
+				$data['DataTkTanah']	= json_decode( json_encode($this->konsulModel->getDataTanah($filterQuery, $id_jenis_permohonan)), true);
 				$filterQuery			= 'b.id_detail, b.id_syarat, c.nm_dokumen,c.keterangan';
 				$data['DokumenUmum']	= json_decode( json_encode($this->konsulModel->getDataUmum($filterQuery, $id_jenis_permohonan)), true);
 				$filterQuery				= 'b.id_detail, b.id_syarat,c.id, c.nm_dokumen,c.keterangan';
@@ -1529,6 +1524,61 @@ class Jsondata extends \CodeIgniter\Controller
 	  }
 	  
 	  return $no_registrasi;
+  }
+
+  public function getdatajnskonsultasiall()
+  {
+	try {
+		$request		= $this->request;
+		$id		= $request->getVar('id');
+		$method			= $request->getMethod();
+		
+		$data = json_decode( json_encode($this->konsulModel->getdatajnskonsultasi('a.*', $id)), true);
+		
+		$id_jenis_permohonan = $data['id_jenis_permohonan'];
+		$data['id_jenis_permohonan']	= $id_jenis_permohonan;
+		if ($id != '') {
+			$filterPemilik	= '	a.*,b.nama_kecamatan,c.nama_kabkota,d.nama_provinsi';
+			$data['DataPemilik']	= json_decode( json_encode($this->konsulModel->getPemilik($filterPemilik, $id)), true);
+			$data['DataTanah']		= json_decode( json_encode($this->konsulModel->getTanah('a.*', $id)), true);
+			$filterBangunan			= '	a.*,b.nama_kecamatan,c.nama_kabkota,d.nama_provinsi,e.nm_konsultasi';
+			$data['DataBangunan']	= json_decode( json_encode($this->konsulModel->getBangunan($filterBangunan, $id)), true);
+			
+			
+			$data['DataFile']		= $this->konsulModel->getDataDokumen('a.*', $id);
+			$filterQuery				= 'b.id_detail, b.id_syarat, c.nm_dokumen,c.keterangan';
+			$data['DataTkTanah']	= json_decode( json_encode($this->konsulModel->getDataTanah($filterQuery, $id_jenis_permohonan)), true);
+			$filterQuery			= 'b.id_detail, b.id_syarat, c.nm_dokumen,c.keterangan';
+			$data['DokumenUmum']	= json_decode( json_encode($this->konsulModel->getDataUmum($filterQuery, $id_jenis_permohonan)), true);
+			$filterQuery				= 'b.id_detail, b.id_syarat,c.id, c.nm_dokumen,c.keterangan';
+			$data['DataArsitektur']	= json_decode( json_encode($this->konsulModel->getDataArsitektur($filterQuery, $id_jenis_permohonan)), true);
+			$filterQuery				= 'b.id_detail, b.id_syarat, c.nm_dokumen,c.keterangan';
+			$data['DataStruktur']	= json_decode( json_encode($this->konsulModel->getDataStruktur($filterQuery, $id_jenis_permohonan)), true);
+			$filterQuery				= 'b.id_detail, b.id_syarat, c.nm_dokumen,c.keterangan';
+			$data['DataMPE']		= json_decode( json_encode($this->konsulModel->getDataMEP($filterQuery, $id_jenis_permohonan)), true);
+		}
+		$data['Konsultasi'] = json_decode( json_encode($this->konsulModel->getDataKonsultasi('a.*', $id)), true);
+		// print_r($data);die;
+		if($data){
+			$response = [
+				'status'   => 'sukses',
+				'code'     => 200,
+				'data' 	 => $data
+			];
+		}else{
+			$response = [
+				'status'   => 'gagal',
+				'code'     => '0',
+				'data'     => 'tidak ada data',
+			];
+		}
+
+	header('Content-Type: application/json');
+	echo json_encode($response);
+	exit;
+	} catch (\Exception $e) {
+		die($e->getMessage());
+	}
   }
 
 }

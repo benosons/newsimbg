@@ -200,6 +200,7 @@ $routes->post('getpemilik', 'Jsondata::getpemilik');
 $routes->post('savedata', 'Jsondata::savedata');
 $routes->post('savealamatbangunan', 'Jsondata::savealamatbangunan');
 $routes->post('getdatajnskonsultasi', 'Jsondata::getdatajnskonsultasi');
+$routes->post('getdatajnskonsultasiall', 'Jsondata::getdatajnskonsultasiall');
 $routes->post('saveTanah', 'Jsondata::saveTanah');
 $routes->post('getdatadokumen', 'Jsondata::getdatadokumen');
 $routes->post('SaveDokumen', 'Jsondata::SaveDokumen');

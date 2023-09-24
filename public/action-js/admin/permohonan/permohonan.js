@@ -35,7 +35,7 @@ $(document).ready(function() {
   // table.buttons().container()
   //   .appendTo( '#example2_wrapper .col-md-6:eq(0)' );
   loadpermohonan()
-  // modalkonfirmasi()
+  // getDataJnsKonsultasi(563806)
   
   // $('#modal-data-kelengkapan').modal('show')
   
@@ -108,7 +108,7 @@ function loadpermohonan() {
           mRender: function (data, type, row) {
             if(row.status == 1){
             var elem = `<div class="btn-group" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-primary btn-sm btn-icon" onclick="action('update', ${row.id_permohonan_slf})"><i class="bx bx-edit me-0 fs-6"></i></button>
+                          <button type="button" class="btn btn-primary btn-sm btn-icon" onclick="actionlanjutkan(${row.id})"><i class="bx bx-edit me-0 fs-6"></i></button>
                           <button type="button" class="btn btn-danger btn-sm btn-icon" onclick="action('delete', ${row.id_permohonan_slf})"><i class="bx bx-trash me-0 fs-6"></i></button>
                         </div>`
             }else if (row.status == 3){
@@ -123,7 +123,7 @@ function loadpermohonan() {
                         </div>`
             }else{
               var elem = `<div class="btn-group" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="action('detail', ${row.id_permohonan_slf})"><i class="bx bx-file me-0 fs-6"></i></button>
+                          <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="actionlanjutkan('${row.id}')"><i class="bx bx-file me-0 fs-6"></i></button>
                           <button type="button" class="btn btn-primary btn-sm btn-icon" onclick="action('update', ${row.id_permohonan_slf})"><i class="bx bx-edit me-0 fs-6"></i></button>
                         </div>`
             }
@@ -1134,27 +1134,59 @@ function getDataJnsKonsultasi(ids) {
       let DataBangunan = data.DataBangunan
       let DataPemilik = data.DataPemilik
       let DataTanah = data.DataTanah
+      let DataTeknisTanah = data.DataTeknisTanah
       let DataTkTanah = data.DataTkTanah
       
       $('#modal-alamat').modal('hide')
       $('#modal-data-tanah').modal('show')
-      $('#nm_konsultasi').html(DataBangunan.nm_konsultasi)
+      $('#nm_konsultasi').html('')
       $('#nm_pemilik').html(result.data.DataPemilik.nm_pemilik)
       $('#alamat_pemilik').html(`${DataPemilik['alamat']}, Kec. ${DataPemilik.nama_kecamatan}, ${DataPemilik.nama_kabkota}, Prov. ${DataPemilik.nama_provinsi}`)
       $('#lokasi_gedung').html(`${DataBangunan.almt_bgn}, Kel/Desa. ${DataBangunan.nama_kelurahan}, Kec. ${DataBangunan.nama_kecamatan}, ${DataBangunan.nama_kabkota}, Prov. ${DataBangunan.nama_provinsi}`)
       
       $('#lokasi_tanah').val(data.alamat_bg ? data.alamat_bg :  DataBangunan.almt_bgn + " Kec. " + DataBangunan.nama_kecamatan + ", " + DataBangunan.nama_kabkota + ", Prov. " + DataBangunan.nama_provinsi)
-      
+      if (DataBangunan.id_jenis_permohonan == '23' || DataBangunan.id_jenis_permohonan == '24' || DataBangunan.id_jenis_permohonan == '26' || DataBangunan.id_jenis_permohonan == '29' || DataBangunan.id_jenis_permohonan == '35' || DataBangunan.id_jenis_permohonan == '36' || DataBangunan.id_jenis_permohonan == '14' ){
+        $('#jenis-permohonannya').hide()
+      }else{
+        $('#jenis-permohonannya').show()
+      }
       let no = 1
       let bodytnh = ''
       let bdy = ''
+
       DataTkTanah.forEach(element => {
+        let id_teknis = ''
+        let dir_file = ''
+        let btn = ''
+        let idutama = ''
+        let id_detail_persyaratan = ''
+        DataTeknisTanah.forEach(ele => {
+          idutama = ele.id
+          id_detail_persyaratan = ele.id_detail
+          if(ele.id_persyaratan == 1){
+            if (element.id_detail == ele.id_persyaratan_detail) {
+              dir_file = ele.dir_file
+              id_teknis = element.id_detail;
+              
+            }
+
+          }
+        })
+        if(dir_file){
+          btn = `<div class="btn-group" role="group" aria-label="Basic example">
+                  <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                  <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${idutama}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail}, 1)"><i class="bx bx-trash"></i></button>
+                </div>`
+        }else{
+          btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${idutama}', '1', '${element.id_detail}', '${id_teknis}', '${element.nm_dokumen}')">`
+
+        }
         bdy += `<tr class="">
                 <td align="center">${no++}</td>
                 <td align="left">${element.nm_dokumen}</td>
                 <td align="left">${element.keterangan}</td>
-                <td align="center">
-                  <input type="file" class="form-control" name="d_file" id="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf">
+                <td align="center" id="upload_${element.id_detail}">
+                ${btn}
                 </td>
               </tr>`
       });
@@ -1271,19 +1303,59 @@ function nextdokumen() {
         success: function (result) {
           let data = result.data
           let DataFile = data.DataFile
+          let DataTkTanah = data.DataTkTanah
           let DokumenUmum = data.DokumenUmum
           let DataArsitektur = data.DataArsitektur
           let DataStruktur = data.DataStruktur
           let DataMPE	 = data.DataMPE
           let no = 1
+          let no1 = 1
           let no2 = 1
           let no3 = 1
+          let no4 = 1
 
+          let opt_tanah = ''
           let opt_umum = ''
           let opt_arsi = ''
           let opt_struk = ''
           let opt_mep = ''
           
+          DataTkTanah.forEach(element => {
+            let id_teknis = ''
+            let dir_file = ''
+            let btn = ''
+            let idutama = ''
+            let id_detail_persyaratan = ''
+            DataFile.forEach(ele => {
+              idutama = ele.id
+              id_detail_persyaratan = ele.id_detail
+              if(ele.id_persyaratan == 1){
+                if (element.id_detail == ele.id_persyaratan_detail) {
+                  dir_file = ele.dir_file
+                  id_teknis = element.id_detail;
+                  
+                }
+
+              }
+            })
+            if(dir_file){
+              btn = `<div class="btn-group" role="group" aria-label="Basic example">
+                      <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${idutama}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail})"><i class="bx bx-trash"></i></button>
+                    </div>`
+            }else{
+              btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${idutama}', '5', '${element.id_detail}', '${id_teknis}', '${element.nm_dokumen}')">`
+
+            }
+            opt_tanah +=  `<tr class="<?= $clss ?>">
+                      <td align="center">${no++}</td>
+                      <td align="left">${element.nm_dokumen}</td>
+                      <td align="left">${element.keterangan ? element.keterangan : ''}</td>
+                      <td align="center" id="upload_${element.id_detail}">
+                        ${btn}
+                      </td>
+                    </tr>`
+          });
 
           DokumenUmum.forEach(element => {
             let id_teknis = ''
@@ -1313,7 +1385,7 @@ function nextdokumen() {
 
             }
             opt_umum +=  `<tr class="<?= $clss ?>">
-                      <td align="center">${no++}</td>
+                      <td align="center">${no1++}</td>
                       <td align="left">${element.nm_dokumen}</td>
                       <td align="left">${element.keterangan ? element.keterangan : ''}</td>
                       <td align="center" id="upload_${element.id_detail}">
@@ -1426,7 +1498,7 @@ function nextdokumen() {
 
             }
             opt_mep +=  `<tr class="<?= $clss ?>">
-                      <td align="center">${no3++}</td>
+                      <td align="center">${no4++}</td>
                       <td align="left">${element.nm_dokumen}</td>
                       <td align="left">${element.keterangan ? element.keterangan : ''}</td>
                       <td align="center" id="upload_${element.id_detail}">
@@ -1436,6 +1508,7 @@ function nextdokumen() {
           });
     
 
+          $('#body-tanah').html(opt_tanah)
           $('#body-umum').html(opt_umum)
           $('#body-arsitek').html(opt_arsi)
           $('#body-struktur').html(opt_struk)
@@ -1475,7 +1548,7 @@ function savedok(isthis, idutama, kategori, id_detail, teknis, nm) {
       })
 }
 
-function deletedoc(path, idutama, id_persyaratan, id_detail, syarat_detail) {
+function deletedoc(path, idutama, id_persyaratan, id_detail, syarat_detail, type) {
   var form_data = new FormData(); 
   form_data.append('id_detail', id_detail)
   form_data.append('path', path)
@@ -1489,7 +1562,7 @@ function deletedoc(path, idutama, id_persyaratan, id_detail, syarat_detail) {
         url: "/deleteDokumen",
         data: form_data,
         success: function (result) {
-          let btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, ${$("#is_id").val()}, ${id_persyaratan}, '${id_detail}', '')">`
+          let btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, ${$("#is_id").val()}, ${type ? type : id_persyaratan}, '${id_detail}', '')">`
           $(`#upload_${syarat_detail}`).html(btn)
         }
       })
@@ -1516,7 +1589,24 @@ function saveDataPernyataan(){
       url: "/saveDataPernyataan",
       data: form_data,
       success: function (result) {
+        window.location.reload()
+      }
+  })
+}
 
+function actionlanjutkan(id) {
+  var form_data = new FormData(); 
+  form_data.append('id', id)
+  $.ajax({
+      type: "post",
+      dataType: "json",
+      cache: false,
+      contentType: false,
+      processData: false,
+      url: "/getdatajnskonsultasiall",
+      data: form_data,
+      success: function (result) {
+        
       }
   })
 }
