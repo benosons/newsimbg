@@ -35,6 +35,8 @@ $(document).ready(function() {
   // table.buttons().container()
   //   .appendTo( '#example2_wrapper .col-md-6:eq(0)' );
   loadpermohonan()
+  // $('#is_id').val(563816)
+  // nextdokumen()
   // getDataJnsKonsultasi(563806)
   
   // $('#modal-data-kelengkapan').modal('show')
@@ -1175,10 +1177,10 @@ function getDataJnsKonsultasi(ids) {
         if(dir_file){
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
                   <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                  <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${idutama}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail}, 1)"><i class="bx bx-trash"></i></button>
+                  <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$('#is_id').val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail}, 1)"><i class="bx bx-trash"></i></button>
                 </div>`
         }else{
-          btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${idutama}', '1', '${element.id_detail}', '${id_teknis}', '${element.nm_dokumen}')">`
+          btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${$('#is_id').val()}', '1', '${element.id_detail}', '${id_teknis}', '${element.nm_dokumen}')">`
 
         }
         bdy += `<tr class="">
@@ -1341,10 +1343,10 @@ function nextdokumen() {
             if(dir_file){
               btn = `<div class="btn-group" role="group" aria-label="Basic example">
                       <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${idutama}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail})"><i class="bx bx-trash"></i></button>
+                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$('#is_id').val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail})"><i class="bx bx-trash"></i></button>
                     </div>`
             }else{
-              btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${idutama}', '5', '${element.id_detail}', '${id_teknis}', '${element.nm_dokumen}')">`
+              btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${$('#is_id').val()}', '1', '${element.id_detail}', '${id_teknis}', '${element.nm_dokumen}')">`
 
             }
             opt_tanah +=  `<tr class="<?= $clss ?>">
@@ -1378,10 +1380,10 @@ function nextdokumen() {
             if(dir_file){
               btn = `<div class="btn-group" role="group" aria-label="Basic example">
                       <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${idutama}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail})"><i class="bx bx-trash"></i></button>
+                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$('#is_id').val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail})"><i class="bx bx-trash"></i></button>
                     </div>`
             }else{
-              btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${idutama}', '5', '${element.id_detail}', '${id_teknis}', '${element.nm_dokumen}')">`
+              btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${$('#is_id').val()}', '5', '${element.id_detail}', '${id_teknis}', '${element.nm_dokumen}')">`
 
             }
             opt_umum +=  `<tr class="<?= $clss ?>">
@@ -1416,10 +1418,10 @@ function nextdokumen() {
             if(dir_file){
               btn = `<div class="btn-group" role="group" aria-label="Basic example">
                       <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${idutama}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail})"><i class="bx bx-trash"></i></button>
+                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$('#is_id').val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail})"><i class="bx bx-trash"></i></button>
                     </div>`
             }else{
-              btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${idutama}', '2', '${element.id_detail}', '${id_teknis}')">`
+              btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${$('#is_id').val()}', '2', '${element.id_detail}', '${id_teknis}')">`
 
             }
 
@@ -1454,10 +1456,10 @@ function nextdokumen() {
             if(dir_file){
               btn = `<div class="btn-group" role="group" aria-label="Basic example">
                       <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}',' ${idutama}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail})"><i class="bx bx-trash"></i></button>
+                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$('#is_id').val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail})"><i class="bx bx-trash"></i></button>
                     </div>`
             }else{
-              btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${idutama}', '3', '${element.id_detail}', '${id_teknis}')">`
+              btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${$('#is_id').val()}', '3', '${element.id_detail}', '${id_teknis}')">`
 
             }
             opt_struk +=  `<tr class="<?= $clss ?>">
@@ -1491,10 +1493,10 @@ function nextdokumen() {
             if(dir_file){
               btn = `<div class="btn-group" role="group" aria-label="Basic example">
                       <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${idutama}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail})"><i class="bx bx-trash"></i></button>
+                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$('#is_id').val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${element.id_detail})"><i class="bx bx-trash"></i></button>
                     </div>`
             }else{
-              btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${idutama}', '4', '${element.id_detail}', '${id_teknis}')">`
+              btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${$('#is_id').val()}', '4', '${element.id_detail}', '${id_teknis}')">`
 
             }
             opt_mep +=  `<tr class="<?= $clss ?>">
@@ -1562,7 +1564,7 @@ function deletedoc(path, idutama, id_persyaratan, id_detail, syarat_detail, type
         url: "/deleteDokumen",
         data: form_data,
         success: function (result) {
-          let btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, ${$("#is_id").val()}, ${type ? type : id_persyaratan}, '${id_detail}', '')">`
+          let btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, ${$("#is_id").val()}, ${type ? type : id_persyaratan}, '${syarat_detail}', '')">`
           $(`#upload_${syarat_detail}`).html(btn)
         }
       })
