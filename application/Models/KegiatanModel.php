@@ -30,6 +30,14 @@ class KegiatanModel extends Model
     return $query->getResult();
   }
 
+  // public function getjbg($id)
+  // {
+  //   $builder = $this->db->table('tm_jenis_bg');
+  //   $builder->select("*");
+  //   $builder->where('id_fungsi_bg', $id);
+  //   $query   = $builder->get();
+  //   return $query->getResult();
+  // }
   public function getjbg($id)
   {
     $builder = $this->db->table('tm_jenis_bg');

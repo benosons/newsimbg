@@ -50,6 +50,8 @@ $(function() {
 
   
 // chart 5
+//  var ctx = document.getElementById('chart5').getContext('2d');
+if(document.getElementById('chart5')){
  var ctx = document.getElementById('chart5').getContext('2d');
 
       var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
@@ -128,8 +130,9 @@ $(function() {
           }
         }
       });
+    }
 
-
+    if(document.getElementById("chart6")){
    // chart 6
     var ctx = document.getElementById("chart6").getContext('2d');
    
@@ -185,9 +188,9 @@ $(function() {
 			  }
       });
 	  
+    }
 	  
-	  
-	  
+	  if(document.getElementById('chart7')){
   // chart 7
  var ctx = document.getElementById('chart7').getContext('2d');
 
@@ -232,7 +235,7 @@ $(function() {
       });  
 	  
 	  
-	  
+    }
 
 // world map
 
@@ -373,7 +376,7 @@ jQuery('#dashboard-map').vectorMap(
 	
 
 
-
+        if(document.getElementById("chart16")){
   // chart 16
   var ctx = document.getElementById("chart16").getContext('2d');
 
@@ -422,8 +425,9 @@ jQuery('#dashboard-map').vectorMap(
 			  }
       });
 
-
+    }
 	  
+    if(document.getElementById("chart17")){
 // chart 17
 var ctx = document.getElementById("chart17").getContext('2d');
 
@@ -471,7 +475,9 @@ var ctx = document.getElementById("chart17").getContext('2d');
 			  }
       });
 
+    }
 
+    if(document.getElementById("chart18")){
 // chart 18
 var ctx = document.getElementById("chart18").getContext('2d');
 
@@ -518,7 +524,7 @@ var ctx = document.getElementById("chart18").getContext('2d');
 			  }
       });
 	  
-	  
+    }
 	  
 });
 

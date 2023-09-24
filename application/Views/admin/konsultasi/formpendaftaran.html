@@ -1,0 +1,115 @@
+{% extends "admin/layout.html" %} {% block content %}
+<script>
+  const data_profile = {{prof |json_encode(constant('JSON_HEX_TAG'))|raw }}
+</script>
+<div class="container mt-10" style="width: 50rem;">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="mb-0">Data Pemilik</h4>
+      <hr>
+    
+
+      <div class="card">
+        <div class="card-body">
+          
+            <input type="hidden" id="user_id" value="{{prof.user_id}}">
+            <div class="row">
+              <div class="col-12 col-lg-12">
+                <label class="form-label text-success">Status Kepemilikan</label>
+                <select class="form-select" id="jns_pemilik" required>
+                  <option value="" selected="">Pilih...</option>
+                  <option value="1">Pemerintah</option>
+                  <option value="2">Badan Usaha</option>
+                  <option value="3">Perorangan</option>
+                </select>
+              </div>
+              <div class="col-12 col-lg-12 pt-3 jns is-pemerintah" style="display: none;" >
+                <label class="form-label">Unit Organisasi</label>
+                <input type="text" class="form-control" id="unit_organisasi" name="unit_organisasi" placeholder="Unit Organisasi" required>
+              </div>
+              <div class="col-12 col-lg-12 pt-3 jns is-perorangan" style="display: none;">
+                <div class="row">
+                  <label class="form-label col-sm-12">Nama Lengkap</label>
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" id="glr_depan" name="glr_depan" placeholder="Gelar" value="{{prof.glr_depan}}" required>
+                  </div>
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" id="nama_pemilik" name="nama_pemilik" placeholder="Nama Lengkap Pemilik" value="{{prof.nama_lengkap}}" required>
+                  </div>
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" id="glr_belakang" name="glr_belakang" placeholder="Gelar" value="{{prof.glr_belakang}}" required>
+                  </div>
+                </div>
+              </div>
+    
+              <div class="col-12 col-lg-12 pt-3 jns is-perorangan" style="display: none;">
+                <label class="form-label">Jenis Tanda Pengenal</label>
+                <select class="form-control" id="jenis_id" name="jenis_id">
+                  <option value="1" {{prof.no_ktp ? 'selected' : '' }}>KTP</option>
+                  <option value="2" {{prof.no_kitas ? 'selected' : '' }}>KITAS</option>
+                </select>
+              </div>
+              <div class="col-12 col-lg-12 pt-3 jns is-perorangan" style="display: none;">
+                <grp id="is-ktp" style="display: {{prof.no_ktp ? 'block' : 'none' }} ;">
+                  <label class="form-label">No KTP</label>
+                  <input type="text" class="form-control numb" id="no_ktp"  placeholder="Nomor KTP" maxlength="16" value="{{prof.no_ktp}}" required>
+                </grp>
+                <grp id="is-kitas" style="display: {{prof.no_kitas ? 'block' : 'none' }} ;">
+                  <label class="form-label">No KITAS</label>
+                  <input type="text" class="form-control numb" id="no_kitas"  placeholder="Nomor KITAS" maxlength="16" value="{{prof.no_kitas}}" required>
+                </grp>
+              </div>
+              <div class="col-12 col-lg-12 pt-3">
+                <label class="form-label">Alamat</label>
+                <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat" >{{ prof.alamat }}</textarea>
+              </div>
+              <div class="col-12 col-lg-6 pt-3">
+                <label class="form-label">Provinsi</label>
+                <select class="form-select" id="id_nama_provinsi" onchange="getwil('kabupaten', this)" required>
+                  <option value="0" selected>Pilih...</option>
+                  {% for prov in data_prov %}
+                  <option value="{{prov.id_provinsi}}">{{prov.nama_provinsi}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-12 col-lg-6 pt-3">
+                <label class="form-label">Kab/Kota</label>
+                <select class="form-select" id="id_nama_kabkota" onchange="getwil('kecamatan', this)" required>
+                  <option value="0" selected>Pilih...</option>
+                </select>
+              </div>
+              <div class="col-12 col-lg-6 pt-3">
+                <label class="form-label">Kecamatan</label>
+                <select class="form-select" id="id_nama_kecamatan" onchange="getwil('kelurahan', this)" required>
+                  <option value="0" selected>Pilih...</option>
+                </select>
+              </div>
+              <div class="col-12 col-lg-6 pt-3">
+                <label class="form-label">Kelurahan</label>
+                <select class="form-select" id="id_nama_kelurahan" required>
+                  <option value="0" selected>Pilih...</option>
+                </select>
+              </div>
+              <div class="col-12 col-lg-6 pt-3">
+                <label class="form-label">No Telp / HP</label>
+                <div class="position-relative input-icon">
+                  <span class="position-absolute top-50 translate-middle-y"><i class="bx bx-phone"></i></span>
+                  <input type="text" class="form-control numb" id="no_hp"  placeholder="No HP" value="{{prof.no_hp}}" required>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6 pt-3">
+                <label class="form-label">Email</label>
+                <div class="position-relative input-icon">
+                  <span class="position-absolute top-50 translate-middle-y"><i class="bx bx-envelope"></i></span>
+                  <input type="email" class="form-control numb" id="email"  placeholder="Email" value="{{prof.email}}" required>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+</div>
+{% endblock %}

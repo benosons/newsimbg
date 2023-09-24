@@ -1,4 +1,7 @@
 {% extends "admin/layout.html" %} {% block content %}
+<script>
+  const data_profile = {{prof |json_encode(constant('JSON_HEX_TAG'))|raw }}
+</script>
 <div class="col-12 col-lg-12">
   <div class="card">
     <div class="card-body">
@@ -174,22 +177,31 @@
           </div>
         </div> -->
         <div class="ms-auto">
-          <!-- <a id="add-permohonan" class="btn btn-primary">+ Add File</a> -->
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleExtraLargeModal"
-          >
-            + Tambah
-          </button>
+            <!-- <a id="add-permohonan" class="btn btn-primary">+ Add File</a> -->
+            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleExtraLargeModal">+ Tambah</button> -->
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary">Tambah</button>
+              <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">	<span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu" style="width: 20rem;">
+                <li>
+                    <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#modal-daftar-pengajuan">Persetujuan Bangunan Gedung</button>
+                </li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li>
+                  <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#exampleExtraLargeModal">Sertifikat Laik Fungsi</button>
+                </li>
+              </ul>
+            </div>
         </div>
       </div>
 
       <div class="card">
         <div class="card-body">
           <div class="table-responsive">
-            <table id="example2" class="table table-striped table-bordered">
+            <table id="all-permohonan" class="table table-striped table-bordered">
               <thead>
                 <tr>
                   <th>#</th>
@@ -2068,6 +2080,691 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-daftar-pengajuan" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Daftar Pengajuan</h5>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12 col-lg-4">
+            <label class="form-label text-success">Jenis Permohonan <code>*</code></label>
+            <select class="form-select" id="id_izin" required>
+              <option value="0" selected="">Pilih...</option>
+              {% for dajen in data_jenis %}
+              <option value="{{dajen.id_jns_permohonan}}">{{dajen.nm_jns_permohonan}}</option>
+              {% endfor %}
+              </select>
+          </div>
+          <div class="col-12 col-lg-4">
+            <label class="form-label text-success">Fungsi Bangunan <code>*</code></label>
+            <select class="form-select" id="id_fungsi_bg" required>
+              <option value="0" selected="">Pilih...</option>
+              {% for dafung in data_fungsi %}
+              <option value="{{dafung.id_fungsi_bg}}">{{dafung.fungsi_bg}}</option>
+              {% endfor %}
+              </select>
+          </div>
+          <div class="col-12 col-lg-4">
+            <label class="form-label text-success">Jenis Bangunan <code>*</code></label>
+            <select class="form-select" id="id_jns_bg" required>
+              <option value="0" selected="">Pilih...</option>
+            </select>
+          </div>
+          <div class="col-12 col-lg-8 pt-3">
+            <label class="form-label">Nama Bangunan <code>*</code></label>
+            <input type="text" class="form-control" id="nama_bangunan" name="nama_bangunan" placeholder="Nama Bangunan" required>
+          </div>
+          <div class="col-12 col-lg-4 pt-3">
+            <label class="form-label">Tinggi Bangunan <code>*</code></label>
+            <div class="position-relative">
+              <span class="position-absolute top-50 translate-middle-y" style="right: 10px!important;left: auto;"><b>m</b></span>
+              <input type="text" class="form-control numb" id="tinggi_bg" placeholder="Tinggi Bangunan" required>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 pt-3">
+            <label class="form-label">Luas Bangunan <code>*</code></label>
+            <div class="position-relative">
+              <span class="position-absolute top-50 translate-middle-y" style="right: 10px!important;left: auto;"><b>m<sup>2</sup></b></span>
+              <input type="text" class="form-control numb" id="luas_bg" onblur="cek()" placeholder="Luas Bangunan" required>
+            </div>
+          </div>
+          <div class="col-12 col-lg-8 pt-3">
+            <label class="form-label">Jumlah Lantai <code>*</code></label>
+            <div class="row">
+              <div class="col-lg-6">
+                <select class="form-select" name="lantai_bg" onchange="cek()" required>
+                  <option value="0" selected="">Pilih...</option>
+                  {% for i in 1..10 %}
+                  <option value="{{i}}">{{i}} Lantai</option>
+                  {% endfor %}
+                </select>
+                <input style="display: none;" type="number" min="0" class="form-control" name="lantai_bg" placeholder="Jumlah Lantai" required>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="pilihanLantai">
+                  <label class="form-check-label">lebih dari 10 Lantai</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 pt-3">
+            <label class="form-label">Luas Basement Bangunan <code>*</code></label>
+            <div class="position-relative">
+              <span class="position-absolute top-50 translate-middle-y" style="right: 10px!important;left: auto;"><b>m<sup>2</sup></b></span>
+              <input type="text" class="form-control numb" id="luas_basement" placeholder="Luas Basement Bangunan" required>
+            </div>
+          </div>
+          <div class="col-12 col-lg-8 pt-3">
+            <label class="form-label">Jumlah Lantai Basement Bangunan <code>*</code></label>
+            <div class="position-relative">
+              <div class="row">
+                <div class="col-lg-6">
+                  <select class="form-select" name="lapis_basement" required>
+                    <option value="0" selected="">Pilih...</option>
+                    {% for i in 0..10 %}
+                    <option value="{{i}}">{{i}} Lapis</option>
+                    {% endfor %}
+                  </select>
+                  <input style="display: none;" type="number" min="0" class="form-control" name="lapis_basement" placeholder="Jumlah Lantai" required>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="pilihanBasement">
+                    <label class="form-check-label">lebih dari 10 Lantai</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="per_doc_tek" class="col-12 col-lg-6 pt-3" style="display: none;">
+            <div class="form-group">
+              <label class="form-label">Perancang Dokumen Teknis <code>*</code></label>
+              <select name="id_doc_tek" id="id_doc_tek" onchange="set_prototype(this.value)" class="form-control">
+              </select>
+            </div>
+          </div>
+
+          <div id="prototype" class="col-12 col-lg-6 pt-3" style="display: none;">
+            <div class="form-group">
+              <label class="form-label">Pilih Prototype <code>*</code></label>
+              <select name="id_prototype" id="id_prototype" class="form-control">
+              </select>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bx bx-x"></i> Batal</button>
+        <button type="button" class="btn btn-primary" onclick="savepermohonan()"><i class="bx bx-check-double"></i> Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+<input type="hidden" name="" id="is_id" value="563801">
+<input type="hidden" name="" id="id_bgn">
+<div class="modal fade" id="modal-pemilik" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Data Pemilik</h5>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="user_id" value="{{prof.user_id}}">
+        <div class="row">
+          <div class="col-12 col-lg-12">
+            <label class="form-label text-success">Status Kepemilikan</label>
+            <select class="form-select" id="jns_pemilik" required>
+              <option value="" selected="">Pilih...</option>
+              <option value="1">Pemerintah</option>
+              <option value="2">Badan Usaha</option>
+              <option value="3">Perorangan</option>
+            </select>
+          </div>
+          <div class="col-12 col-lg-12 pt-3 jns is-pemerintah" style="display: none;" >
+            <label class="form-label">Unit Organisasi</label>
+            <input type="text" class="form-control" id="unit_organisasi" name="unit_organisasi" placeholder="Unit Organisasi" required>
+          </div>
+          <div class="col-12 col-lg-12 pt-3 jns is-perorangan" style="display: none;">
+            <div class="row">
+              <label class="form-label col-sm-12">Nama Lengkap</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="glr_depan" name="glr_depan" placeholder="Gelar" value="{{prof.glr_depan}}" required>
+              </div>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="nama_pemilik" name="nama_pemilik" placeholder="Nama Lengkap Pemilik" value="{{prof.nama_lengkap}}" required>
+              </div>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="glr_belakang" name="glr_belakang" placeholder="Gelar" value="{{prof.glr_belakang}}" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-12 pt-3 jns is-perorangan" style="display: none;">
+            <label class="form-label">Jenis Tanda Pengenal</label>
+            <select class="form-control" id="jenis_id" name="jenis_id">
+              <option value="1" {{prof.no_ktp ? 'selected' : '' }}>KTP</option>
+              <option value="2" {{prof.no_kitas ? 'selected' : '' }}>KITAS</option>
+            </select>
+          </div>
+          <div class="col-12 col-lg-12 pt-3 jns is-perorangan" style="display: none;">
+            <grp id="is-ktp" style="display: {{prof.no_ktp ? 'block' : 'none' }} ;">
+              <label class="form-label">No KTP</label>
+              <input type="text" class="form-control numb" id="no_ktp"  placeholder="Nomor KTP" maxlength="16" value="{{prof.no_ktp}}" required>
+            </grp>
+            <grp id="is-kitas" style="display: {{prof.no_kitas ? 'block' : 'none' }} ;">
+              <label class="form-label">No KITAS</label>
+              <input type="text" class="form-control numb" id="no_kitas"  placeholder="Nomor KITAS" maxlength="16" value="{{prof.no_kitas}}" required>
+            </grp>
+          </div>
+          <div class="col-12 col-lg-12 pt-3">
+            <label class="form-label">Alamat</label>
+            <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat" >{{ prof.alamat }}</textarea>
+          </div>
+          <div class="col-12 col-lg-6 pt-3">
+            <label class="form-label">Provinsi</label>
+            <select class="form-select" id="id_nama_provinsi" onchange="getwil('kabupaten', this)" required>
+              <option value="0" selected>Pilih...</option>
+              {% for prov in data_prov %}
+              <option value="{{prov.id_provinsi}}">{{prov.nama_provinsi}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-12 col-lg-6 pt-3">
+            <label class="form-label">Kab/Kota</label>
+            <select class="form-select" id="id_nama_kabkota" onchange="getwil('kecamatan', this)" required>
+              <option value="0" selected>Pilih...</option>
+            </select>
+          </div>
+          <div class="col-12 col-lg-6 pt-3">
+            <label class="form-label">Kecamatan</label>
+            <select class="form-select" id="id_nama_kecamatan" onchange="getwil('kelurahan', this)" required>
+              <option value="0" selected>Pilih...</option>
+            </select>
+          </div>
+          <div class="col-12 col-lg-6 pt-3">
+            <label class="form-label">Kelurahan</label>
+            <select class="form-select" id="id_nama_kelurahan" required>
+              <option value="0" selected>Pilih...</option>
+            </select>
+          </div>
+          <div class="col-12 col-lg-6 pt-3">
+            <label class="form-label">No Telp / HP</label>
+            <div class="position-relative input-icon">
+              <span class="position-absolute top-50 translate-middle-y"><i class="bx bx-phone"></i></span>
+              <input type="text" class="form-control numb" id="no_hp"  placeholder="No HP" value="{{prof.no_hp}}" required>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6 pt-3">
+            <label class="form-label">Email</label>
+            <div class="position-relative input-icon">
+              <span class="position-absolute top-50 translate-middle-y"><i class="bx bx-envelope"></i></span>
+              <input type="email" class="form-control numb" id="email"  placeholder="Email" value="{{prof.email}}" required>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="savepemilik()"><i class="bx bx-check-double"></i> Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-alamat" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Data Alamat Bangunan Gedung</h5>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          
+          <div class="col-12 col-lg-6 pt-3">
+            <label class="form-label">Provinsi</label>
+            <select class="form-select" id="id_nama_provinsi_bangunan" onchange="getwilbangunan('kabupaten', this)" required>
+              <option value="0" selected>Pilih...</option>
+              {% for prov in data_prov %}
+              <option value="{{prov.id_provinsi}}">{{prov.nama_provinsi}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-12 col-lg-6 pt-3">
+            <label class="form-label">Kab/Kota</label>
+            <select class="form-select" id="id_nama_kabkota_bangunan" onchange="getwilbangunan('kecamatan', this)" required>
+              <option value="0" selected>Pilih...</option>
+            </select>
+          </div>
+          <div class="col-12 col-lg-6 pt-3">
+            <label class="form-label">Kecamatan</label>
+            <select class="form-select" id="id_nama_kecamatan_bangunan" onchange="getwilbangunan('kelurahan', this)" required>
+              <option value="0" selected>Pilih...</option>
+            </select>
+          </div>
+          <div class="col-12 col-lg-6 pt-3">
+            <label class="form-label">Kelurahan</label>
+            <select class="form-select" id="id_nama_kelurahan_bangunan" required>
+              <option value="0" selected>Pilih...</option>
+            </select>
+          </div>
+          <div class="col-12 col-lg-12 pt-3">
+            <label class="form-label">Lokasi Bangunan Gedung</label>
+            <textarea class="form-control" id="almt_bgn" name="almt_bgn" placeholder="Alamat Bangunan" ></textarea>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="savealamat()"><i class="bx bx-check-double"></i> Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-data-tanah" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Data Tanah</h5>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      </div>
+      <div class="modal-body">
+        
+          <div class="card border-primary border-top border-3 border-0" hidden>
+            <div class="card-body">
+              <h5 class="card-title text-primary">Data Konsultasi</h5>
+              <hr/>
+                <div class="row">
+                  <div class="col-12 col-lg-12 mt-3">
+                    <label class="form-label Jenis Konsultasi"><strong>Jenis Konsultasi : </strong> </label>
+                    <span id="nm_konsultasi"></span>
+                  </div>
+                  <div class="col-12 col-lg-12 mt-3">
+                    <label class="form-label Jenis Konsultasi"><strong>Nama Pemilik : </strong> </label>
+                    <span id="nm_pemilik"></span>
+                  </div>
+                  <div class="col-12 col-lg-12 mt-3">
+                    <label class="form-label Jenis Konsultasi"><strong>Alamat Pemilik Bangunan : </strong> </label>
+                    <span id="alamat_pemilik"></span>
+                  </div>
+                  <div class="col-12 col-lg-12 mt-3">
+                    <label class="form-label Jenis Konsultasi"><strong>Lokasi Bangunan Gedung : </strong> </label>
+                    <span id="lokasi_gedung"></span>
+                  </div>
+                  <div class="col-12 col-lg-12 mt-3">
+                    <label class="form-label Jenis Konsultasi"><strong>Data Bangunan : </strong> </label>
+                    <span id="lokasi_gedung"></span>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-6">
+              <button type="button" class="btn btn-danger" onclick="tambahdatatanah()"><i class="bx bx-plus"></i> Data Profile Tanah</button>
+            </div>
+            <div class="col-sm-6"></div>
+          </div>
+          <div class="row" id="data-tanah" style="display: none;">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title">Tambah Data Tanah</h5>
+              </div>
+              <form id="form-tambah-tanah">
+              <div class="card-body">
+                  <div class="row">
+                    <div class="col-12 col-lg-3">
+                      <label class="form-label Jenis Konsultasi"><strong>Jenis Dokumen Kepemilikan : </strong> </label>
+                      <select name="id_dokumen" id="id_dokumen" class="form-control" onchange="">
+                        <option value="">Pilih</option>
+                        <option value="1">Sertifikat</option>
+                        <option value="2">Akte Jual Beli</option>
+                        <option value="3">Girik</option>
+                        <option value="4">Petuk</option>
+                        <option value="5">Bukti Lain - Lain</option>
+                      </select>
+                    </div>
+                    <div class="col-12 col-lg-3">
+                      <label class="form-label Jenis Konsultasi"><strong>Nomor Dokumen : </strong> </label>
+                      <input class="form-control" id="nomor_dokumen" name="nomor_dokumen" type="text" placeholder="0-9 / A-Z" autocomplete="off">
+                    </div>
+                    <div class="col-12 col-lg-3">
+                      <label class="form-label Jenis Konsultasi"><strong>Tanggal Terbit Dokumen : </strong> </label>
+                      <input class="form-control date-picker" type="date" id="tgl_terbit_dokumen" name="tgl_terbit_dokumen" data-date-format="yyyy-mm-dd" autocomplete="off" placeholder="2000/12/31">                    
+                    </div>
+                    <div class="col-12 col-lg-3">
+                      <label class="form-label Jenis Konsultasi"><strong>Luas Tanah (m<sup>2</sup>) : </strong> </label>
+                      <input class="form-control" id="luas_tanah" name="luas_tanah" type="text" placeholder="Luas Tanah 00.00" autocomplete="off">
+                    </div>
+                    <div class="col-12 col-lg-3 mt-3">
+                      <label class="form-label Jenis Konsultasi"><strong>Hak Kepemilikan Atas Tanah : </strong> </label>
+                      <select name="hat" id="hat" class="form-control" onchange="">
+                        <option value="">Pilih</option>
+                        <option value="1">Hak Milik</option>
+                        <option value="2">Hak Pakai</option>
+                        <option value="3">Hak Pengelolaan</option>
+                        <option value="4">Hak Guna Bangunan</option>
+                        <option value="5">Hak Guna Usaha</option>
+                        <option value="6">Hak Wakaf</option>
+                      </select>
+                    </div>
+                    <div class="col-12 col-lg-3 mt-3">
+                      <label class="form-label Jenis Konsultasi"><strong>Nama Pemilik Hak Atas Tanah : </strong> </label>
+                      <input class="form-control" id="atas_nama" name="atas_nama" type="text" placeholder="Nama Pemegang Hak Atas Tanah" autocomplete="off">
+                    </div>
+                    <div class="col-12 col-lg-6 mt-3">
+                      <label class="form-label Jenis Konsultasi"><strong>Alamat Lokasi Tanah : </strong> </label>
+                      <input type="text" class="form-control" value="" rows="1" placeholder="Lokasi Tanah" id="lokasi_tanah" name="lokasi_tanah" readonly="" aria-required="true" aria-invalid="false">                    
+                    </div>
+                    <div class="col-12 col-lg-6 mt-3">
+                      <label class="form-label Jenis Konsultasi"><strong>File Data Kepemilikan : </strong> </label>
+                      <input type="file" class="form-control" name="d_file_tan" id="d_file_tan" accept="application/pdf">
+                    </div>
+                    <div class="col-12 col-lg-6 mt-3">
+                      <label class="form-label Jenis Konsultasi"><strong>Izin pemanfaatan dari pemegang hak atas tanah : </strong> </label>
+                      <select name="hat2" id="hat2" class="form-control" onclick="set_status_izin_pemanfaatan(this.value)">
+                        <option value="">Pilih</option>
+                        <option value="1">YA</option>
+                        <option value="2">Tidak</option>
+                      </select>
+                    </div>
+                    <div class="col-12 col-lg-6 mt-3 izinjing">
+                      <label class="form-label Jenis Konsultasi"><strong>Izin pemanfaatan dari pemegang hak atas tanah : </strong> </label>
+                      <input class="form-control" id="no_dok_izin_pemanfaatan" name="no_dok_izin_pemanfaatan" type="text" placeholder="0-9 / A-Z" autocomplete="off">
+                    </div>
+                    <div class="col-12 col-lg-6 mt-3 izinjing">
+                      <label class="form-label Jenis Konsultasi"><strong>Tanggal Terbit Izin Pemanfaatan : </strong> </label>
+                      <input class="form-control date-picker" type="date" id="tgl_terbit_phat" name="tgl_terbit_phat" data-date-format="yyyy-mm-dd" placeholder="2000/12/31" autocomplete="off">
+                    </div>
+                    <div class="col-12 col-lg-6 mt-3 izinjing">
+                      <label class="form-label Jenis Konsultasi"><strong>Nama Penerima Izin Pemanfaatan : </strong> </label>
+                      <input class="form-control" id="nama_penerima_kuasa" name="nama_penerima_kuasa" type="text" placeholder="Nama Penerima Izin Pemanfaatan" autocomplete="off">
+                    </div>
+                    <div class="col-12 col-lg-6 mt-3 izinjing">
+                      <label class="form-label Jenis Konsultasi"><strong>Berkas Izin Pemanfaatan : </strong> </label>
+                      <input type="file" class="form-control" name="d_file_phat" id="d_file_phat" accept="application/pdf">
+                    </div>
+                    <div class="col-12 col-lg-12 mt-3">
+                      <button type="button" class="btn btn-info" onclick="savedatatanah()" style="float: right;"><i class="bx bx-check-double"></i> Simpan</button>
+                    </div>
+
+                  </div>
+              </div>
+              </form>
+            </div>
+          </div>
+          <div class="row">
+            <table id="all-data-tanah" class="table table-striped table-bordered">
+              <thead class="table-dark">
+                <tr>
+                  <th>#No</th>
+                  <th>Jenis Dokumen</th>
+                  <th>No dan Tgl Dokumen</th>
+                  <th>Luas Tanah (m<sup>2</sup>)</th>
+                  <th>Atas Nama</th>
+                  <th>Berkas</th>
+                  <th>Izin Pemanfaatan</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="dt-tanah-bdy">
+                
+              </tbody>
+            </table>
+          </div>
+          <div class="row" id="jenis-permohonannya">
+            
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="nextdokumen()"><i class="bx bx-check-double"></i> Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-data-kelengkapan" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Data Kelengkapan</h5>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      </div>
+      <div class="modal-body">
+          <!-- <div class="row">
+            <div class="col-sm-6">
+              <label class="form-label">Data Umum</label>
+              <select class="form-select" id="file_data_umum" required>
+                
+              </select>
+            </div>
+            <div class="col-sm-6" id="uploader-data-umum">
+              <label class="form-label">Pilih File</label>
+              <input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, 'umum')">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-sm-6">
+              <label class="form-label">Data Teknis Arsitektur</label>
+              <select class="form-select" id="file_data_arsitektur" required>
+                
+              </select>
+            </div>
+            <div class="col-sm-6" id="uploader-data-arsitektur">
+              <label class="form-label">Pilih File</label>
+              <input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, 'arsitektur')">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-sm-6">
+              <label class="form-label">Data Teknis Struktur</label>
+              <select class="form-select" id="file_data_struktur" required>
+                
+              </select>
+            </div>
+            <div class="col-sm-6" id="uploader-data-struktur">
+              <label class="form-label">Pilih File</label>
+              <input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, 'struktur')">
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-sm-6">
+              <label class="form-label">Data Teknis MEP</label>
+              <select class="form-select" id="file_data_mep" required>
+                
+              </select>
+            </div>
+            <div class="col-sm-6" id="uploader-data-mep">
+              <label class="form-label">Pilih File</label>
+              <input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, 'mep')">
+            </div>
+          </div> -->
+          <div class="row mt-3">
+            <table class="table table-bordered table-striped table-hover">
+              <thead class="table-dark">
+                <tr class="warning">
+                  <th width="5%">No</th>
+                  <th width="35%">Data Teknis Tanah</th>
+                  <th width="30%">Keterangan</th>
+                  <th width="30%">Berkas</th>
+                </tr>
+              </thead>
+              <tbody id="body-tanah">
+                    
+              </tbody>
+            </table>
+          </div>
+          <div class="row mt-3">
+            <table class="table table-bordered table-striped table-hover">
+              <thead class="table-dark">
+                <tr class="warning">
+                  <th width="5%">No</th>
+                  <th width="35%">Data Umum</th>
+                  <th width="30%">Keterangan</th>
+                  <th width="30%">Berkas</th>
+                </tr>
+              </thead>
+              <tbody id="body-umum">
+               
+              </tbody>
+            </table>
+          </div>
+          <div class="row mt-3">
+            <table class="table table-bordered table-striped table-hover">
+              <thead class="table-dark">
+                <tr class="warning">
+                  <th width="5%">No</th>
+                  <th width="35%">Data Teknis Arsitektur</th>
+                  <th width="30%">Keterangan</th>
+                  <th width="30%">Berkas</th>
+                </tr>
+              </thead>
+              <tbody id="body-arsitek">
+               
+              </tbody>
+            </table>
+          </div>
+          <div class="row mt-3">
+            <table class="table table-bordered table-striped table-hover">
+              <thead class="table-dark">
+                <tr class="warning">
+                  <th width="5%">No</th>
+                  <th width="35%">Data Teknis Struktur</th>
+                  <th width="30%">Keterangan</th>
+                  <th width="30%">Berkas</th>
+                </tr>
+              </thead>
+              <tbody id="body-struktur">
+               
+              </tbody>
+            </table>
+          </div>
+          <div class="row mt-3">
+            <table class="table table-bordered table-striped table-hover">
+              <thead class="table-dark">
+                <tr class="warning">
+                  <th width="5%">No</th>
+                  <th width="35%">Data Teknis Mekanikal, Elektrikal, dan Plambing</th>
+                  <th width="30%">Keterangan</th>
+                  <th width="30%">Berkas</th>
+                </tr>
+              </thead>
+              <tbody id="body-mep">
+               
+              </tbody>
+            </table>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="modalkonfirmasi()"><i class="bx bx-check-double"></i> Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-konfirmasi" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Konfirmasi Pernyataan Permohonan</h5>
+      </div>
+      <div class="modal-body">
+        <div class="card shadow-none border radius-15">
+          <div class="card-body">
+            <h6>Sebelum anda mengkonfirmasi, Mohon memperhatikan informasi berikut:</h6>
+            <ul>
+              <li>Data yang anda berikan adalah benar dan dapat dipertanggungjawabkan.</li>
+              <li>Anda dapat melengkapi data persyaratan dengan cara diunggah melalui situs SIMBG.</li>
+              <li>Dokumen harus dilengkapi dalam waktu 20 hari terhitung mulai tanggal pendaftaran.</li>
+              <li>Apabila terjadi kesalahan data setelah dilakukan konfirmasi, Anda dapat memperbaikinya setelah dikembalikan oleh Dinas Teknis</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="card shadow-none border radius-15">
+          <div class="card-body">
+            <h6>Berdasarkan konfirmasi setuju yang saya nyatakan:</h6>
+            <ul>
+              <li>Seluruh data dalam berkas/dokumen yang telah saya unggah dan isi, serta saya sampaikan adalah benar.</li>
+              <li>Data yang saya berikan tunduk pada peraturan perundang-undangan.</li>
+              <li>Apabila di kemudian hari terjadi kesalahan terhadap data yang saya sampaikan, maka saya bersedia menerima sanksi sesuai peraturan perundang-undangan.</li>
+            </ul>  
+          </div>
+        </div>
+
+        <div class="card shadow-none border radius-15">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-check form-check-success">
+                  <input class="form-check-input" type="checkbox" name="dir_1" id="dir_1" value="1" >
+                  <label class="form-check-label text-success" for="dir_1">
+                    Pernyataan mematuhi KRK/KKPR
+                  </label> 
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-check form-check-success">
+                  <input class="form-check-input" type="checkbox" name="dir_2" id="dir_2" value="1" >
+                  <label class="form-check-label text-success" for="dir_2">
+                    Pernyataan menggunakan Pelaksana Konstruksi
+                  </label> 
+                  </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-check form-check-success">
+                  <input class="form-check-input" type="checkbox" name="dir_3" id="dir_3" value="1" >
+                  <label class="form-check-label text-success" for="dir_3">
+                    Pernyataan menggunakan Pengawas/ Manajemen Konstruksi bersertifikat
+                  </label> 
+                  </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-check form-check-success">
+                  <input class="form-check-input" type="checkbox" name="dir_4" id="dir_4" value="1" >
+                  <label class="form-check-label text-success" for="dir_4">
+                    Pernyataan bahwa tanah tidak dalam status sengketa
+                  </label> 
+                  </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-check form-check-success">
+                  <input class="form-check-input" type="checkbox" name="dir_5" id="dir_5" value="1" >
+                  <label class="form-check-label text-success" for="dir_5">
+                    Pernyataan memenuhi ketentuan pokok tahan gempa
+                  </label> 
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr/>
+        <div class="row">
+          <div class="col-lg-4"></div>
+          <div class="col-lg-4"><div class="form-check form-check-success">
+            <input class="form-check-input" type="checkbox" ame="pernyataan" id="pernyataan" value="1" >
+            <label class="form-check-label text-success" for="pernyataan">
+              Ceklis Jika Setuju
+            </label> 
+          </div></div>
+          <div class="col-lg-4"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="saveDataPernyataan()"><i class="bx bx-check-double"></i> Simpan</button>
       </div>
     </div>
   </div>

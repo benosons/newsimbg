@@ -52,6 +52,7 @@ class Auth extends \CodeIgniter\Controller
 							'id' 			=> $dataemail->id,
 							'role' 			=> $dataemail->id_role,
 							'rolename' 		=> $dataemail->role,
+							'email' 		=> $dataemail->email,
 							'logged_in'     => TRUE,
 
 					];

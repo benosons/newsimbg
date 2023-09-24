@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\HTTP\RequestInterface;
 
-class View extends \CodeIgniter\Controller
+class Konsultasi extends \CodeIgniter\Controller
 {
 
 	protected $session;
@@ -31,153 +31,22 @@ class View extends \CodeIgniter\Controller
 		);
 	}
 
-	//FRONTEND
-
-	public function index()
-	{
-		return redirect('login');
-	}
-
-	public function home()
-	{
-		helper('url');
-		$uri = current_url(true);
-
-		return \Twig::instance()->display('front/home.html');
-	}
-
-	public function menu()
-	{
-		helper('url');
-		$uri = current_url(true);
-
-		return \Twig::instance()->display('front/menu.html');
-	}
-
-	public function login()
-	{
-
-		if ($this->logged) {
-			return redirect('dashboard');
-		} else {
-			helper('form');
-			helper('url');
-			$uri = current_url(true);
-			$message = $this->session->getFlashdata('msg');
-
-			if ($message) {
-				$this->data['message'] = $message;
-			}
-			return \Twig::instance()->display('auth/login.html', $this->data);
-		}
-	}
-
-	public function register()
-	{
-
-		if ($this->logged) {
-			return redirect('dashboard');
-		} else {
-			helper('form');
-			helper('url');
-			$uri = current_url(true);
-			$message = $this->session->getFlashdata('msg');
-
-			if ($message) {
-				$this->data['message'] = $message;
-			}
-			return \Twig::instance()->display('auth/register.html', $this->data);
-		}
-	}
-
-	// public function layanan_informasi_mahasiswa()
-	// {
-	// 	helper('url');
-	// 	$uri = current_url(true);
-
-	// 	return \Twig::instance()->display('front/layanan_informasi/mahasiswa.html',$this->data);
-	// }
-
-	// public function layanan_informasi_dosen()
-	// {
-	// 	helper('url');
-	// 	$uri = current_url(true);
-
-	// 	return \Twig::instance()->display('front/layanan_informasi/dosen.html',$this->data);
-	// }
-
-	// public function layanan_informasi_buku()
-	// {
-	// 	helper('url');
-	// 	$uri = current_url(true);
-
-	// 	return \Twig::instance()->display('front/buku_digital.html',$this->data);
-	// }
-
-	// public function layanan_berita()
-	// {
-	// 	helper('url');
-	// 	$uri = current_url(true);
-
-	// 	return \Twig::instance()->display('front/berita.html',$this->data);
-	// }
-
-	// public function detail_berita()
-	// {
-	// 	helper('url');
-	// 	$uri = current_url(true);
-
-	// 	return \Twig::instance()->display('front/detailberita.html', $this->data);
-	// }
-
-	// public function layanan_agenda()
-	// {
-	// 	helper('url');
-	// 	$uri = current_url(true);
-
-	// 	return \Twig::instance()->display('front/agenda.html',$this->data);
-	// }
-
-	// public function detail_agenda()
-	// {
-	// 	helper('url');
-	// 	$uri = current_url(true);
-
-	// 	return \Twig::instance()->display('front/detailagenda.html', $this->data);
-	// }
-
-
-	// BACKEND
-
-	public function dashboard()
-	{
-
-		if ($this->logged) {
-			helper('form');
-			$this->data['active'] = 'dashboard';
-			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/index.js';
-			return \Twig::instance()->display('admin/index.html', $this->data);
-		} else {
-			return redirect('login');
-		}
-	}
-
 	public function permohonan()
 	{
-
+		
 		if ($this->logged && ($this->data['role'] == 10 || $this->data['role'] == 200)) {
 			helper('form');
-			$global = new \App\Models\GlobalModel();
-			$konsultasi = new \App\Models\KonsultasiModel();
+			$user_id				= $this->session->get('user_id');
+			$this->data['user_id'] 	= $user_id;
+			$filterQuery			= 'a.*, b.no_konsultasi,b.pernyataan,b.status, b.almt_bgn,c.nm_konsultasi,d.status_pemohon';
+			$konultasi = new \App\Models\KonsultasiModel();
 
-			$this->data['active'] = 'permohonan';
-			$this->data['data_jenis']		= $global->getjenis();
-			$this->data['data_fungsi']		= $global->getfungsi();
+			$this->data['active'] = 'permohonan';			
+			$this->data['data_jenis']		= $perm->getjenis();
+			$this->data['data_fungsi']		= $perm->getfungsi();
 			// $this->data['data_jbg']		= $perm->getjbg();
-			$this->data['data_prov']		= $global->getprov();
-			$this->data['prof'] 			= json_decode( json_encode($konsultasi->getDataUserProfil('a.*', $this->session->get('id'))), true);
-			// echo '<pre>';
-			// print_r($this->data['prof'] );die;
+			$this->data['data_prov']		= $perm->getprov();
+			print_r($this->data['data_prov']);die;
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/permohonan/permohonan.js';
 			return \Twig::instance()->display('admin/permohonan/permohonan.html', $this->data);
 		} else {
@@ -292,7 +161,7 @@ class View extends \CodeIgniter\Controller
 	public function pengawas_pupr()
 	{
 
-		if ($this->logged && ($this->data['role'] == 30 || $this->data['role'] == 40 || $this->data['role'] == 200)) {
+		if ($this->logged && ($this->data['role'] == 40 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'pengawas_pupr';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/pengawas_pupr.js';
@@ -566,145 +435,6 @@ class View extends \CodeIgniter\Controller
 			return \Twig::instance()->display('admin/user/log.html', $this->data);
 		} else {
 			return redirect('dashboard');
-		}
-	}
-
-	// public function infobox()
-	// {
-
-	// 	if ($this->logged) {
-	// 		helper('form');
-
-	// 		$request	= $this->request;
-	// 		$detail 	= $request->getVar('detail');
-
-	// 		$this->data['here'] 			= 'infobox';
-	// 		$this->data['box'] 				= $detail;
-	// 		$this->data['script'] 			= $this->data['baseURL'] . '/action-js/admin/infobox.js';
-	// 		return \Twig::instance()->display('admin/infobox.html', $this->data);
-	// 	} else {
-	// 		return redirect('dashboard');
-	// 	}
-	// }
-
-	// public function komunikasi()
-	// {
-
-	// 	if ($this->logged) {
-	// 		helper('form');
-	// 		$request	= $this->request;
-	// 		$id_tiket 	= $request->getVar('detail');
-	// 		$komunikasi = new \App\Models\KomunikasiModel();
-
-	// 		if($id_tiket){
-	// 			$this->data['detail_tiket'] 	= $komunikasi->gettiket(null, $this->session->get('role'), $id_tiket);
-	// 			$this->data['diskusi_tiket'] 	= $komunikasi->getdiskusitiket($id_tiket);
-
-	// 		}else{
-	// 			$this->data['data_tiket'] 		= $komunikasi->gettiket($this->session->get('user_id'), $this->session->get('role'));
-	// 		}
-
-	// 		$this->data['here'] 			= 'komunikasi';
-	// 		$this->data['script'] 			= $this->data['baseURL'] . '/action-js/admin/komunikasi.js';
-	// 		return \Twig::instance()->display('admin/komunikasi.html', $this->data);
-	// 	} else {
-	// 		return redirect('dashboard');
-	// 	}
-	// }
-
-	// public function wasdal()
-	// {
-
-	// 	if ($this->logged) {
-	// 		helper('form');
-	// 		$request	= $this->request;
-	// 		$id_tiket 	= $request->getVar('detail');
-	// 		$komunikasi = new \App\Models\KomunikasiModel();
-
-	// 		$this->data['here'] 			= 'wasdal';
-	// 		$this->data['sub'] 				= $request->uri->getSegment(2);
-	// 		$this->data['script'] 			= $this->data['baseURL'] . '/action-js/admin/komunikasi.js';
-	// 		return \Twig::instance()->display('admin/komunikasi.html', $this->data);
-	// 	} else {
-	// 		return redirect('dashboard');
-	// 	}
-	// }
-
-	// public function cicilan()
-	// {
-
-	// 	if ($this->logged) {
-	// 		helper('form');
-	// 		$request	= $this->request;
-	// 		$cicilan = new \App\Models\CicilanModel();
-	// 		$billing = new \App\Models\BillingModel();
-	// 		$user = new \App\Models\UserModel();
-	// 		if($request->uri->getSegment(1) == 'detailcicilan'){
-	// 			$this->data['detail'] 	= 'detail';
-	// 			$this->data['data_rumah'] 	= $cicilan->getdetailrumahcicilan($request->uri->getSegment(2));
-	// 			$this->data['data_cicilan'] = $cicilan->getdetailcicilanangsuran($request->uri->getSegment(2));
-	// 			$this->data['data_denda'] 	= $cicilan->getdetailcicilandenda($request->uri->getSegment(2));
-	// 			$this->data['data_billing'] = $billing->getbilling($request->uri->getSegment(2));
-	// 		}else if($request->uri->getSegment(1) == 'detailbilling'){
-
-	// 			$this->data['detail_billing'] = $billing->getdetailbilling($request->uri->getSegment(2));
-	// 			$this->data['detail_pembayaran_billing'] = $billing->getdetailpembayaranbilling($request->uri->getSegment(2));
-
-
-	// 		}else{
-	// 			$this->data['data_provinsi'] 	= $user->getprovinsi();
-	// 			$this->data['data_lembaga'] 	= $user->getlembaga();
-	// 		}
-
-	// 		// echo '<pre>';
-	// 		// print_r($this->data);die;
-	// 		$this->data['here'] 			= 'cicilan';
-	// 		$this->data['script'] 			= $this->data['baseURL'] . '/action-js/admin/cicilan/cicilan.js';
-	// 		return \Twig::instance()->display('admin/cicilan/cicilan.html', $this->data);
-	// 	} else {
-	// 		return redirect('dashboard');
-	// 	}
-	// }
-
-	public function dataprofile()
-	{
-
-		if ($this->logged) {
-			helper('form');
-			$profile = new \App\Models\ProfileModel();
-			$global = new \App\Models\GlobalModel();
-
-			$this->data['user_id'] = $this->session->get('id');
-			//echo $user_id;
-			$this->data['profile_user'] = $profile->getDataUserProfile('a.*', $this->session->get('id'));
-			$this->data['daftar_provinsi']	= $global->listDataProvinsi('id_provinsi,nama_provinsi');
-			if (isset($this->data['profile_user']->id_provinsi)) {
-				$provinsi = $this->data['profile_user']->id_provinsi;
-				$this->data['daftar_kabkota']		= $global->listDataKabKota('id_kabkot,nama_kabkota', '', $provinsi);
-			}
-			if (isset($this->data['profile_user']->id_kabkota)) {
-				$kabkot = $this->data['profile_user']->id_kabkota;
-				$this->data['daftar_kecamatan']	= $global->listDataKecamatan('a.id_kecamatan,a.nama_kecamatan', '', $kabkot);
-			}
-			
-			$this->data['active'] = '';
-			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/user/profil.js';
-			return \Twig::instance()->display('admin/user/profil.html', $this->data);
-		} else {
-			return redirect('login');
-		}
-	}
-
-	public function FormPendaftaran()
-	{
-
-		if ($this->logged ) {
-			helper('form');
-			$this->data['active'] = '';
-			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/konsultasi/formpendaftaran.js';
-			return \Twig::instance()->display('admin/konsultasi/formpendaftaran.html', $this->data);
-		} else {
-			return redirect('login');
 		}
 	}
 
