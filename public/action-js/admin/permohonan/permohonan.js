@@ -34,8 +34,8 @@ $(document).ready(function() {
   
   // table.buttons().container()
   //   .appendTo( '#example2_wrapper .col-md-6:eq(0)' );
-  // loadpermohonan()
-  // modalkonfirmasi()
+  loadpermohonan()
+  modalkonfirmasi()
   
   // $('#modal-data-kelengkapan').modal('show')
   
@@ -1498,4 +1498,25 @@ function deletedoc(path, idutama, id_persyaratan, id_detail, syarat_detail) {
 function modalkonfirmasi(params) {
   $('#modal-data-kelengkapan').modal('hide')
   $('#modal-konfirmasi').modal('show')
+}
+
+function saveDataPernyataan(){
+  var form_data = new FormData(); 
+  form_data.append('id', $('#is_id').val())
+  form_data.append('pernyataan', $('#pernyataan').val())
+  for (let i = 1; i <= 5; i++) {
+    form_data.append('dir_'+i, $('#dir_'+i).val())
+  }
+  $.ajax({
+      type: "post",
+      dataType: "json",
+      cache: false,
+      contentType: false,
+      processData: false,
+      url: "/saveDataPernyataan",
+      data: form_data,
+      success: function (result) {
+
+      }
+  })
 }

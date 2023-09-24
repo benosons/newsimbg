@@ -204,6 +204,7 @@ $routes->post('saveTanah', 'Jsondata::saveTanah');
 $routes->post('getdatadokumen', 'Jsondata::getdatadokumen');
 $routes->post('SaveDokumen', 'Jsondata::SaveDokumen');
 $routes->post('deleteDokumen', 'Jsondata::deleteDokumen');
+$routes->post('saveDataPernyataan', 'Jsondata::saveDataPernyataan');
 /**
  * --------------------------------------------------------------------
  * Additional Routing

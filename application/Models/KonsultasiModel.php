@@ -12,6 +12,7 @@ class KonsultasiModel extends Model{
 		if ($user_id != null || trim($user_id) != '')  $builder->where('a.user_id', $user_id);
 		if ($id_permohonan != null || trim($id_permohonan) != '')  $builder->where('a.id_permohonan', $id_permohonan);
 		$builder->where("b.status != 26 ");
+		$builder->where("a.post_date = DATE_FORMAT(now(),'%Y-%m-%d')");
 		$builder->join('tmdatabangunan b', 'a.id = b.id', 'LEFT');
 		$builder->join('tr_konsultasi c', 'b.id_jenis_permohonan = c.id', 'LEFT');
 		$builder->join('status_sistem d', 'b.status = d.status_progress', 'LEFT');
@@ -31,6 +32,8 @@ class KonsultasiModel extends Model{
 		if ($user_id != null || trim($user_id) != '')  $builder->where('a.user_id', $user_id);
 		if ($id_permohonan != null || trim($id_permohonan) != '')  $builder->where('a.id_permohonan', $id_permohonan);
 		$builder->where("b.status != 26 ");
+		$builder->where("a.post_date = DATE_FORMAT(now(),'%Y-%m-%d')");
+
 		$builder->join('tmdatabangunan b', 'a.id = b.id', 'LEFT');
 		$builder->join('tr_konsultasi c', 'b.id_jenis_permohonan = c.id', 'LEFT');
 		$builder->join('status_sistem d', 'b.status = d.status_progress', 'LEFT');
@@ -216,5 +219,22 @@ class KonsultasiModel extends Model{
 	{
 		$res = $this->db->table('tmpersyaratankonsultasi')->where('id_detail', $id_detail)->delete();
         return  $res;
+	}
+
+	public function get_id_kabkot($id)
+	{
+		$sql = "SELECT id, no_konsultasi, id_kabkot_bgn, id_kec_bgn , id_izin
+		FROM tmdatabangunan where id = ".$id;
+		$hasil = $this->db->query($sql)->getRowArray();
+		return $hasil;
+	}
+
+	public function get_nomor_registrasi($id_kec_bg, $tgl_skrg)
+	{
+		$sql = "SELECT max(no_konsultasi) as no_urut 
+			FROM tmdatabangunan WHERE SUBSTR(no_konsultasi,5,6) = '$id_kec_bg'
+			and SUBSTR(no_konsultasi,12,8) = '$tgl_skrg'";
+		$hasil = $this->db->query($sql)->getRowArray();
+		return $hasil;
 	}
 }

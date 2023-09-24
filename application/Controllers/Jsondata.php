@@ -1444,4 +1444,91 @@ class Jsondata extends \CodeIgniter\Controller
 	}
   }
 
+  public function saveDataPernyataan()
+  {
+	  	$user_id			= $this->session->get('id');
+	  	$db = \Config\Database::connect(); // Connect to the database
+		$db->query('START TRANSACTION');
+	  
+		$id				= $this->request->getVar('id');
+		$pernyataan		=  $this->request->getVar('pernyataan');
+		$tgl_skrg 		= date('Y-m-d');
+		$no_konsultasi 	= $this->nomor_registrasi($id);
+
+		if ($pernyataan == '1') {
+			$data	= array(
+				'pernyataan' => $pernyataan,
+				'no_konsultasi' => $no_konsultasi,
+				'tgl_pernyataan' => $tgl_skrg,
+				'status' => '1',
+				'post_date' => date('Y-m-d')
+			);
+			
+			$this->konsulModel->updateData($id, $data, 'tmdatabangunan', 'id' );
+			// $this->session->set_flashdata('message', 'Data User Berhasil di Ubah.');
+			// $this->session->set_flashdata('status', 'success');
+			// $this->load->library('ciqrcode'); //pemanggilan library QR CODE
+			// $config['imagedir']     = 'object-storage/dekill/QR_Code/'; //direktori penyimpanan qr code
+			// $config['quality']      = true; //boolean, the default is true
+			// $config['size']         = '1024'; //interger, the default is 1024
+			// $config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+			// $config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+			// $this->ciqrcode->initialize($config);
+			// $image_name = $no_konsultasi . '.png'; //buat name dari qr code sesuai dengan nim
+			// $params['data'] = 'http://simbg.pu.go.id/Main/Konsultasi/' . $no_konsultasi; //data yang akan di jadikan QR CODE
+			// $params['level'] = 'H'; //H=High
+			// $params['size'] = 10;
+			// $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder assets/images/
+			// $data['QR'] = $this->ciqrcode->generate($params);
+		}
+		
+		$db->query('COMMIT');
+		$response = [
+			'status'   	=> 'success',
+			'code'     	=> 200,
+			'data'		=> []
+		];
+
+		header('Content-Type: application/json');
+		echo json_encode($response);
+		exit;
+  }
+
+  public function nomor_registrasi($id = null)
+  {
+	  $que = $this->konsulModel->get_id_kabkot($id);
+	  
+	  $no_reg_awal = $que['id_kec_bgn'];
+	  $id_izin = $que['id_izin'];
+	  $tgl_disetujui = date('d') . date('m') . date('Y');;
+	  $mydata2 = $this->konsulModel->get_nomor_registrasi($no_reg_awal, $tgl_disetujui);
+	  if ($id_izin == '2') {
+		  if (count($mydata2) > 0) {
+			  $no_baru = SUBSTR($mydata2['no_urut'], -2) + 1;
+			  if ($no_baru < 10) {
+				  $no_registrasi = "SLF-" . $no_reg_awal . "-" . $tgl_disetujui . "-0" . $no_baru;
+			  } else {
+				  $no_registrasi = "SLF-" . $no_reg_awal . "-" . $tgl_disetujui . "-" . $no_baru;
+			  }
+		  } else {
+			  $no_registrasi = "SLF-" . $no_reg_awal . "-" . $tgl_disetujui . "-01";
+		  }
+	  } else {
+		
+		  if (count($mydata2) > 0) {
+			  $no_baru = SUBSTR(is_numeric($mydata2['no_urut']) ? $mydata2['no_urut'] : 0, -2) + 1;
+			  
+			  if ($no_baru < 10) {
+				  $no_registrasi = "PBG-" . $no_reg_awal . "-" . $tgl_disetujui . "-0" . $no_baru;
+			  } else {
+				  $no_registrasi = "PBG-" . $no_reg_awal . "-" . $tgl_disetujui . "-" . $no_baru;
+			  }
+		  } else {
+			  $no_registrasi = "PBG-" . $no_reg_awal . "-" . $tgl_disetujui . "-01";
+		  }
+	  }
+	  
+	  return $no_registrasi;
+  }
+
 }
