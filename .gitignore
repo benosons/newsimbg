@@ -46,6 +46,7 @@ application/.env
 application/cache/*
 public/uploads/*
 public/files/*
+public/object-storage/*
 
 #-------------------------
 # Temporary Files
