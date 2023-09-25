@@ -38,9 +38,10 @@ $(document).ready(function() {
   // $('#is_id').val(563816)
   // nextdokumen()
   // getDataJnsKonsultasi(563806)
-    
-  if(data_profile['id_provinsi']){
-    $('#id_nama_provinsi').val(data_profile['id_provinsi']).trigger('change.select2')
+  if(data_profile){
+    if(data_profile['id_provinsi']){
+      $('#id_nama_provinsi').val(data_profile['id_provinsi']).trigger('change.select2')
+    }
   }
   
   $('#jns_pemilik').on('change', function () {
