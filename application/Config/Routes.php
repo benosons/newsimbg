@@ -141,7 +141,7 @@ $routes->add('tokenData', 'View::tokenData');
 // $routes->add('login', 'View::login');
 // $routes->add('dashboard', 'View::dashboard');
 $routes->add('users', 'View::user');
- 
+
 $routes->add('auth', 'Auth::auth');
 $routes->add('reg', 'Auth::reg');
 $routes->add('logout', 'Auth::logout');
@@ -206,6 +206,11 @@ $routes->post('getdatadokumen', 'Jsondata::getdatadokumen');
 $routes->post('SaveDokumen', 'Jsondata::SaveDokumen');
 $routes->post('deleteDokumen', 'Jsondata::deleteDokumen');
 $routes->post('saveDataPernyataan', 'Jsondata::saveDataPernyataan');
+
+// VERIFIKASI
+$routes->post('getallpermohonanverifikasi', 'Jsondata::getallpermohonanverifikasi');
+$routes->post('getverifikasipermohonan', 'Jsondata::getverifikasipermohonan');
+$routes->post('updateVerifikasiTanah', 'Jsondata::updateVerifikasiTanah');
 /**
  * --------------------------------------------------------------------
  * Additional Routing

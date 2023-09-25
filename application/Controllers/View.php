@@ -175,7 +175,7 @@ class View extends \CodeIgniter\Controller
 			$this->data['data_fungsi']		= $global->getfungsi();
 			// $this->data['data_jbg']		= $perm->getjbg();
 			$this->data['data_prov']		= $global->getprov();
-			$this->data['prof'] 			= json_decode( json_encode($konsultasi->getDataUserProfil('a.*', $this->session->get('id'))), true);
+			$this->data['prof'] 			= json_decode(json_encode($konsultasi->getDataUserProfil('a.*', $this->session->get('id'))), true);
 			// echo '<pre>';
 			// print_r($this->data['prof'] );die;
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/permohonan/permohonan.js';
@@ -686,7 +686,7 @@ class View extends \CodeIgniter\Controller
 				$kabkot = $this->data['profile_user']->id_kabkota;
 				$this->data['daftar_kecamatan']	= $global->listDataKecamatan('a.id_kecamatan,a.nama_kecamatan', '', $kabkot);
 			}
-			
+
 			$this->data['active'] = '';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/user/profil.js';
 			return \Twig::instance()->display('admin/user/profil.html', $this->data);
@@ -698,7 +698,7 @@ class View extends \CodeIgniter\Controller
 	public function FormPendaftaran()
 	{
 
-		if ($this->logged ) {
+		if ($this->logged) {
 			helper('form');
 			$this->data['active'] = '';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/konsultasi/formpendaftaran.js';
@@ -707,5 +707,4 @@ class View extends \CodeIgniter\Controller
 			return redirect('login');
 		}
 	}
-
 }
