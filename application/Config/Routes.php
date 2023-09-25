@@ -211,6 +211,20 @@ $routes->post('saveDataPernyataan', 'Jsondata::saveDataPernyataan');
 $routes->post('getallpermohonanverifikasi', 'Jsondata::getallpermohonanverifikasi');
 $routes->post('getverifikasipermohonan', 'Jsondata::getverifikasipermohonan');
 $routes->post('check_status_tanah', 'Jsondata::check_status_tanah');
+$routes->post('check_status', 'Jsondata::check_status');
+$routes->post('status_dt_teknis', 'Jsondata::status_dt_teknis');
+
+// ONLY PERMOHONAN
+$routes->post('getpermohonan', 'Jsondata::getpermohonan');
+
+// PENUGASAN
+$routes->post('getallpermohonanpenugasan', 'Jsondata::getallpermohonanpenugasan');
+$routes->post('listDataPersonilAsn', 'Jsondata::listDataPersonilAsn');
+$routes->post('savePenugasanTpt', 'Jsondata::savePenugasanTpt');
+
+// PENJADWALAN
+$routes->post('getallpermohonanpenjadwalan', 'Jsondata::getallpermohonanpenjadwalan');
+$routes->post('getTpaTptPenugasan', 'Jsondata::getTpaTptPenugasan');
 /**
  * --------------------------------------------------------------------
  * Additional Routing

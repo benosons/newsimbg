@@ -292,7 +292,7 @@ class View extends \CodeIgniter\Controller
 	public function pengawas_pupr()
 	{
 
-		if ($this->logged && ($this->data['role'] == 40 || $this->data['role'] == 200)) {
+		if ($this->logged && ($this->data['role'] == 30 || $this->data['role'] == 40 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'pengawas_pupr';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/pengawas_pupr.js';

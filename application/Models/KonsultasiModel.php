@@ -325,4 +325,61 @@ class KonsultasiModel extends Model
 		$query = $builder->update($dataIn);
 		return $query;
 	}
+
+	function updateValidasi($dataIn, $id, $detail)
+	{
+		$builder = $this->db->table('tmpersyaratankonsultasi');
+		$builder->where(array('id' => $id, 'id_persyaratan_detail' => $detail));
+		$update = $builder->update($dataIn);
+		// $updated_status = $this->db->affected_rows();
+		if ($update) :
+			return $detail;
+		else :
+			return false;
+		endif;
+	}
+
+	function insert_syarat($dataIn)
+	{
+		$builder = $this->db->table('tmpersyaratankonsultasi');
+		$builder->insert($dataIn);
+
+		return true;
+	}
+
+	public function gettpt()
+	{
+		$builder = $this->db->table('tm_personal');
+		$query = $builder->get();
+
+		return $query->getResult();
+	}
+
+	public function insertPenugasanTpt($data)
+	{
+		$builder = $this->db->table('tm_penugasan_pbg');
+		$query = $builder->insert($data);
+
+		return $query;
+	}
+
+	public function getDataBangunan($where)
+	{
+		$builder = $this->db->table('tmdatabanguann');
+		$builder->where($where);
+		$query = $builder->get();
+
+		return $query->getRow();
+	}
+
+	public function getPetugasTpt($where)
+	{
+		$builder = $this->db->table('tmdatabangunan a');
+		$builder->select('a.*, b.*');
+		$builder->where($where);
+		$builder->join('tm_personal b', 'b.id_personal = a.id_personal', 'LEFT');
+		$query = $builder->get();
+
+		return $query->getResult();
+	}
 }

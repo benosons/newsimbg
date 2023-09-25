@@ -1807,15 +1807,17 @@ class Jsondata extends \CodeIgniter\Controller
 
 	public function status_dt_teknis()
 	{
-		$user_id		= $this->session->userdata('loc_user_id');
-		$id_kabkot		= $this->session->userdata('loc_id_kabkot');
-		$user_id		= $this->Outh_model->Encryptor('decrypt', $user_id);
-		$status			= $this->input->post('status_syarat');
-		$no_surat		= $this->input->post('no_surat');
-		$catatan		= $this->input->post('catatan');
-		$id_pemilik		= $this->input->post('id_pemilik');
-		$email			= $this->input->post('email');
-		$no_konsultasi	= $this->input->post('no_konsultasi');
+		$request = $this->request;
+		$globalmodel = new \App\Models\GlobalModel();
+		$user_id		= 1;
+		$id_kabkot		= 3207;
+		// $user_id		= $this->Outh_model->Encryptor('decrypt', $user_id);
+		$status			= $request->getVar('status_syarat');
+		$no_surat		= $request->getVar('no_surat');
+		$catatan		= $request->getVar('catatan');
+		$id_pemilik		= $request->getVar('id_pemilik');
+		// $email			= $request->getVar('email');
+		// $no_konsultasi	= $request->getVar('no_konsultasi');
 		$tgl_skrg 		= date('Y-m-d');
 		if ($status == '2') {
 			$ket = "Dikembalikan ke Pemohon agar di perbaiki/dilengkapi";
@@ -1824,29 +1826,50 @@ class Jsondata extends \CodeIgniter\Controller
 		} else {
 			$ket = "Belum ditentukan";
 		}
-		$filean = $this->input->post('dir_dokumen');
-		$thisdir = getcwd();
-		$dirPath = $thisdir . "/object-storage/dekill/Consultation/";
-		$config['upload_path'] 		= $dirPath;
-		$config['allowed_types'] 	= 'pdf|png|jpg';
-		$config['max_size']			= '50240';
-		$config['remove_spaces']	= False;
-		$config['encrypt_name']		= TRUE;
-		$this->load->library('upload', $config);
-		$this->upload->initialize($config);
-		$file = preg_replace("/[^a-zA-Z0-9.]/", "", $_FILES["dir_file"]['name']);
-		if ($_FILES["dir_file"]["name"]) {
-			$config["file_name"] = $file;
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-			$dir_file = $this->upload->do_upload('dir_file');
-			$filean = $this->upload->data();
-			$filean = $filean['file_name'];
-			if (!$dir_file) {
-				$data['err_msg'] = $this->upload->display_errors('', '');
-				$this->session->set_flashdata('message', 'Jenis Berkas atau Ukuran Berkas tidak Sesuai !');
-				$this->session->set_flashdata('status', 'warning');
-				redirect('DinasTeknis/Verifikasi');
+		// $filean = $this->input->post('dir_dokumen');
+		// $thisdir = getcwd();
+		// $dirPath = $thisdir . "/object-storage/dekill/Consultation/";
+		// $config['upload_path'] 		= $dirPath;
+		// $config['allowed_types'] 	= 'pdf|png|jpg';
+		// $config['max_size']			= '50240';
+		// $config['remove_spaces']	= False;
+		// $config['encrypt_name']		= TRUE;
+		// $this->load->library('upload', $config);
+		// $this->upload->initialize($config);
+		// $file = preg_replace("/[^a-zA-Z0-9.]/", "", $_FILES["dir_file"]['name']);
+		if (!file_exists($_FILES['file']['tmp_name']) || !is_uploaded_file($_FILES['file']['tmp_name'])) {
+
+			$response = array(
+				'code' => 0,
+				'msg' => 'Tidak Ada File upload'
+			);
+
+			echo json_encode($response);
+			exit;
+		} else {
+			if (array_key_exists("file", $_FILES)) {
+				foreach ($_FILES as $key => $value) {
+
+					$basepath = './object-storage/dekill/SuratPemberitahuan/';
+					if (!is_dir($basepath)) {
+						mkdir($basepath, 0777, true);
+					}
+
+					// for ($i = 0; $i < count($value['tmp_name']); $i++) {
+					$tmp_name = $value['tmp_name'];
+					if ($tmp_name) {
+						$path = $value['name'];
+						$ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+						$imgname = "SuratPemberitahuan-" . date('dmYHis') . "-" . $path;
+						$terupload = move_uploaded_file($tmp_name, $basepath . $imgname);
+						if ($terupload) {
+							$response = array(
+								'code' => 0,
+								'msg' => 'File Gagal Diupload'
+							);
+						}
+					}
+				}
 			}
 		}
 
@@ -1859,9 +1882,11 @@ class Jsondata extends \CodeIgniter\Controller
 					'no_surat' => $no_surat,
 					'id' => $id_pemilik,
 					'catatan' => $catatan,
-					'dir_file' => $filean,
+					'dir_file' => $imgname,
 					'user_id' => $user_id,
-					'modul' => 'verifikasi'
+					'modul' => 'verifikasi',
+					'post_by' => 1,
+					'post_date' => date('Y-m-d H:i:s')
 				);
 			} else {
 				$data	= array(
@@ -1870,9 +1895,11 @@ class Jsondata extends \CodeIgniter\Controller
 					'no_surat' => $no_surat,
 					'id' => $id_pemilik,
 					'catatan' => $catatan,
-					'dir_file' => $filean,
+					'dir_file' => $imgname,
 					'user_id' => $user_id,
-					'modul' => 'verifikasi'
+					'modul' => 'verifikasi',
+					'post_by' => 1,
+					'post_date' => date('Y-m-d H:i:s')
 				);
 			}
 		} else {
@@ -1882,57 +1909,30 @@ class Jsondata extends \CodeIgniter\Controller
 				'no_surat' => $no_surat,
 				'id' => $id_pemilik,
 				'catatan' => $catatan,
-				'dir_file' => $filean,
+				'dir_file' => $imgname,
 				'user_id' => $user_id,
-				'modul' => 'verifikasi'
+				'modul' => 'verifikasi',
+				'post_by' => 1,
+				'post_date' => date('Y-m-d H:i:s')
 			);
 		}
-		if ($status == '1') {
-			$dataPemilik 	= $this->MDinasTeknis->getDataVerifikatorOSS($id_pemilik)->row();
-			if ($dataPemilik->oss_id != '' || $dataPemilik->oss_id != null) {
-				$tgl_skrg 		= date('Y-m-d');
-				$kd_status 		= '10';
-				$tgl_status 	= $tgl_skrg;
-				$nama_status 	= 'Verifikasi Kelengkapan';
-				$keterangan 	= 'Dokumen Telah Lengkap';
-				$this->oss_lib->receiveLicenseStatusNew($id_pemilik, $kd_status, $tgl_status, $nama_status, $keterangan);
-			}
-		} else {
-			$dataPemilik 	= $this->MDinasTeknis->getDataVerifikatorOSS($id_pemilik)->row();
-			if ($dataPemilik->oss_id != '' || $dataPemilik->oss_id != null) {
-				$tgl_skrg 		= date('Y-m-d');
-				$kd_status 		= '11';
-				$tgl_status 	= $tgl_skrg;
-				$nama_status 	= 'Verifikasi Kelengkapan';
-				$keterangan 	= 'Dokumen Tidak Lengkap';
-				$this->oss_lib->receiveLicenseStatusNew($id_pemilik, $kd_status, $tgl_status, $nama_status, $keterangan);
-			}
-		}
 
-		$this->Mglobals->setData('tmdatabangunan', ['status' => $data['status']], 'id', $id_pemilik);
-		$this->Mglobals->setDatakol('th_data_konsultasi', $data);
-		$this->session->set_flashdata('message', 'Data User Berhasil di Diperbaharui.');
-		$this->session->set_flashdata('status', 'success');
-		$email 			= "$email";
-		$no_konsultasi 	= "$no_konsultasi";
-		$catatan 		= "$catatan";
-		$subject 		= "Status Verifikasi $no_konsultasi";
-		$text 			= "";
-		$text .= "Yth Bapak/Ibu,<br>";
-		$text .= "<br>";
-		$text .= "Dengan ini kami memberitahukan bahwa Permohonan dengan No.Registrasi $no_konsultasi <br>";
-		$text .= "Dengan keterangan $ket<br>";
-		$text .= "Catatan : $catatan";
-		$text .= "<br>";
-		$text .= "<br>";
-		$text .= "Hormat Kami <br>";
-		$text .= "Admin SIMBG ";
-		if ($status == '1') {
-			$this->simbg_lib->sendEmail($email, $subject, $text);
-		} else {
-			$this->simbg_lib->sendEmail($email, $subject, $text);
-		}
-		redirect('DinasTeknis/Verifikasi');
+		$updatepermohonan = $globalmodel->setData('tmdatabangunan', ['status' => $data['status'], 'last_update' => date('Y-m-d H:i:s')], 'id', $id_pemilik);
+		$insertkonsultasi = $globalmodel->setDatakol('th_data_konsultasi', $data);
+
+		// if ($updatepermohonan && $insertkonsultasi) {
+		$response = array(
+			'code' => 200,
+			'msg' => 'Berhasil'
+		);
+		// } else {
+		// $response = array(
+		// 	'code' => 200,
+		// 	'msg' => 'Gagal'
+		// );
+		// }
+
+		echo json_encode($response);
 	}
 
 	public function check_status_tanah()
@@ -1963,6 +1963,258 @@ class Jsondata extends \CodeIgniter\Controller
 				'msg' => "Gagal !"
 			);
 		}
+		echo json_encode($response);
+	}
+
+	public function check_status()
+	{
+		$request = $this->request;
+		$konsultasi = new \App\Models\KonsultasiModel();
+		$id = $request->getVar('id');
+		$data['id'] = $id;
+		$id_persyaratan_detail = $request->getVar('id_persyaratan_detail');
+		$key_syarat = $request->getVar('key_syarat');
+		$status = $request->getVar('status');
+		if ($key_syarat == 'adm') {
+			$id_persyaratan = '5';
+		} else if ($key_syarat == 'ars') {
+			$id_persyaratan = '2';
+		} else if ($key_syarat == 'str') {
+			$id_persyaratan = '3';
+		} else if ($key_syarat == 'mep') {
+			$id_persyaratan = '4';
+		} else if ($key_syarat == 'tnh') {
+			$id_persyaratan = '1';
+		} else {
+			$id_persyaratan = '0';
+		}
+		$dataIn = array('status' => '1');
+		$id_detail =  $konsultasi->updateValidasi($dataIn, $id, $id_persyaratan_detail);
+		// if ($id_detail != $id_persyaratan_detail) {
+		// 	$dataIsi = array(
+		// 		'id' => $id,
+		// 		'id_persyaratan' => $id_persyaratan,
+		// 		'id_persyaratan_detail' => $id_persyaratan_detail,
+		// 		'status' => '1'
+		// 	);
+		// 	$konsultasi->insert_syarat($dataIsi); // Sudah tersedia
+		// }
+		$response = array(
+			'code' => 200,
+			'msg' => 'Berhasil Diverifikasi'
+		);
+
+		// $response = array(
+		// 	'code' => 0,
+		// 	'msg' => 'Gagal Diverifikasi'
+		// );
+
+		echo json_encode($response);
+	}
+
+	public function getallpermohonanpenugasan()
+	{
+		try {
+			$request	= $this->request;
+			$param	= $request->getVar('param');
+			$konsultasi = new \App\Models\KonsultasiModel();
+			$user_id				= '';
+			$filterQuery			= 'a.*, b.no_konsultasi,b.pernyataan,b.status, b.almt_bgn,c.nm_konsultasi,d.status_pemohon';
+
+			$data = $konsultasi->getDataKonsultasi($filterQuery, '', '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'));
+			$count = $konsultasi->getDataKonsultasiCount($user_id, '', $request->getVar('search'));
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'recordsTotal' => $count,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => [],
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getpermohonan()
+	{
+		try {
+			$request	= $this->request;
+			$param	= $request->getVar('param');
+			$konsultasi = new \App\Models\KonsultasiModel();
+			// $user_id				= '';
+			// $filterQuery			= 'a.*, b.no_konsultasi,b.pernyataan,b.status, b.almt_bgn,c.nm_konsultasi,d.status_pemohon';
+			$dataverifikator = $konsultasi->getDataVerifikator($param);
+			// $data['jum_data'] = $query->num_rows();
+			// $data['results_umum'] = $query->result();
+			// $data = $konsultasi->getDataKonsultasi($filterQuery, $user_id, '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'));
+			// $count = $konsultasi->getDataKonsultasiCount($user_id, '', $request->getVar('search'));
+
+			if ($dataverifikator) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'recordsTotal' => 1,
+					'data' 	 => $dataverifikator
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => [],
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function listDataPersonilAsn()
+	{
+		try {
+			$request	= $this->request;
+			// $param	= $request->getVar('param');
+			$konsultasi = new \App\Models\KonsultasiModel();
+			// $user_id				= '';
+			// $filterQuery			= 'a.*, b.no_konsultasi,b.pernyataan,b.status, b.almt_bgn,c.nm_konsultasi,d.status_pemohon';
+			$datatpt = $konsultasi->gettpt();
+			// $data['jum_data'] = $query->num_rows();
+			// $data['results_umum'] = $query->result();
+			// $data = $konsultasi->getDataKonsultasi($filterQuery, $user_id, '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'));
+			// $count = $konsultasi->getDataKonsultasiCount($user_id, '', $request->getVar('search'));
+
+			if ($datatpt) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'recordsTotal' => 1,
+					'data' 	 => $datatpt
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => [],
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function savePenugasanTpt()
+	{
+		$request = $this->request;
+		$konsultasi = new \App\Models\KonsultasiModel();
+		$val = $request->getVar('val');
+		$id = $request->getVar('id_permohonan');
+		$no_konsultasi = $request->getVar('no_konsultasi');
+		$status = $request->getVar('status');
+		$arrval = explode(',', $val);
+
+		for ($i = 0; $i < count($arrval); $i++) {
+			$data = array(
+				'id_personal' => $arrval[$i],
+				'id_pemilik' => $id
+			);
+
+			$insert = $konsultasi->insertPenugasanTpt($data);
+		}
+
+		$update = $konsultasi->updateData($no_konsultasi, ['status' => 5], 'tmdatabangunan', 'no_konsultasi');
+
+		if ($insert && $update) {
+			$response = array(
+				'code' => 200,
+				'msg' => 'Penugasan Berhasil'
+			);
+		} else {
+			$response = array(
+				'code' => 0,
+				'msg' => 'Penugasan Gagal'
+			);
+		}
+
+		echo json_encode($response);
+	}
+
+	public function getallpermohonanpenjadwalan()
+	{
+		try {
+			$request	= $this->request;
+			$param	= $request->getVar('param');
+			$konsultasi = new \App\Models\KonsultasiModel();
+			$user_id				= '';
+			$filterQuery			= 'a.*, b.no_konsultasi,b.pernyataan,b.status, b.almt_bgn,c.nm_konsultasi,d.status_pemohon';
+
+			$data = $konsultasi->getDataKonsultasi($filterQuery, '', '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'));
+			$count = $konsultasi->getDataKonsultasiCount($user_id, '', $request->getVar('search'));
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'recordsTotal' => $count,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => [],
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getTpaTptPenugasan()
+	{
+		$request = $this->request;
+		$konsultasi = new \App\Models\KonsultasiModel();
+		$id = $request->getVar('id_permohonan');
+		$no_konsultasi = $request->getVar('no_konsultasi');
+
+		$getpermohonan = $konsultasi->getDataBangunan(['no_konsultasi' => $no_konsultasi]);
+
+		$getpenugasan = $konsultasi->getPetugasTpt(['a.id_pemilik' => $getpermohonan->id]);
+
+		if ($getpenugasan) {
+			$response = array(
+				'code' => 200,
+				'data' => $getpenugasan
+			);
+		} else {
+			$response = array(
+				'code' => 0,
+				'data' => []
+			);
+		}
+
 		echo json_encode($response);
 	}
 }

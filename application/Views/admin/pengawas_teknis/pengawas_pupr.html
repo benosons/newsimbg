@@ -2,21 +2,32 @@
 
 <div class="card">
   <div class="card-body">
-
     <ul class="nav nav-tabs nav-primary mt-3 mb-2" role="tablist">
       <li class="nav-item" role="presentation">
-        <a class="nav-link active" data-bs-toggle="tab" href="#primaryhome" role="tab" aria-selected="true">
+        <a
+          class="nav-link active"
+          data-bs-toggle="tab"
+          href="#primaryhome"
+          role="tab"
+          aria-selected="true"
+        >
           <div class="d-flex align-items-center">
-            <div class="tab-icon"><i class='bx bx-home font-18 me-1'></i>
-            </div>
+            <div class="tab-icon"><i class="bx bx-home font-18 me-1"></i></div>
             <div class="tab-title">Penugasan Pemeriksaan Dokumen</div>
           </div>
         </a>
       </li>
       <li class="nav-item" role="presentation">
-        <a class="nav-link" data-bs-toggle="tab" href="#primaryprofile" role="tab" aria-selected="false">
+        <a
+          class="nav-link"
+          data-bs-toggle="tab"
+          href="#primaryprofile"
+          role="tab"
+          aria-selected="false"
+        >
           <div class="d-flex align-items-center">
-            <div class="tab-icon"><i class='bx bx-user-pin font-18 me-1'></i>
+            <div class="tab-icon">
+              <i class="bx bx-user-pin font-18 me-1"></i>
             </div>
             <div class="tab-title">Penjadwalan Konsultasi</div>
           </div>
@@ -25,105 +36,92 @@
     </ul>
 
     <div class="tab-content py-3">
-
       <div class="tab-pane fade show active" id="primaryhome" role="tabpanel">
-        
         <div class="row">
-
           <div class="col-12 col-lg-6">
-            <div class="card radius-10 border-start border-0 border-4 border-danger">
-               <div class="card-body">
-                 <div class="d-flex align-items-center">
-                   <div>
-                     <p class="mb-0 text-secondary">Menunggu Penugasan TPA/TPT</p>
-                     <h4 class="my-1 text-danger">24</h4>
-                   </div>
-                   <div class="widgets-icons-2 rounded-circle bg-gradient-burning text-white ms-auto"><i class='bx bxs-bar-chart-alt-2'></i>
-                   </div>
-                 </div>
-               </div>
+            <div
+              class="card radius-10 border-start border-0 border-4 border-danger"
+            >
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <p class="mb-0 text-secondary">
+                      Menunggu Penugasan TPA/TPT
+                    </p>
+                    <h4 class="my-1 text-danger">24</h4>
+                  </div>
+                  <div
+                    class="widgets-icons-2 rounded-circle bg-gradient-burning text-white ms-auto"
+                  >
+                    <i class="bx bxs-bar-chart-alt-2"></i>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="col-12 col-lg-6">
-            <div class="card radius-10 border-start border-0 border-4 border-success">
+            <div
+              class="card radius-10 border-start border-0 border-4 border-success"
+            >
               <div class="card-body">
                 <div class="d-flex align-items-center">
                   <div>
                     <p class="mb-0 text-secondary">Sudah Penugasan TPA/TPT</p>
                     <h4 class="my-1 text-success">36</h4>
                   </div>
-                  <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i class='bx bxs-bar-chart-alt-2' ></i>
+                  <div
+                    class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"
+                  >
+                    <i class="bx bxs-bar-chart-alt-2"></i>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
 
         <div class="row">
-
           <div class="table-responsive">
-            <table id="table-tpa_tpt" class="table table-striped table-bordered">
+            <table
+              id="permohonan-penugasan"
+              class="table table-striped table-bordered"
+            >
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Jenis Konsultasi</th>
-                  <th>No. Registrasi</th>
                   <th>Nama Pemilik</th>
+                  <th>No. Registrasi</th>
                   <th>Lokasi BG</th>
+                  <!-- <th>Fungsi BG</th> -->
+                  <th>Tanggal Permohonan</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      Prasarana Bangunan Gedung
-                    </div>
-                  </td>
-                  <td>BLA/123135432563/87967857</td>
-                  <td>John Doe</td>
-                  <td>Jl. Jakarta 10, Kota Bandung</td>
-                  <td><span class="badge bg-danger">Menunggu Penugasan</span></td>
-                  <td style="text-align: center;"><button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-secondary"><i class="bx bx-edit me-0"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      </div>Bangunan Gedung Kepentingan Umum
-                    </div>
-                  </td>
-                  <td>BLA/123135432563/87967857</td>
-                  <td>Jane Doe</td>
-                  <td>Jl. Jakarta 10, Kota Bandung</td>
-                  <td><span class="badge bg-success">Sudah Penugasan</span></td>
-                  <td style="text-align: center;"><button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-secondary"><i class="bx bx-edit me-0"></i></button>
-                  </td>
-                </tr>
-                
-              </tbody>
+              <tbody></tbody>
             </table>
+          </div>
         </div>
-
       </div>
-
     </div>
 
     <div class="tab-pane fade" id="primaryprofile" role="tabpanel">
-        
       <div class="row mt-1 mb-2">
-
         <div class="col-12 col-lg-6">
-          <div class="card radius-10 border-start border-0 border-4 border-danger">
+          <div
+            class="card radius-10 border-start border-0 border-4 border-danger"
+          >
             <div class="card-body">
               <div class="d-flex align-items-center">
                 <div>
                   <p class="mb-0 text-secondary">Menunggu Penjadwalan</p>
                   <h4 class="my-1 text-danger">24</h4>
                 </div>
-                <div class="widgets-icons-2 rounded-circle bg-gradient-burning text-white ms-auto"><i class='bx bxs-bar-chart-alt-2'></i>
+                <div
+                  class="widgets-icons-2 rounded-circle bg-gradient-burning text-white ms-auto"
+                >
+                  <i class="bx bxs-bar-chart-alt-2"></i>
                 </div>
               </div>
             </div>
@@ -131,78 +129,385 @@
         </div>
 
         <div class="col-12 col-lg-6">
-          <div class="card radius-10 border-start border-0 border-4 border-success">
+          <div
+            class="card radius-10 border-start border-0 border-4 border-success"
+          >
             <div class="card-body">
               <div class="d-flex align-items-center">
                 <div>
                   <p class="mb-0 text-secondary">Sudah Penjadwalan</p>
                   <h4 class="my-1 text-success">36</h4>
                 </div>
-                <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i class='bx bxs-bar-chart-alt-2' ></i>
+                <div
+                  class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"
+                >
+                  <i class="bx bxs-bar-chart-alt-2"></i>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        
       </div>
-      
+
       <div class="row">
-        
         <div class="table-responsive">
-          <table id="table-penjadwalan_konsultasi" class="table table-striped table-bordered">
+          <table
+            id="permohonan-penjadwalan"
+            class="table table-striped table-bordered"
+          >
             <thead>
               <tr>
-                <th>Jenis Permohonan</th>
-                <th>No. Registrasi</th>
+                <th>#</th>
+                <th>Jenis Konsultasi</th>
                 <th>Nama Pemilik</th>
+                <th>No. Registrasi</th>
                 <th>Lokasi BG</th>
+                <!-- <th>Fungsi BG</th> -->
+                <th>Tanggal Permohonan</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <div class="d-flex align-items-center">
-                    Prasarana Bangunan Gedung
-                  </div>
-                </td>
-                <td>BLA/123135432563/87967857</td>
-                <td>John Doe</td>
-                <td>Jl. Jakarta 10, Kota Bandung</td>
-                <td><span class="badge bg-danger">Menunggu Penjadwalan</span></td>
-                <td style="text-align: center;">
-                  <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-primary"><i class="bx bx-user me-0"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="d-flex align-items-center">
-                    </div>Bangunan Gedung Kepentingan Umum
-                  </div>
-                </td>
-                <td>BLA/123135432563/87967857</td>
-                <td>Jane Doe</td>
-                <td>Jl. Jakarta 10, Kota Bandung</td>
-                <td><span class="badge bg-success">Sudah Penjadwalan</span></td>
-                <td style="text-align: center;">
-                  <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-primary"><i class="bx bx-user me-0"></i>
-                  </button>
-                </td>
-              </tr>
-              
-            </tbody>
+            <tbody></tbody>
           </table>
+        </div>
       </div>
-
     </div>
-
   </div>
-      
+
+  <!-- PENUGASAN TPA -->
+  <div
+    class="modal fade"
+    id="exampleExtraLargeModal2"
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Data Summary Permohonan</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <div class="card radius-10 bg-info">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <div>
+                        <h4 class="mb-0 text-white" id="sum-data_pbg"></h4>
+                      </div>
+                      <div
+                        class="widgets-icons bg-light-white text-secondary ms-auto"
+                      >
+                        <i class="bx bxs-file"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-1"></div>
+                  <div class="col-4">Nama Lengkap Pemilik</div>
+                  <div class="col-7" id="sum-nama_pemilik"></div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-1"></div>
+                  <div class="col-4">No Identitas Pemilik</div>
+                  <div class="col-7" id="sum-identitas_pemilik"></div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-1"></div>
+                  <div class="col-4">Alamat Pemilik Bangunan</div>
+                  <div class="col-7" id="sum-alamat_pemilik"></div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-1"></div>
+                  <div class="col-4">No Telepon</div>
+                  <div class="col-7" id="sum-kontak_pemilik"></div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-1"></div>
+                  <div class="col-4">E-mail</div>
+                  <div class="col-7" id="sum-email_pemilik"></div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-1"></div>
+                  <div class="col-4">Lokasi Bangunan Gedung</div>
+                  <div class="col-7" id="sum-lokasi_bangunan"></div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h6 class="card-title">List Data TPA / TPT</h6>
+              </div>
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Pilih</th>
+                  </thead>
+                  <tbody id="listtpatpt"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="hidden" id="id_permohonan_penugasan" value="0" />
+          <input type="hidden" id="no_konsultasi_penugasan" value="0" />
+          <button class="btn btn-primary" id="savepenugasan">Simpan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PENJADWALAN KONSULTASI -->
+  <div
+    class="modal fade"
+    id="exampleExtraLargeModal3"
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Data Summary Permohonan Penjadwalan</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="card radius-10 bg-info">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center">
+                        <div>
+                          <h4
+                            class="mb-0 text-white"
+                            id="sum-data_pbg-penjadwalan"
+                          ></h4>
+                        </div>
+                        <div
+                          class="widgets-icons bg-light-white text-secondary ms-auto"
+                        >
+                          <i class="bx bxs-file"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-1"></div>
+                    <div class="col-4">Nama Lengkap Pemilik</div>
+                    <div class="col-7" id="sum-nama_pemilik-penjadwalan"></div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-1"></div>
+                    <div class="col-4">No Identitas Pemilik</div>
+                    <div
+                      class="col-7"
+                      id="sum-identitas_pemilik-penjadwalan"
+                    ></div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-1"></div>
+                    <div class="col-4">Alamat Pemilik Bangunan</div>
+                    <div
+                      class="col-7"
+                      id="sum-alamat_pemilik-penjadwalan"
+                    ></div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-1"></div>
+                    <div class="col-4">No Telepon</div>
+                    <div
+                      class="col-7"
+                      id="sum-kontak_pemilik-penjadwalan"
+                    ></div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-1"></div>
+                    <div class="col-4">E-mail</div>
+                    <div class="col-7" id="sum-email_pemilik-penjadwalan"></div>
+                  </div>
+                  <div class="row mb-1">
+                    <div class="col-1"></div>
+                    <div class="col-4">Lokasi Bangunan Gedung</div>
+                    <div
+                      class="col-7"
+                      id="sum-lokasi_bangunan-penjadwalan"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h6 class="card-title">Form Konsultasi</h6>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-4 mb-3">
+                      <div class="form-group">
+                        <label for="" class="form-control-label"
+                          >Konsultasi ke
+                        </label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          value="1"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                    <div class="col-4 mb-3">
+                      <div class="form-group">
+                        <label for="" class="form-control-label">Tanggal</label>
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="tanggal_konsultasi"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-4 mb-3">
+                      <div class="form-group">
+                        <label for="" class="form-control-label">Jam</label>
+                        <input
+                          type="time"
+                          class="form-control"
+                          id="jam_konsultasi"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="form-group">
+                        <label for="" class="form-control-label"
+                          >Tipe Konsultasi</label
+                        >
+                        <select id="tipe_konsultasi" class="form-select">
+                          <option value="">PILIH</option>
+                          <option value="1">Onsite</option>
+                          <option value="2">Online</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3 d-none" id="field-tempat">
+                      <div class="form-group">
+                        <label for="" class="form-control-label"
+                          >Tempat / Keterangan</label
+                        >
+                        <textarea
+                          id="tempat"
+                          cols="30"
+                          rows="3"
+                          class="form-control"
+                          placeholder="Masukan Tempat / Keterangan Konsultasi"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3 d-none" id="field-link">
+                      <div class="form-group">
+                        <label for="" class="form-control-label"
+                          >Link Konsultasi Daring</label
+                        >
+                        <textarea
+                          id="link"
+                          cols="30"
+                          rows="3"
+                          class="form-control"
+                          placeholder="Masukan Link Konsultasi"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3 d-none" id="field-pass-daring">
+                      <div class="form-group">
+                        <label for="" class="form-control-label"
+                          >Password Konsultasi Daring</label
+                        >
+                        <textarea
+                          id="passdaring"
+                          cols="30"
+                          rows="3"
+                          class="form-control"
+                          placeholder="Masukan Password Konsultasi"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="form-group">
+                        <label for="" class="form-control-label"
+                          >Unggah Undangan Konsultasi</label
+                        >
+                        <input type="file" id="file" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-1">
+                      <button id="simpanpenjadwalan" class="btn btn-primary">
+                        Simpan
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h6 class="card-title">List Tim Yang Ditugaskan</h6>
+                </div>
+                <div class="card-body">
+                  <table class="table">
+                    <thead>
+                      <th>No</th>
+                      <th id="thead-penjadwalan">Nama</th>
+                      <th>Unsur</th>
+                      <th>Bidang Keahlian</th>
+                    </thead>
+                    <tbody id="listpenugasantpatpt"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h6 class="card-title">List Konsultasi</h6>
+                </div>
+                <div class="card-body">
+                  <table class="table">
+                    <thead>
+                      <th>No</th>
+                      <th>Nama</th>
+                      <th>Pilih</th>
+                    </thead>
+                    <tbody id="listtpatpt"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="hidden" id="id_permohonan_penjadwalan" value="0" />
+          <button class="btn btn-primary" id="savepenjadwalan">Simpan</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-
 {% endblock %}

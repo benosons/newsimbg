@@ -37,7 +37,10 @@ $(document).ready(function () {
               cancelButton: "btn btn-success btn-sm",
             },
           }).then((result) => {
-            location.reload();
+            $("#exampleExtraLargeModal2").modal("toggle");
+            $("#exampleExtraLargeModal2").modal("hide");
+
+            loadpermohonan();
           });
         }
       },
@@ -49,6 +52,7 @@ function loadpermohonan() {
   $("#permohonan-verifikasi").DataTable({
     processing: true,
     serverSide: true,
+    destroy: true,
     dom:
       "<'row'" +
       "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
@@ -96,10 +100,10 @@ function loadpermohonan() {
                           
                         </div>`;
           } else if (row.status == 4) {
-            var elem = `<div class="btn-group" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="action('detail', ${row.id_permohonan_slf})"><i class="bx bx-file me-0 fs-6"></i></button>
-                          
-                        </div>`;
+            // var elem = `<div class="btn-group" role="group" aria-label="First group">
+            //               <button type="button" class="btn btn-info btn-sm btn-icon" onclick="action('detail', ${row.id_permohonan_slf})"><i class="bx bx-detail me-0 fs-6"></i></button>
+            //             </div>`;
+            var elem = "";
           } else {
             var elem = `<div class="btn-group" role="group" aria-label="First group">
                           <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="actionlanjutkan('${row.id}')"><i class="bx bx-file me-0 fs-6"></i></button>
@@ -268,7 +272,7 @@ function action(mode, id, username) {
     });
   } else if (mode == "verifikasi") {
     getdatapermohonan(id);
-    $("#id_permohonan").val(id);
+    $("#id_pemilik").val(id);
     $("#exampleExtraLargeModal2").modal("toggle");
     $("#exampleExtraLargeModal2").modal("show");
     // $.ajax({
@@ -445,7 +449,7 @@ function getdatapermohonan(id) {
           } else {
             htmldoktanah += `
             <option value="0"> Tidak Terverifikasi </option>
-            <option value="1" selected> Terverifikasi </option>
+            <option value="1"> Terverifikasi </option>
             `;
           }
           htmldoktanah += `
@@ -462,17 +466,28 @@ function getdatapermohonan(id) {
         var listtanah = "";
         data.tanah.forEach((item, index) => {
           listtanah += `<tr>
-            <td>${index + 1}</td>
-            <td>${item.nm_dokumen}</td>
-            <td>${item.keterangan}</td>
+            <td width="5%">${index + 1}</td>
+            <td width="30%">${item.nm_dokumen}</td>
+            <td width="30%">${item.keterangan}</td>
           `;
           if (item.syarat != null) {
-            listtanah += `<td><button class="btn btn-primary btn-sm lihatberkas" type="button" data-kategori="tanah" data-file="${item.syarat.dir_file}">Lihat</button></td>`;
+            listtanah += `<td width="10%"><button class="btn btn-primary btn-sm lihatberkas" type="button" data-kategori="tanah" data-file="${item.syarat.dir_file}">Lihat</button></td>`;
           } else {
-            listtanah += "<td></td>";
+            listtanah += "<tw width='10%'></td>";
           }
-          listtanah += `<td><input type="checkbox" class="form-check"></td>`;
-          listtanah += "</tr>";
+          listtanah += `<td width="25%">
+            <select id="${item.syarat.id_detail}" class="form-select" onchange="check_status(event,${item.syarat.id_detail}, ${item.syarat.id_persyaratan_detail},${id},'tnh')">
+              `;
+          if (item.syarat.status == 1) {
+            listtanah += `<option value="0"> Tidak Terverifikasi </option>
+                  <option value="1" selected> Terverifikasi </option>
+                </select>`;
+          } else {
+            listtanah += `<option value="0"> Tidak Terverifikasi </option>
+                  <option value="1" > Terverifikasi </option>
+                </select>`;
+          }
+          listtanah += "</td></tr>";
         });
 
         $("#listtanah").html(listtanah);
@@ -480,17 +495,28 @@ function getdatapermohonan(id) {
         var listumum = "";
         data.umum.forEach((item, index) => {
           listumum += `<tr>
-            <td>${index + 1}</td>
-            <td>${item.nm_dokumen}</td>
-            <td>${item.keterangan}</td>
+            <td width="5%">${index + 1}</td>
+            <td width="30%">${item.nm_dokumen}</td>
+            <td width="30%">${item.keterangan}</td>
           `;
           if (item.syarat != null) {
-            listumum += `<td><button class="btn btn-primary btn-sm lihatberkas" type="button" data-kategori="tanah" data-file="${item.syarat.dir_file}">Lihat</button></td>`;
+            listumum += `<td width="10%"><button class="btn btn-primary btn-sm lihatberkas" type="button" data-kategori="tanah" data-file="${item.syarat.dir_file}">Lihat</button></td>`;
           } else {
-            listumum += "<td></td>";
+            listumum += "<td width='10%'></td>";
           }
-          listumum += `<td><input type="checkbox" class="form-check"></td>`;
-          listumum += "</tr>";
+          listumum += `<td width="25%">
+            <select id="${item.syarat.id_detail}" class="form-select" onchange="check_status(event,${item.syarat.id_detail}, ${item.syarat.id_persyaratan_detail},${id},'adm' )">
+              `;
+          if (item.syarat.status == 1) {
+            listumum += `<option value="0"> Tidak Terverifikasi </option>
+                  <option value="1" selected> Terverifikasi </option>
+                </select>`;
+          } else {
+            listumum += `<option value="0"> Tidak Terverifikasi </option>
+                  <option value="1" > Terverifikasi </option>
+                </select>`;
+          }
+          listumum += "</td></tr>";
         });
 
         $("#listumum").html(listumum);
@@ -498,17 +524,28 @@ function getdatapermohonan(id) {
         var listars = "";
         data.ars.forEach((item, index) => {
           listars += `<tr>
-            <td>${index + 1}</td>
-            <td>${item.nm_dokumen}</td>
-            <td>${item.keterangan}</td>
+            <td width="5%">${index + 1}</td>
+            <td width="30%">${item.nm_dokumen}</td>
+            <td width="30%">${item.keterangan}</td>
           `;
           if (item.syarat != null) {
-            listars += `<td><button class="btn btn-primary btn-sm lihatberkas" type="button" data-kategori="tanah" data-file="${item.syarat.dir_file}">Lihat</button></td>`;
+            listars += `<td width="10%"><button class="btn btn-primary btn-sm lihatberkas" type="button" data-kategori="tanah" data-file="${item.syarat.dir_file}">Lihat</button></td>`;
           } else {
-            listars += "<td></td>";
+            listars += "<td width='10%'><'td>";
           }
-          listars += `<td><input type="checkbox" class="form-check"></td>`;
-          listars += "</tr>";
+          listars += `<td width="25%">
+            <select id="${item.syarat.id_detail}" class="form-select" onchange="check_status(event,${item.syarat.id_detail}, ${item.syarat.id_persyaratan_detail},${id},'ars' )">
+              `;
+          if (item.syarat.status == 1) {
+            listars += `<option value="0"> Tidak Terverifikasi </option>
+                  <option value="1" selected> Terverifikasi </option>
+                </select>`;
+          } else {
+            listars += `<option value="0"> Tidak Terverifikasi </option>
+                  <option value="1" > Terverifikasi </option>
+                </select>`;
+          }
+          listars += "</td></tr>";
         });
 
         $("#listars").html(listars);
@@ -516,17 +553,28 @@ function getdatapermohonan(id) {
         var liststruk = "";
         data.struk.forEach((item, index) => {
           liststruk += `<tr>
-            <td>${index + 1}</td>
-            <td>${item.nm_dokumen}</td>
-            <td>${item.keterangan}</td>
+            <td width="5%">${index + 1}</td>
+            <td width="30%">${item.nm_dokumen}</td>
+            <td width="30%">${item.keterangan}</td>
           `;
           if (item.syarat != null) {
-            liststruk += `<td><button class="btn btn-primary btn-sm lihatberkas" type="button" data-kategori="tanah" data-file="${item.syarat.dir_file}">Lihat</button></td>`;
+            liststruk += `<td width="10%"><button class="btn btn-primary btn-sm lihatberkas" type="button" data-kategori="tanah" data-file="${item.syarat.dir_file}">Lihat</button></td>`;
           } else {
-            liststruk += "<td></td>";
+            liststruk += "<td width='0%'></td>";
           }
-          liststruk += `<td><input type="checkbox" class="form-check"></td>`;
-          liststruk += "</tr>";
+          liststruk += `<td width="25%">
+            <select class="form-select" onchange="check_status(event,${item.syarat.id_detail}, ${item.syarat.id_persyaratan_detail},${id},'str' )">
+              `;
+          if (item.syarat.status == 1) {
+            liststruk += `<option value="0"> Tidak Terverifikasi </option>
+                  <option value="1" selected> Terverifikasi </option>
+                </select>`;
+          } else {
+            liststruk += `<option value="0"> Tidak Terverifikasi </option>
+                  <option value="1" > Terverifikasi </option>
+                </select>`;
+          }
+          liststruk += "</td></tr>";
         });
 
         $("#liststruk").html(liststruk);
@@ -534,17 +582,28 @@ function getdatapermohonan(id) {
         var listmep = "";
         data.mep.forEach((item, index) => {
           listmep += `<tr>
-            <td>${index + 1}</td>
-            <td>${item.nm_dokumen}</td>
-            <td>${item.keterangan}</td>
+            <td width="5%">${index + 1}</td>
+            <td width="30%">${item.nm_dokumen}</td>
+            <td width="30%">${item.keterangan}test</td>
           `;
           if (item.syarat != null) {
-            listmep += `<td><button class="btn btn-primary btn-sm lihatberkas" type="button" data-kategori="tanah" data-file="${item.syarat.dir_file}">Lihat</button></td>`;
+            listmep += `<td width="10%"><button class="btn btn-primary btn-sm lihatberkas" type="button" data-kategori="tanah" data-file="${item.syarat.dir_file}">Lihat</button></td>`;
           } else {
-            listmep += "<td></td>";
+            listmep += "<td width='10%'></td>";
           }
-          listmep += `<td><input type="checkbox" class="form-check"></td>`;
-          listmep += "</tr>";
+          listmep += `<td width="25%">
+            <select id="${item.syarat.id_detail}" class="form-select" onchange="check_status(event,${item.syarat.id_detail}, ${item.syarat.id_persyaratan_detail},${id},'mep' )">
+          `;
+          if (item.syarat.status == 1) {
+            listmep += `<option value="0"> Tidak Terverifikasi </option>
+              <option value="1" selected> Terverifikasi </option>
+            </select>`;
+          } else {
+            listmep += `<option value="0"> Tidak Terverifikasi </option>
+              <option value="1" > Terverifikasi </option>
+            </select>`;
+          }
+          listmep += "</td></tr>";
         });
 
         $("#listmep").html(listmep);
@@ -578,6 +637,45 @@ function check_tanah(id, idel, event, id_pemilik) {
             }).then((result) => {
               if (result.isConfirmed) {
                 getdatapermohonan(id_pemilik);
+              }
+            });
+          }
+        },
+      });
+    }
+  });
+}
+function check_status(event, id_detail, id_persyaratan_detail, id, key) {
+  Swal.fire({
+    icon: "question",
+    title: "Verifikasi Dokumen ini ?",
+    showCancelButton: true,
+    cancelButtonText: "Tidak",
+    confirmButtonText: "Ya",
+  }).then((res) => {
+    if (res.isConfirmed) {
+      var elambil = event.target;
+      var select = elambil.value;
+
+      $.ajax({
+        type: "post",
+        dataType: "json",
+        data: {
+          id: id,
+          id_detail: id_detail,
+          id_persyaratan_detail: id_persyaratan_detail,
+          key_syarat: key,
+          status: select,
+        },
+        url: "check_status",
+        success: function (response) {
+          if (response.code == 200) {
+            Swal.fire({
+              icon: "success",
+              html: response.msg,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                getdatapermohonan(id);
               }
             });
           }
