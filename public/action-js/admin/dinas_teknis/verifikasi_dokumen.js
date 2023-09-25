@@ -425,16 +425,32 @@ function getdatapermohonan(id) {
 
           if (doktanah.dir_file != null || doktanah.dir_file != "") {
             htmldoktanah += `
-            <td><button type="button" class="btn btn-primary btn-sm lihatberkas" data-kategori="doktanah" data-file="${doktanah.dir_file}">Lihat</button></td>
+            <td><button type="button" class="btn btn-primary btn-sm lihatberkas" onclick="openmodalfile('tanah', '${doktanah.dir_file}')">Lihat</button></td>
             `;
           }
           if (doktanah.dir_file_phat != null || doktanah.dir_file_phat != "") {
             htmldoktanah += `
-            <td><button type="button" class="btn btn-primary btn-sm lihatberkas" data-kategori="doktanah" data-file="${doktanah.dir_file_phat}">Lihat</button></td>
+            <td><button type="button" class="btn btn-primary btn-sm lihatberkas" onclick="openmodalfile('tanah', '${doktanah.dir_file_phat}')">Lihat</button></td>
             `;
           }
           htmldoktanah += `
-            <td><input type="checkbox" class="form-check" id="doktanah_${doktanah.id_detail}" onchange="check_tanah(${doktanah.id_detail},'#doktanah_${doktanah.id_detail}', ${id})"></td>
+            <td>
+              <select class="form-select" id="doktanah_${doktanah.id_detail}" onchange="check_tanah(${doktanah.id_detail},'#doktanah_${doktanah.id_detail}',event, ${id})">
+          `;
+          if (doktanah.status_verifikasi_tanah == 1) {
+            htmldoktanah += `
+            <option value="0"> Tidak Terverifikasi </option>
+            <option value="1" selected> Terverifikasi </option>
+            `;
+          } else {
+            htmldoktanah += `
+            <option value="0"> Tidak Terverifikasi </option>
+            <option value="1" selected> Terverifikasi </option>
+            `;
+          }
+          htmldoktanah += `
+              </select>
+            </td>
           </tr>
         `;
           $("#doktanah").html(htmldoktanah);
@@ -537,7 +553,7 @@ function getdatapermohonan(id) {
   });
 }
 
-function check_tanah(id, idel, id_pemilik) {
+function check_tanah(id, idel, event, id_pemilik) {
   Swal.fire({
     icon: "question",
     title: "Verifikasi Dokumen ini ?",
@@ -546,15 +562,14 @@ function check_tanah(id, idel, id_pemilik) {
     confirmButtonText: "Ya",
   }).then((res) => {
     if (res.isConfirmed) {
-      var status = 0;
-      if ($(idel).checked) {
-        status = 1;
-      }
+      var elambil = event.target;
+      var select = elambil.value;
+
       $.ajax({
         type: "post",
         dataType: "json",
-        data: { id_detail: id, status: status },
-        url: "updateVerifikasiTanah",
+        data: { id_detail: id, status: select },
+        url: "check_status_tanah",
         success: function (response) {
           if (response.code == 200) {
             Swal.fire({
@@ -570,4 +585,18 @@ function check_tanah(id, idel, id_pemilik) {
       });
     }
   });
+}
+
+function openmodalfile(kategori, file) {
+  var modals = new bootstrap.Modal(document.getElementById("pdfModal"), {
+    keyboard: false,
+    backdrop: false,
+  });
+
+  let html = "";
+  var path = "object-storage/dekill/Earth/";
+  html += `<embed id="pathview" src="${file}" width="100%" height="1000" type="application/pdf">`;
+
+  $("#bodyview").html(html);
+  modals.show();
 }

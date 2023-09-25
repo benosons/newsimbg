@@ -210,7 +210,7 @@ $routes->post('saveDataPernyataan', 'Jsondata::saveDataPernyataan');
 // VERIFIKASI
 $routes->post('getallpermohonanverifikasi', 'Jsondata::getallpermohonanverifikasi');
 $routes->post('getverifikasipermohonan', 'Jsondata::getverifikasipermohonan');
-$routes->post('updateVerifikasiTanah', 'Jsondata::updateVerifikasiTanah');
+$routes->post('check_status_tanah', 'Jsondata::check_status_tanah');
 /**
  * --------------------------------------------------------------------
  * Additional Routing

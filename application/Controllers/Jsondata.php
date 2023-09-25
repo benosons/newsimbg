@@ -1628,6 +1628,37 @@ class Jsondata extends \CodeIgniter\Controller
 			$dataverifikator = $konsultasi->getDataVerifikator($param);
 			$permohonan = $konsultasi->getJenisKonsultasi($param);
 			$doktanah = $konsultasi->getTanahVerifikasi($param);
+			$dokumentanah = array();
+			foreach ($doktanah as $value) {
+				$dat = array(
+					'atas_nama_dok' => $value->atas_nama_dok,
+					'dir_file' => $this->data['baseURL'] . '/object-storage/dekill/Earth/' . $value->dir_file,
+					'dir_file_phat' => $this->data['baseURL'] . '/object-storage/dekill/Earth/' . $value->dir_file_phat,
+					'hat' => $value->hat,
+					'id' => $value->id,
+					'id_detail' => $value->id_detail,
+					'id_dokumen' => $value->id_dokumen,
+					'id_kabkot' => $value->id_kabkot,
+					'id_kecamatan' => $value->id_kecamatan,
+					'id_provinsi' => $value->id_provinsi,
+					'jenis_dokumen_phat' => $value->jenis_dokumen_phat,
+					'last_update' => $value->last_update,
+					'lokasi_tanah' => $value->lokasi_tanah,
+					'luas_tanah' => $value->luas_tanah,
+					'nama_penerima_phat' => $value->nama_penerima_phat,
+					'no_dok' => $value->no_dok,
+					'no_dokumen_phat' => $value->no_dokumen_phat,
+					'post_by' => $value->post_by,
+					'post_date' => $value->post_date,
+					'status_phat' => $value->status_phat,
+					'status_val' => $value->status_val,
+					'status_verifikasi_tanah' => $value->status_verifikasi_tanah,
+					'tanggal_dok' => $value->tanggal_dok,
+					'tgl_terbit_phat' => $value->tgl_terbit_phat,
+				);
+
+				array_push($dokumentanah, $dat);
+			}
 			$id_j_per = $permohonan->id_jenis_permohonan;
 			$umum = $konsultasi->getSyaratList($id_j_per, '5');
 			$syaratumum = array();
@@ -1728,7 +1759,7 @@ class Jsondata extends \CodeIgniter\Controller
 			// $data['results_umum'] = $query->result();
 			$data = array(
 				'verifikator' => $dataverifikator,
-				'doktanah' => $doktanah,
+				'doktanah' => $dokumentanah,
 				'umum' => $syaratumum,
 				'tanah' => $syarattanah,
 				'ars' => $syaratars,
