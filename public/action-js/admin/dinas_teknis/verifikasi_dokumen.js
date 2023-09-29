@@ -429,12 +429,12 @@ function getdatapermohonan(id) {
 
           if (doktanah.dir_file != null || doktanah.dir_file != "") {
             htmldoktanah += `
-            <td><button type="button" class="btn btn-primary btn-sm lihatberkas" onclick="openmodalfile('tanah', '${doktanah.dir_file}')">Lihat</button></td>
+            <td><a href="${doktanah.dir_file}" target="_blank" class="btn btn-primary btn-sm lihatberkas" >Lihat</a></td>
             `;
           }
           if (doktanah.dir_file_phat != null || doktanah.dir_file_phat != "") {
             htmldoktanah += `
-            <td><button type="button" class="btn btn-primary btn-sm lihatberkas" onclick="openmodalfile('tanah', '${doktanah.dir_file_phat}')">Lihat</button></td>
+            <td><a href="${doktanah.dir_file}" target="_blank" class="btn btn-primary btn-sm lihatberkas" >Lihat</a></td>
             `;
           }
           htmldoktanah += `
@@ -471,7 +471,7 @@ function getdatapermohonan(id) {
             <td width="30%">${item.keterangan}</td>
           `;
           if (item.syarat != null) {
-            listtanah += `<td width="10%"><button class="btn btn-primary btn-sm lihatberkas" type="button" data-kategori="tanah" data-file="${item.syarat.dir_file}">Lihat</button></td>`;
+            listtanah += `<td width="10%"><a href="object-storage/dekill/Requirement/${item.syarat.dir_file}" target="_blank" class="btn btn-primary btn-sm lihatberkas">Lihat</a></td>`;
           } else {
             listtanah += "<tw width='10%'></td>";
           }
@@ -500,7 +500,7 @@ function getdatapermohonan(id) {
             <td width="30%">${item.keterangan}</td>
           `;
           if (item.syarat != null) {
-            listumum += `<td width="10%"><button class="btn btn-primary btn-sm lihatberkas" type="button" data-kategori="tanah" data-file="${item.syarat.dir_file}">Lihat</button></td>`;
+            listumum += `<td width="10%"><a href="object-storage/dekill/Requirement/${item.syarat.dir_file}" target="_blank" class="btn btn-primary btn-sm">Lihat</button></td>`;
           } else {
             listumum += "<td width='10%'></td>";
           }
@@ -529,7 +529,7 @@ function getdatapermohonan(id) {
             <td width="30%">${item.keterangan}</td>
           `;
           if (item.syarat != null) {
-            listars += `<td width="10%"><button class="btn btn-primary btn-sm lihatberkas" type="button" data-kategori="tanah" data-file="${item.syarat.dir_file}">Lihat</button></td>`;
+            listars += `<td width="10%"><a href="object-storage/dekill/Requirement/${item.syarat.dir_file}" target="_blank" class="btn btn-primary btn-sm">Lihat</button></td>`;
           } else {
             listars += "<td width='10%'><'td>";
           }
@@ -558,7 +558,7 @@ function getdatapermohonan(id) {
             <td width="30%">${item.keterangan}</td>
           `;
           if (item.syarat != null) {
-            liststruk += `<td width="10%"><button class="btn btn-primary btn-sm lihatberkas" type="button" data-kategori="tanah" data-file="${item.syarat.dir_file}">Lihat</button></td>`;
+            liststruk += `<td width="10%"><a href="object-storage/dekill/Requirement/${item.syarat.dir_file}" target="_blank" class="btn btn-primary btn-sm">Lihat</button></td>`;
           } else {
             liststruk += "<td width='0%'></td>";
           }
@@ -587,7 +587,7 @@ function getdatapermohonan(id) {
             <td width="30%">${item.keterangan}test</td>
           `;
           if (item.syarat != null) {
-            listmep += `<td width="10%"><button class="btn btn-primary btn-sm lihatberkas" type="button" data-kategori="tanah" data-file="${item.syarat.dir_file}">Lihat</button></td>`;
+            listmep += `<td width="10%"><a href="object-storage/dekill/Requirement/${item.syarat.dir_file}" target="_blank" class="btn btn-primary btn-sm">Lihat</button></td>`;
           } else {
             listmep += "<td width='10%'></td>";
           }

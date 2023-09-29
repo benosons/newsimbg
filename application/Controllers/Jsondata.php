@@ -2102,6 +2102,7 @@ class Jsondata extends \CodeIgniter\Controller
 				$response = [
 					'status'   => 'sukses',
 					'code'     => 200,
+					'thead'		=> 'Nama Tim TPT',
 					'recordsTotal' => 1,
 					'data' 	 => $datatpt
 				];

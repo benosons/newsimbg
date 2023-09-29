@@ -133,14 +133,15 @@ function loadpermohonanpenugasan() {
       {
         mRender: function (data, type, row) {
           if (row.status == 1) {
-            var elem = `<div class="btn-group" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="action('verifikasi',${row.id})"><i class="bx bx-file me-0 fs-6"></i></button>
-                        </div>`;
+            // var elem = `<div class="btn-group" role="group" aria-label="First group">
+            //               <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="action('verifikasi',${row.id})"><i class="bx bx-file me-0 fs-6"></i></button>
+            //             </div>`;
+            var elem = "";
           } else if (row.status == 3) {
-            var elem = `<div class="btn-group" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="action('detail', ${row.id_permohonan_slf})"><i class="bx bx-file me-0 fs-6"></i></button>
-                          
-                        </div>`;
+            var elem = "";
+            // var elem = `<div class="btn-group" role="group" aria-label="First group">
+            //               <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="action('detail', ${row.id_permohonan_slf})"><i class="bx bx-file me-0 fs-6"></i></button>
+            //             </div>`;
           } else if (row.status == 4) {
             var elem = `<div class="btn-group" role="group" aria-label="First group">
             <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="action('penugasan', ${row.id}, '${row.no_konsultasi}')"><i class="bx bxs-user-detail me-0 fs-6" title="Penugasan TPA/TPT"></i></button>
@@ -707,6 +708,7 @@ function gettpttpapenugasan(id) {
         var data = response.data;
         var html = ``;
         var nomor = 1;
+        $("#thead-tim").html(response.thead);
         data.forEach((item) => {
           html += `
             <tr>
