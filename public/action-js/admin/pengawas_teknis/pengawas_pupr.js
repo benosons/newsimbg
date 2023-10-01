@@ -124,7 +124,7 @@ function loadpermohonanpenugasan() {
     aoColumnDefs: [
       {
         mRender: function (data, type, row) {
-          var elem = `<span class="badge bg-gradient-bloody text-white shadow-sm w-100">${data}</span>`;
+          var elem = `<span class="badge bg-main text-white shadow-sm w-100">${data}</span>`;
 
           return elem;
         },
@@ -144,7 +144,7 @@ function loadpermohonanpenugasan() {
             //             </div>`;
           } else if (row.status == 4) {
             var elem = `<div class="btn-group" role="group" aria-label="First group">
-            <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="action('penugasan', ${row.id}, '${row.no_konsultasi}')"><i class="bx bxs-user-detail me-0 fs-6" title="Penugasan TPA/TPT"></i></button>
+            <button type="button" class="btn btn-second btn-sm btn-icon" onclick="action('penugasan', ${row.id}, '${row.no_konsultasi}')"><i class="bx bxs-user-detail me-0 fs-6" title="Penugasan TPA/TPT"></i></button>
                         </div>`;
             // var elem = "";
           } else {

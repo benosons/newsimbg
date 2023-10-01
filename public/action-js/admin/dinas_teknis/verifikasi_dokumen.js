@@ -82,7 +82,7 @@ function loadpermohonan() {
     aoColumnDefs: [
       {
         mRender: function (data, type, row) {
-          var elem = `<span class="badge bg-gradient-bloody text-white shadow-sm w-100">${data}</span>`;
+          var elem = `<span class="badge bg-main text-white shadow-sm w-100">${data}</span>`;
 
           return elem;
         },
@@ -92,11 +92,11 @@ function loadpermohonan() {
         mRender: function (data, type, row) {
           if (row.status == 1) {
             var elem = `<div class="btn-group" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="action('verifikasi',${row.id})"><i class="bx bx-file me-0 fs-6"></i></button>
+                          <button type="button" class="btn btn-fifth btn-sm btn-icon" onclick="action('verifikasi',${row.id})"><i class="bx bx-file me-0 fs-6"></i></button>
                         </div>`;
           } else if (row.status == 3) {
             var elem = `<div class="btn-group" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="action('detail', ${row.id_permohonan_slf})"><i class="bx bx-file me-0 fs-6"></i></button>
+                          <button type="button" class="btn btn-fifth btn-sm btn-icon" onclick="action('detail', ${row.id_permohonan_slf})"><i class="bx bx-file me-0 fs-6"></i></button>
                           
                         </div>`;
           } else if (row.status == 4) {
@@ -106,8 +106,8 @@ function loadpermohonan() {
             var elem = "";
           } else {
             var elem = `<div class="btn-group" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="actionlanjutkan('${row.id}')"><i class="bx bx-file me-0 fs-6"></i></button>
-                          <button type="button" class="btn btn-primary btn-sm btn-icon" onclick="action('update', ${row.id_permohonan_slf})"><i class="bx bx-edit me-0 fs-6"></i></button>
+                          <button type="button" class="btn btn-fifth btn-sm btn-icon" onclick="actionlanjutkan('${row.id}')"><i class="bx bx-file me-0 fs-6"></i></button>
+                          <button type="button" class="btn btn-second btn-sm btn-icon" onclick="action('update', ${row.id_permohonan_slf})"><i class="bx bx-edit me-0 fs-6"></i></button>
                         </div>`;
           }
           return elem;
