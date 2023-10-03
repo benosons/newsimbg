@@ -1994,6 +1994,181 @@ class Jsondata extends \CodeIgniter\Controller
 		}
 	}
 
+	public function gethasilkonsultasi()
+	{
+		try {
+			$request	= $this->request;
+			$param	= $request->getVar('param');
+			$konsultasi = new \App\Models\KonsultasiModel();
+			// $user_id				= '';
+			// $filterQuery			= 'a.*, b.no_konsultasi,b.pernyataan,b.status, b.almt_bgn,c.nm_konsultasi,d.status_pemohon';
+			$dataverifikator = $konsultasi->getDataVerifikator($param);
+			$permohonan = $konsultasi->getJenisKonsultasi($param);
+			$doktanah = $konsultasi->getTanahVerifikasi($param);
+			$dokumentanah = array();
+			foreach ($doktanah as $value) {
+				$dat = array(
+					'atas_nama_dok' => $value->atas_nama_dok,
+					'dir_file' => $this->data['baseURL'] . '/object-storage/dekill/Earth/' . $value->dir_file,
+					'dir_file_phat' => $this->data['baseURL'] . '/object-storage/dekill/Earth/' . $value->dir_file_phat,
+					'hat' => $value->hat,
+					'id' => $value->id,
+					'id_detail' => $value->id_detail,
+					'id_dokumen' => $value->id_dokumen,
+					'id_kabkot' => $value->id_kabkot,
+					'id_kecamatan' => $value->id_kecamatan,
+					'id_provinsi' => $value->id_provinsi,
+					'jenis_dokumen_phat' => $value->jenis_dokumen_phat,
+					'last_update' => $value->last_update,
+					'lokasi_tanah' => $value->lokasi_tanah,
+					'luas_tanah' => $value->luas_tanah,
+					'nama_penerima_phat' => $value->nama_penerima_phat,
+					'no_dok' => $value->no_dok,
+					'no_dokumen_phat' => $value->no_dokumen_phat,
+					'post_by' => $value->post_by,
+					'post_date' => $value->post_date,
+					'status_phat' => $value->status_phat,
+					'status_val' => $value->status_val,
+					'status_verifikasi_tanah' => $value->status_verifikasi_tanah,
+					'tanggal_dok' => $value->tanggal_dok,
+					'tgl_terbit_phat' => $value->tgl_terbit_phat,
+				);
+
+				array_push($dokumentanah, $dat);
+			}
+			$id_j_per = $permohonan->id_jenis_permohonan;
+			$umum = $konsultasi->getSyaratList($id_j_per, '5');
+			$syaratumum = array();
+			foreach ($umum as $value) {
+				$dat = array(
+					'id' => $value->id,
+					'id_detail' => $value->id_detail,
+					'id_detail_jenis_persyaratan' => $value->id_detail_jenis_persyaratan,
+					'id_jenis_persyaratan' => $value->id_jenis_persyaratan,
+					'id_persyaratan' => $value->id_persyaratan,
+					'id_syarat' => $value->id_syarat,
+					'keterangan' => $value->keterangan,
+					'nm_dokumen' => $value->nm_dokumen
+				);
+
+				$getsyarat = $konsultasi->getSyarat($value->id_detail, $param);
+				$dat['syarat'] = $getsyarat;
+
+				array_push($syaratumum, $dat);
+			}
+			$tanah = $konsultasi->getSyaratList($id_j_per, '1');
+			$syarattanah = array();
+			foreach ($tanah as $value) {
+				$dat = array(
+					'id' => $value->id,
+					'id_detail' => $value->id_detail,
+					'id_detail_jenis_persyaratan' => $value->id_detail_jenis_persyaratan,
+					'id_jenis_persyaratan' => $value->id_jenis_persyaratan,
+					'id_persyaratan' => $value->id_persyaratan,
+					'id_syarat' => $value->id_syarat,
+					'keterangan' => $value->keterangan,
+					'nm_dokumen' => $value->nm_dokumen
+				);
+
+				$getsyarat = $konsultasi->getSyarat($value->id_detail, $param);
+				$dat['syarat'] = $getsyarat;
+
+				array_push($syarattanah, $dat);
+			}
+			$ars = $konsultasi->getSyaratList($id_j_per, '2');
+			$syaratars = array();
+			foreach ($ars as $value) {
+				$dat = array(
+					'id' => $value->id,
+					'id_detail' => $value->id_detail,
+					'id_detail_jenis_persyaratan' => $value->id_detail_jenis_persyaratan,
+					'id_jenis_persyaratan' => $value->id_jenis_persyaratan,
+					'id_persyaratan' => $value->id_persyaratan,
+					'id_syarat' => $value->id_syarat,
+					'keterangan' => $value->keterangan,
+					'nm_dokumen' => $value->nm_dokumen
+				);
+
+				$getsyarat = $konsultasi->getSyarat($value->id_detail, $param);
+				$dat['syarat'] = $getsyarat;
+
+				array_push($syaratars, $dat);
+			}
+			$struk = $konsultasi->getSyaratList($id_j_per, '3');
+			$syaratstruk = array();
+			foreach ($struk as $value) {
+				$dat = array(
+					'id' => $value->id,
+					'id_detail' => $value->id_detail,
+					'id_detail_jenis_persyaratan' => $value->id_detail_jenis_persyaratan,
+					'id_jenis_persyaratan' => $value->id_jenis_persyaratan,
+					'id_persyaratan' => $value->id_persyaratan,
+					'id_syarat' => $value->id_syarat,
+					'keterangan' => $value->keterangan,
+					'nm_dokumen' => $value->nm_dokumen
+				);
+
+				$getsyarat = $konsultasi->getSyarat($value->id_detail, $param);
+				$dat['syarat'] = $getsyarat;
+
+				array_push($syaratstruk, $dat);
+			}
+			$mep = $konsultasi->getSyaratList($id_j_per, '4');
+			$syaratmep = array();
+			foreach ($mep as $value) {
+				$dat = array(
+					'id' => $value->id,
+					'id_detail' => $value->id_detail,
+					'id_detail_jenis_persyaratan' => $value->id_detail_jenis_persyaratan,
+					'id_jenis_persyaratan' => $value->id_jenis_persyaratan,
+					'id_persyaratan' => $value->id_persyaratan,
+					'id_syarat' => $value->id_syarat,
+					'keterangan' => $value->keterangan,
+					'nm_dokumen' => $value->nm_dokumen
+				);
+
+				$getsyarat = $konsultasi->getSyarat($value->id_detail, $param);
+				$dat['syarat'] = $getsyarat;
+
+				array_push($syaratmep, $dat);
+			}
+			// $data['jum_data'] = $query->num_rows();
+			// $data['results_umum'] = $query->result();
+			$data = array(
+				'verifikator' => $dataverifikator,
+				'doktanah' => $dokumentanah,
+				'umum' => $syaratumum,
+				'tanah' => $syarattanah,
+				'ars' => $syaratars,
+				'struk' => $syaratstruk,
+				'mep' => $syaratmep
+			);
+			// $data = $konsultasi->getDataKonsultasi($filterQuery, $user_id, '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'));
+			// $count = $konsultasi->getDataKonsultasiCount($user_id, '', $request->getVar('search'));
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'recordsTotal' => 1,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => [],
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
 	public function getDataUmum($id)
 	{
 		// $id = $this->uri->segment('3');
