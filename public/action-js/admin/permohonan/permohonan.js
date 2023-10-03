@@ -162,6 +162,24 @@ function loadpermohonan() {
       return index;
     },
     lengthChange: false,
+    infoCallback: function (settings, start, end, max, total, pre) {
+      console.log(settings);
+      console.log(start + ":" + end + ":" + max + ":" + total);
+      return !isNaN(total)
+        ? "Showing " +
+            start +
+            " to " +
+            end +
+            " of " +
+            total +
+            " entries" +
+            (total !== max ? " (filtered from " + max + " total entries)" : "")
+        : "Showing " +
+            start +
+            " to " +
+            (start + this.api().data().length - 1) +
+            " entries";
+    },
   });
   // $.ajax({
   //   type: "post",

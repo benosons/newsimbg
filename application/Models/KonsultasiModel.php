@@ -34,7 +34,7 @@ class KonsultasiModel extends Model
 		if ($user_id != null || trim($user_id) != '')  $builder->where('a.user_id', $user_id);
 		if ($id_permohonan != null || trim($id_permohonan) != '')  $builder->where('a.id_permohonan', $id_permohonan);
 		$builder->where("b.status != 26 ");
-		$builder->where("a.post_date = DATE_FORMAT(now(),'%Y-%m-%d')");
+		// $builder->where("a.post_date = DATE_FORMAT(now(),'%Y-%m-%d')");
 
 		$builder->join('tmdatabangunan b', 'a.id = b.id', 'LEFT');
 		$builder->join('tr_konsultasi c', 'b.id_jenis_permohonan = c.id', 'LEFT');
@@ -374,10 +374,10 @@ class KonsultasiModel extends Model
 
 	public function getPetugasTpt($where)
 	{
-		$builder = $this->db->table('tmdatabangunan a');
+		$builder = $this->db->table('tm_penugasan_pbg a');
 		$builder->select('a.*, b.*');
-		$builder->where($where);
 		$builder->join('tm_personal b', 'b.id_personal = a.id_personal', 'LEFT');
+		$builder->where($where);
 		$query = $builder->get();
 
 		return $query->getResult();

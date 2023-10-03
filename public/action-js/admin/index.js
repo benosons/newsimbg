@@ -15,6 +15,13 @@ $(() => {
     let kecamatan = $(this).val();
     getkelurahan(kecamatan);
   });
+
+  $("#formDatadiri").submit(function (e) {
+    e.preventDefault();
+
+    let fd = new FormData(this);
+    savedatadiri(fd);
+  });
 });
 
 function cekprofile() {
@@ -50,6 +57,7 @@ function getkabkot(id) {
     },
   });
 }
+
 function getkecamatan(id) {
   $.ajax({
     type: "post",
@@ -69,6 +77,7 @@ function getkecamatan(id) {
     },
   });
 }
+
 function getkelurahan(id) {
   $.ajax({
     type: "post",
@@ -84,6 +93,33 @@ function getkelurahan(id) {
             `;
         });
         $("#id_kelurahan").html(html);
+      }
+    },
+  });
+}
+
+function savedatadiri(fd) {
+  $.ajax({
+    type: "post",
+    dataType: "json",
+    data: fd,
+    processData: false,
+    contentType: false,
+    url: "savedatadiri",
+    success: function (response) {
+      if (response.code == 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Data Diri Berhasil Simpan",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            $("#exampleExtraLargeModal2").modal("toggle");
+            $("#exampleExtraLargeModal2").modal("hide");
+
+            cekprofile();
+          }
+        });
       }
     },
   });

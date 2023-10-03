@@ -687,6 +687,53 @@ class Jsondata extends \CodeIgniter\Controller
 		}
 	}
 
+	public function savedatadiri()
+	{
+		try {
+			$request		= $this->request;
+			$method			= $request->getMethod();
+			$komunikasi 	= new \App\Models\ProfileModel();
+
+			$data = array(
+				'user_id' => $this->data['id'],
+				'nama_lengkap' => $request->getVar('nama_lengkap'),
+				'glr_depan' => $request->getVar('glr_depan'),
+				'glr_belakang' => $request->getVar('glr_belakang'),
+				'no_ktp' => $request->getVar('no_ktp'),
+				'no_hp' => $request->getVar('no_hp'),
+				'email' => $request->getVar('email'),
+				'alamat' => $request->getVar('alamat'),
+				'id_provinsi' => $request->getVar('id_provinsi'),
+				'id_kabkota' => $request->getVar('id_kabkot'),
+				'id_kecamatan' => $request->getVar('id_kecamatan'),
+				'id_kelurahan' => $request->getVar('id_kelurahan'),
+				'status_pemohon' => 1,
+				'post_date' => date('Y-m-d'),
+				'post_by' => $this->data['id']
+			);
+
+			$insert = $komunikasi->insertProfile($data);
+
+			if ($insert) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
 	public function getjsonkabkot()
 	{
 		try {
@@ -1359,7 +1406,9 @@ class Jsondata extends \CodeIgniter\Controller
 		};
 		if (array_key_exists("dir_file_phat", $_FILES)) {
 			$dir_file_phat = $this->uploadfiletanah('./object-storage/dekill/Earth/', $this->request->getFile('dir_file_phat'));
-		};
+		} else {
+			$dir_file_phat = "";
+		}
 
 		$data	= array(
 			'id' => $id,
@@ -1966,7 +2015,7 @@ class Jsondata extends \CodeIgniter\Controller
 		$id_kabkot		= 3207;
 		// $user_id		= $this->Outh_model->Encryptor('decrypt', $user_id);
 		$status			= $request->getVar('status_syarat');
-		$no_surat		= $request->getVar('no_surat');
+		// $no_surat		= $request->getVar('no_surat');
 		$catatan		= $request->getVar('catatan');
 		$id_pemilik		= $request->getVar('id_pemilik');
 		// $email			= $request->getVar('email');
@@ -1990,41 +2039,41 @@ class Jsondata extends \CodeIgniter\Controller
 		// $this->load->library('upload', $config);
 		// $this->upload->initialize($config);
 		// $file = preg_replace("/[^a-zA-Z0-9.]/", "", $_FILES["dir_file"]['name']);
-		if (!file_exists($_FILES['file']['tmp_name']) || !is_uploaded_file($_FILES['file']['tmp_name'])) {
+		// if (!file_exists($_FILES['file']['tmp_name']) || !is_uploaded_file($_FILES['file']['tmp_name'])) {
 
-			$response = array(
-				'code' => 0,
-				'msg' => 'Tidak Ada File upload'
-			);
+		// 	$response = array(
+		// 		'code' => 0,
+		// 		'msg' => 'Tidak Ada File upload'
+		// 	);
 
-			echo json_encode($response);
-			exit;
-		} else {
-			if (array_key_exists("file", $_FILES)) {
-				foreach ($_FILES as $key => $value) {
+		// 	echo json_encode($response);
+		// 	exit;
+		// } else {
+		// 	if (array_key_exists("file", $_FILES)) {
+		// foreach ($_FILES as $key => $value) {
 
-					$basepath = './object-storage/dekill/SuratPemberitahuan/';
-					if (!is_dir($basepath)) {
-						mkdir($basepath, 0777, true);
-					}
+		// 	$basepath = './object-storage/dekill/SuratPemberitahuan/';
+		// 	if (!is_dir($basepath)) {
+		// 		mkdir($basepath, 0777, true);
+		// 	}
 
-					// for ($i = 0; $i < count($value['tmp_name']); $i++) {
-					$tmp_name = $value['tmp_name'];
-					if ($tmp_name) {
-						$path = $value['name'];
-						$ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-						$imgname = "SuratPemberitahuan-" . date('dmYHis') . "-" . $path;
-						$terupload = move_uploaded_file($tmp_name, $basepath . $imgname);
-						if ($terupload) {
-							$response = array(
-								'code' => 0,
-								'msg' => 'File Gagal Diupload'
-							);
-						}
-					}
-				}
-			}
-		}
+		// 	// for ($i = 0; $i < count($value['tmp_name']); $i++) {
+		// 	$tmp_name = $value['tmp_name'];
+		// 	if ($tmp_name) {
+		// 		$path = $value['name'];
+		// 		$ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+		// 		$imgname = "SuratPemberitahuan-" . date('dmYHis') . "-" . $path;
+		// 		$terupload = move_uploaded_file($tmp_name, $basepath . $imgname);
+		// 		if ($terupload) {
+		// 			$response = array(
+		// 				'code' => 0,
+		// 				'msg' => 'File Gagal Diupload'
+		// 			);
+		// 		}
+		// 	}
+		// }
+		// 	}
+		// }
 
 		if ($status == '1') {
 			if ($id_kabkot == '31') {
@@ -2032,10 +2081,10 @@ class Jsondata extends \CodeIgniter\Controller
 					'tgl_status' => $tgl_skrg,
 					'status' => '4',
 					'id_dki' => '1',
-					'no_surat' => $no_surat,
+					// 'no_surat' => $no_surat,
 					'id' => $id_pemilik,
 					'catatan' => $catatan,
-					'dir_file' => $imgname,
+					// 'dir_file' => $imgname,
 					'user_id' => $user_id,
 					'modul' => 'verifikasi',
 					'post_by' => 1,
@@ -2045,10 +2094,10 @@ class Jsondata extends \CodeIgniter\Controller
 				$data	= array(
 					'tgl_status' => $tgl_skrg,
 					'status' => '4',
-					'no_surat' => $no_surat,
+					// 'no_surat' => $no_surat,
 					'id' => $id_pemilik,
 					'catatan' => $catatan,
-					'dir_file' => $imgname,
+					// 'dir_file' => $imgname,
 					'user_id' => $user_id,
 					'modul' => 'verifikasi',
 					'post_by' => 1,
@@ -2059,10 +2108,10 @@ class Jsondata extends \CodeIgniter\Controller
 			$data	= array(
 				'tgl_status' => $tgl_skrg,
 				'status' => '3',
-				'no_surat' => $no_surat,
+				// 'no_surat' => $no_surat,
 				'id' => $id_pemilik,
 				'catatan' => $catatan,
-				'dir_file' => $imgname,
+				// 'dir_file' => $imgname,
 				'user_id' => $user_id,
 				'modul' => 'verifikasi',
 				'post_by' => 1,
@@ -2353,9 +2402,9 @@ class Jsondata extends \CodeIgniter\Controller
 		$id = $request->getVar('id_permohonan');
 		$no_konsultasi = $request->getVar('no_konsultasi');
 
-		$getpermohonan = $konsultasi->getDataBangunan(['no_konsultasi' => $no_konsultasi]);
+		// $getpermohonan = $konsultasi->getDataBangunan(['no_konsultasi' => $no_konsultasi]);
 
-		$getpenugasan = $konsultasi->getPetugasTpt(['a.id_pemilik' => $getpermohonan->id]);
+		$getpenugasan = $konsultasi->getPetugasTpt(['a.id_pemilik' => $id]);
 
 		if ($getpenugasan) {
 			$response = array(
@@ -2366,6 +2415,106 @@ class Jsondata extends \CodeIgniter\Controller
 			$response = array(
 				'code' => 0,
 				'data' => []
+			);
+		}
+
+		echo json_encode($response);
+	}
+
+	public function savepenjadwalan()
+	{
+		$request = $this->request;
+		$globalmodel = new \App\Models\GlobalModel();
+		$kegiatan = new \App\Models\KegiatanModel();
+		$user_id		= 1;
+		$id_kabkot		= 3207;
+		// $user_id		= $this->Outh_model->Encryptor('decrypt', $user_id);
+		$tipe			= $request->getVar('tipe_konsultasi');
+		$tanggal_konsultasi			= $request->getVar('tanggal_konsultasi');
+		$jam_konsultasi			= $request->getVar('jam_konsultasi');
+		$id_permohonan			= $request->getVar('id_permohonan');
+		// $status			= $request->getVar('status_syarat');
+		// $tgl_skrg 		= date('Y-m-d');
+		$data = array(
+			'id' => $id_permohonan,
+			'kosultasi' => 1,
+			'tgl_konsultasi' => $tanggal_konsultasi,
+			'jam_konsultasi' => $jam_konsultasi,
+			'tipe_konsultasi' => $tipe,
+			'post_date' => date('Y-m-d'),
+			'post_by' => $this->data['id']
+		);
+
+		if ($tipe == 1) {
+			$data['ket_konsultasi'] = $request->getVar('tempat');
+		} else if ($tipe == 2) {
+			$data['link_meeting'] = $request->getVar('link');
+			$data['password_meeting'] = $request->getVar('passdaring');
+		}
+
+		// $filean = $this->input->post('dir_dokumen');
+		// $thisdir = getcwd();
+		// $dirPath = $thisdir . "/object-storage/dekill/Consultation/";
+		// $config['upload_path'] 		= $dirPath;
+		// $config['allowed_types'] 	= 'pdf|png|jpg';
+		// $config['max_size']			= '50240';
+		// $config['remove_spaces']	= False;
+		// $config['encrypt_name']		= TRUE;
+		// $this->load->library('upload', $config);
+		// $this->upload->initialize($config);
+		// $file = preg_replace("/[^a-zA-Z0-9.]/", "", $_FILES["dir_file"]['name']);
+		if (!file_exists($_FILES['file']['tmp_name']) || !is_uploaded_file($_FILES['file']['tmp_name'])) {
+
+			// $response = array(
+			// 	'code' => 0,
+			// 	'msg' => 'Tidak Ada File upload'
+			// );
+
+			// echo json_encode($response);
+			// exit;
+			$imgname = "";
+		} else {
+			if (array_key_exists("file", $_FILES)) {
+				foreach ($_FILES as $key => $value) {
+
+					$basepath = './object-storage/dekill/SuratKonsultasi/';
+					if (!is_dir($basepath)) {
+						mkdir($basepath, 0777, true);
+					}
+
+					// for ($i = 0; $i < count($value['tmp_name']); $i++) {
+					$tmp_name = $value['tmp_name'];
+					if ($tmp_name) {
+						$path = $value['name'];
+						$ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+						$imgname = "SuratKonsultasi-" . date('dmYHis') . "-" . $path;
+						$terupload = move_uploaded_file($tmp_name, $basepath . $imgname);
+						if (!$terupload) {
+							// $response = array(
+							// 	'code' => 0,
+							// 	'msg' => 'File Gagal Diupload'
+							// );
+						}
+					}
+					// }
+				}
+			}
+		}
+
+		$data['dir_file_konsultasi'] = $imgname;
+
+		$updatepermohonan = $globalmodel->setData('tmdatabangunan', ['status' => 6, 'last_update' => date('Y-m-d H:i:s')], 'id', $id_permohonan);
+		$insertjadwal = $kegiatan->savedatajadwal($data);
+
+		if ($updatepermohonan && $insertjadwal) {
+			$response = array(
+				'code' => 200,
+				'msg' => 'Berhasil'
+			);
+		} else {
+			$response = array(
+				'code' => 200,
+				'msg' => 'Gagal'
 			);
 		}
 

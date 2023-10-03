@@ -105,10 +105,11 @@ function loadpermohonan() {
             //             </div>`;
             var elem = "";
           } else {
-            var elem = `<div class="btn-group" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-fifth btn-sm btn-icon" onclick="actionlanjutkan('${row.id}')"><i class="bx bx-file me-0 fs-6"></i></button>
-                          <button type="button" class="btn btn-second btn-sm btn-icon" onclick="action('update', ${row.id_permohonan_slf})"><i class="bx bx-edit me-0 fs-6"></i></button>
-                        </div>`;
+            // var elem = `<div class="btn-group" role="group" aria-label="First group">
+            //               <button type="button" class="btn btn-fifth btn-sm btn-icon" onclick="actionlanjutkan('${row.id}')"><i class="bx bx-file me-0 fs-6"></i></button>
+            //               <button type="button" class="btn btn-second btn-sm btn-icon" onclick="action('update', ${row.id_permohonan_slf})"><i class="bx bx-edit me-0 fs-6"></i></button>
+            //             </div>`;
+            var elem = "";
           }
           return elem;
         },
@@ -189,7 +190,7 @@ function loadpermohonan() {
   //             mRender: function (data, type, row) {
   //               if(row.status == 1){
   //               var elem = `<div class="btn-group" role="group" aria-label="First group">
-  //                             <button type="button" class="btn btn-primary btn-sm btn-icon" onclick="action('update', ${row.id_permohonan_slf})"><i class="bx bx-edit me-0 fs-6"></i></button>
+  //                             <button type="button" class="btn btn-main btn-sm btn-icon" onclick="action('update', ${row.id_permohonan_slf})"><i class="bx bx-edit me-0 fs-6"></i></button>
   //                             <button type="button" class="btn btn-danger btn-sm btn-icon" onclick="action('delete', ${row.id_permohonan_slf})"><i class="bx bx-trash me-0 fs-6"></i></button>
   //                           </div>`
   //               }else if (row.status == 3){
@@ -205,7 +206,7 @@ function loadpermohonan() {
   //               }else{
   //                 var elem = `<div class="btn-group" role="group" aria-label="First group">
   //                             <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="action('detail', ${row.id_permohonan_slf})"><i class="bx bx-file me-0 fs-6"></i></button>
-  //                             <button type="button" class="btn btn-primary btn-sm btn-icon" onclick="action('update', ${row.id_permohonan_slf})"><i class="bx bx-edit me-0 fs-6"></i></button>
+  //                             <button type="button" class="btn btn-main btn-sm btn-icon" onclick="action('update', ${row.id_permohonan_slf})"><i class="bx bx-edit me-0 fs-6"></i></button>
   //                           </div>`
   //               }
   //               return elem ;
@@ -429,16 +430,19 @@ function getdatapermohonan(id) {
 
           if (doktanah.dir_file != null || doktanah.dir_file != "") {
             htmldoktanah += `
-            <td><a href="${doktanah.dir_file}" target="_blank" class="btn btn-primary btn-sm lihatberkas" >Lihat</a></td>
+            <td><a href="${doktanah.dir_file}" target="_blank" class="btn btn-main btn-sm lihatberkas" >Lihat</a></td>
             `;
           }
           if (doktanah.dir_file_phat != null || doktanah.dir_file_phat != "") {
             htmldoktanah += `
-            <td><a href="${doktanah.dir_file}" target="_blank" class="btn btn-primary btn-sm lihatberkas" >Lihat</a></td>
+            <td><a href="${doktanah.dir_file}" target="_blank" class="btn btn-main btn-sm lihatberkas" >Lihat</a></td>
             `;
           }
           htmldoktanah += `
             <td>
+              <table class="table table-borderless">
+              <tr>
+              <td>
               <select class="form-select" id="doktanah_${doktanah.id_detail}" onchange="check_tanah(${doktanah.id_detail},'#doktanah_${doktanah.id_detail}',event, ${id})">
           `;
           if (doktanah.status_verifikasi_tanah == 1) {
@@ -453,7 +457,13 @@ function getdatapermohonan(id) {
             `;
           }
           htmldoktanah += `
-              </select>
+              </select></td>`;
+          if (doktanah.status_verifikasi_tanah == 1) {
+            htmldoktanah += `<td class="align-middle text-center fs-4"><i class="bx bx-check-circle text-success"></i></td>`;
+          }
+          htmldoktanah += `
+            </tr>
+            </table>
             </td>
           </tr>
         `;
@@ -471,21 +481,38 @@ function getdatapermohonan(id) {
             <td width="30%">${item.keterangan}</td>
           `;
           if (item.syarat != null) {
-            listtanah += `<td width="10%"><a href="object-storage/dekill/Requirement/${item.syarat.dir_file}" target="_blank" class="btn btn-primary btn-sm lihatberkas">Lihat</a></td>`;
+            listtanah += `<td width="10%"><a href="object-storage/dekill/Requirement/${item.syarat.dir_file}" target="_blank" class="btn btn-main btn-sm lihatberkas">Lihat</a></td>`;
           } else {
             listtanah += "<tw width='10%'></td>";
           }
-          listtanah += `<td width="25%">
+          listtanah += `<td width="25%">`;
+          if (item.syarat == null) {
+            listtanah += "Tidak ada Dokumen";
+          } else {
+            listtanah += `
+              <table class="table table-borderless">
+              <tr>
+              <td>
             <select id="${item.syarat.id_detail}" class="form-select" onchange="check_status(event,${item.syarat.id_detail}, ${item.syarat.id_persyaratan_detail},${id},'tnh')">
               `;
-          if (item.syarat.status == 1) {
-            listtanah += `<option value="0"> Tidak Terverifikasi </option>
+            if (item.syarat.status == 1) {
+              listtanah += `<option value="0"> Tidak Terverifikasi </option>
                   <option value="1" selected> Terverifikasi </option>
                 </select>`;
-          } else {
-            listtanah += `<option value="0"> Tidak Terverifikasi </option>
+            } else {
+              listtanah += `<option value="0"> Tidak Terverifikasi </option>
                   <option value="1" > Terverifikasi </option>
                 </select>`;
+            }
+            listtanah += `
+              </td>`;
+            if (item.syarat.status == 1) {
+              listtanah += `<td class="align-middle text-center fs-4"><i class="bx bx-check-circle text-success"></i></td>`;
+            }
+            listtanah += `
+            </tr>
+            </table>
+        `;
           }
           listtanah += "</td></tr>";
         });
@@ -500,21 +527,39 @@ function getdatapermohonan(id) {
             <td width="30%">${item.keterangan}</td>
           `;
           if (item.syarat != null) {
-            listumum += `<td width="10%"><a href="object-storage/dekill/Requirement/${item.syarat.dir_file}" target="_blank" class="btn btn-primary btn-sm">Lihat</button></td>`;
+            listumum += `<td width="10%"><a href="object-storage/dekill/Requirement/${item.syarat.dir_file}" target="_blank" class="btn btn-main btn-sm">Lihat</button></td>`;
           } else {
             listumum += "<td width='10%'></td>";
           }
-          listumum += `<td width="25%">
-            <select id="${item.syarat.id_detail}" class="form-select" onchange="check_status(event,${item.syarat.id_detail}, ${item.syarat.id_persyaratan_detail},${id},'adm' )">
+
+          listumum += `<td width="25%">`;
+          if (item.syarat == null) {
+            listumum += "Tidak ada Dokumen";
+          } else {
+            listumum += `
+              <table class="table table-borderless">
+              <tr>
+              <td>
+            <select id="${item.syarat.id_detail}" class="form-select" onchange="check_status(event,${item.syarat.id_detail}, ${item.syarat.id_persyaratan_detail},${id},'tnh')">
               `;
-          if (item.syarat.status == 1) {
-            listumum += `<option value="0"> Tidak Terverifikasi </option>
+            if (item.syarat.status == 1) {
+              listumum += `<option value="0"> Tidak Terverifikasi </option>
                   <option value="1" selected> Terverifikasi </option>
                 </select>`;
-          } else {
-            listumum += `<option value="0"> Tidak Terverifikasi </option>
+            } else {
+              listumum += `<option value="0"> Tidak Terverifikasi </option>
                   <option value="1" > Terverifikasi </option>
                 </select>`;
+            }
+            listumum += `
+              </td>`;
+            if (item.syarat.status == 1) {
+              listumum += `<td class="align-middle text-center fs-4"><i class="bx bx-check-circle text-success"></i></td>`;
+            }
+            listumum += `
+            </tr>
+            </table>
+        `;
           }
           listumum += "</td></tr>";
         });
@@ -529,21 +574,38 @@ function getdatapermohonan(id) {
             <td width="30%">${item.keterangan}</td>
           `;
           if (item.syarat != null) {
-            listars += `<td width="10%"><a href="object-storage/dekill/Requirement/${item.syarat.dir_file}" target="_blank" class="btn btn-primary btn-sm">Lihat</button></td>`;
+            listars += `<td width="10%"><a href="object-storage/dekill/Requirement/${item.syarat.dir_file}" target="_blank" class="btn btn-main btn-sm">Lihat</button></td>`;
           } else {
-            listars += "<td width='10%'><'td>";
+            listars += "<td width='10%'></td>";
           }
-          listars += `<td width="25%">
-            <select id="${item.syarat.id_detail}" class="form-select" onchange="check_status(event,${item.syarat.id_detail}, ${item.syarat.id_persyaratan_detail},${id},'ars' )">
+          listars += `<td width="25%">`;
+          if (item.syarat == null) {
+            listars += "Tidak ada Dokumen";
+          } else {
+            listars += `
+              <table class="table table-borderless">
+              <tr>
+              <td>
+            <select id="${item.syarat.id_detail}" class="form-select" onchange="check_status(event,${item.syarat.id_detail}, ${item.syarat.id_persyaratan_detail},${id},'tnh')">
               `;
-          if (item.syarat.status == 1) {
-            listars += `<option value="0"> Tidak Terverifikasi </option>
+            if (item.syarat.status == 1) {
+              listars += `<option value="0"> Tidak Terverifikasi </option>
                   <option value="1" selected> Terverifikasi </option>
                 </select>`;
-          } else {
-            listars += `<option value="0"> Tidak Terverifikasi </option>
+            } else {
+              listars += `<option value="0"> Tidak Terverifikasi </option>
                   <option value="1" > Terverifikasi </option>
                 </select>`;
+            }
+            listars += `
+              </td>`;
+            if (item.syarat.status == 1) {
+              listars += `<td class="align-middle text-center fs-4"><i class="bx bx-check-circle text-success"></i></td>`;
+            }
+            listars += `
+            </tr>
+            </table>
+        `;
           }
           listars += "</td></tr>";
         });
@@ -558,21 +620,38 @@ function getdatapermohonan(id) {
             <td width="30%">${item.keterangan}</td>
           `;
           if (item.syarat != null) {
-            liststruk += `<td width="10%"><a href="object-storage/dekill/Requirement/${item.syarat.dir_file}" target="_blank" class="btn btn-primary btn-sm">Lihat</button></td>`;
+            liststruk += `<td width="10%"><a href="object-storage/dekill/Requirement/${item.syarat.dir_file}" target="_blank" class="btn btn-main btn-sm">Lihat</button></td>`;
           } else {
             liststruk += "<td width='0%'></td>";
           }
-          liststruk += `<td width="25%">
-            <select class="form-select" onchange="check_status(event,${item.syarat.id_detail}, ${item.syarat.id_persyaratan_detail},${id},'str' )">
+          liststruk += `<td width="25%">`;
+          if (item.syarat == null) {
+            liststruk += "Tidak ada Dokumen";
+          } else {
+            liststruk += `
+              <table class="table table-borderless">
+              <tr>
+              <td>
+            <select id="${item.syarat.id_detail}" class="form-select" onchange="check_status(event,${item.syarat.id_detail}, ${item.syarat.id_persyaratan_detail},${id},'tnh')">
               `;
-          if (item.syarat.status == 1) {
-            liststruk += `<option value="0"> Tidak Terverifikasi </option>
+            if (item.syarat.status == 1) {
+              liststruk += `<option value="0"> Tidak Terverifikasi </option>
                   <option value="1" selected> Terverifikasi </option>
                 </select>`;
-          } else {
-            liststruk += `<option value="0"> Tidak Terverifikasi </option>
+            } else {
+              liststruk += `<option value="0"> Tidak Terverifikasi </option>
                   <option value="1" > Terverifikasi </option>
                 </select>`;
+            }
+            liststruk += `
+              </td>`;
+            if (item.syarat.status == 1) {
+              liststruk += `<td class="align-middle text-center fs-4"><i class="bx bx-check-circle text-success"></i></td>`;
+            }
+            liststruk += `
+            </tr>
+            </table>
+        `;
           }
           liststruk += "</td></tr>";
         });
@@ -583,25 +662,42 @@ function getdatapermohonan(id) {
         data.mep.forEach((item, index) => {
           listmep += `<tr>
             <td width="5%">${index + 1}</td>
-            <td width="30%">${item.nm_dokumen}</td>
-            <td width="30%">${item.keterangan}test</td>
+            <td width="40%">${item.nm_dokumen}</td>
+            <td width="10%">${item.keterangan}test</td>
           `;
           if (item.syarat != null) {
-            listmep += `<td width="10%"><a href="object-storage/dekill/Requirement/${item.syarat.dir_file}" target="_blank" class="btn btn-primary btn-sm">Lihat</button></td>`;
+            listmep += `<td width="10%"><a href="object-storage/dekill/Requirement/${item.syarat.dir_file}" target="_blank" class="btn btn-main btn-sm">Lihat</button></td>`;
           } else {
-            listmep += "<td width='10%'></td>";
+            listmep += "<td width='0%'></td>";
           }
-          listmep += `<td width="25%">
-            <select id="${item.syarat.id_detail}" class="form-select" onchange="check_status(event,${item.syarat.id_detail}, ${item.syarat.id_persyaratan_detail},${id},'mep' )">
-          `;
-          if (item.syarat.status == 1) {
-            listmep += `<option value="0"> Tidak Terverifikasi </option>
-              <option value="1" selected> Terverifikasi </option>
-            </select>`;
+          listmep += `<td width="25%">`;
+          if (item.syarat == null) {
+            listmep += "Tidak ada Dokumen";
           } else {
-            listmep += `<option value="0"> Tidak Terverifikasi </option>
-              <option value="1" > Terverifikasi </option>
-            </select>`;
+            listmep += `
+              <table class="table table-borderless">
+              <tr>
+              <td>
+            <select id="${item.syarat.id_detail}" class="form-select" onchange="check_status(event,${item.syarat.id_detail}, ${item.syarat.id_persyaratan_detail},${id},'tnh')">
+              `;
+            if (item.syarat.status == 1) {
+              listmep += `<option value="0"> Tidak Terverifikasi </option>
+                  <option value="1" selected> Terverifikasi </option>
+                </select>`;
+            } else {
+              listmep += `<option value="0"> Tidak Terverifikasi </option>
+                  <option value="1" > Terverifikasi </option>
+                </select>`;
+            }
+            listmep += `
+              </td>`;
+            if (item.syarat.status == 1) {
+              listmep += `<td class="align-middle text-center fs-4"><i class="bx bx-check-circle text-success"></i></td>`;
+            }
+            listmep += `
+            </tr>
+            </table>
+        `;
           }
           listmep += "</td></tr>";
         });
@@ -613,75 +709,41 @@ function getdatapermohonan(id) {
 }
 
 function check_tanah(id, idel, event, id_pemilik) {
-  Swal.fire({
-    icon: "question",
-    title: "Verifikasi Dokumen ini ?",
-    showCancelButton: true,
-    cancelButtonText: "Tidak",
-    confirmButtonText: "Ya",
-  }).then((res) => {
-    if (res.isConfirmed) {
-      var elambil = event.target;
-      var select = elambil.value;
+  var elambil = event.target;
+  var select = elambil.value;
 
-      $.ajax({
-        type: "post",
-        dataType: "json",
-        data: { id_detail: id, status: select },
-        url: "check_status_tanah",
-        success: function (response) {
-          if (response.code == 200) {
-            Swal.fire({
-              icon: "success",
-              html: response.msg,
-            }).then((result) => {
-              if (result.isConfirmed) {
-                getdatapermohonan(id_pemilik);
-              }
-            });
-          }
-        },
-      });
-    }
+  $.ajax({
+    type: "post",
+    dataType: "json",
+    data: { id_detail: id, status: select },
+    url: "check_status_tanah",
+    success: function (response) {
+      if (response.code == 200) {
+        getdatapermohonan(id_pemilik);
+      }
+    },
   });
 }
 function check_status(event, id_detail, id_persyaratan_detail, id, key) {
-  Swal.fire({
-    icon: "question",
-    title: "Verifikasi Dokumen ini ?",
-    showCancelButton: true,
-    cancelButtonText: "Tidak",
-    confirmButtonText: "Ya",
-  }).then((res) => {
-    if (res.isConfirmed) {
-      var elambil = event.target;
-      var select = elambil.value;
+  var elambil = event.target;
+  var select = elambil.value;
 
-      $.ajax({
-        type: "post",
-        dataType: "json",
-        data: {
-          id: id,
-          id_detail: id_detail,
-          id_persyaratan_detail: id_persyaratan_detail,
-          key_syarat: key,
-          status: select,
-        },
-        url: "check_status",
-        success: function (response) {
-          if (response.code == 200) {
-            Swal.fire({
-              icon: "success",
-              html: response.msg,
-            }).then((result) => {
-              if (result.isConfirmed) {
-                getdatapermohonan(id);
-              }
-            });
-          }
-        },
-      });
-    }
+  $.ajax({
+    type: "post",
+    dataType: "json",
+    data: {
+      id: id,
+      id_detail: id_detail,
+      id_persyaratan_detail: id_persyaratan_detail,
+      key_syarat: key,
+      status: select,
+    },
+    url: "check_status",
+    success: function (response) {
+      if (response.code == 200) {
+        getdatapermohonan(id);
+      }
+    },
   });
 }
 

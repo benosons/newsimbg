@@ -92,15 +92,13 @@
         <div class="col">
           <div class="card">
             <div class="card-body">
-              <div class="card radius-10 bg-info">
+              <div class="card radius-10 bg-main">
                 <div class="card-body">
                   <div class="d-flex align-items-center">
                     <div>
-                      <h4 class="mb-0 text-white" id="sum-data_pbg"></h4>
+                      <h4 class="mb-0 text-third" id="sum-data_pbg"></h4>
                     </div>
-                    <div
-                      class="widgets-icons bg-light-white text-secondary ms-auto"
-                    >
+                    <div class="widgets-icons bg-third text-main ms-auto">
                       <i class="bx bxs-file"></i>
                     </div>
                   </div>
@@ -332,13 +330,11 @@
                     <div class="card-body">
                       <table class="table mb-0">
                         <thead class="table-primary">
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Dokumen Struktur</th>
-                            <th scope="col">Keterangan</th>
-                            <th scope="col">Berkas</th>
-                            <th scope="col">Verifikasi</th>
-                          </tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Dokumen Struktur</th>
+                          <th scope="col">Keterangan</th>
+                          <th scope="col">Berkas</th>
+                          <th scope="col">Verifikasi</th>
                         </thead>
                         <tbody id="liststruk"></tbody>
                       </table>
@@ -347,22 +343,16 @@
 
                   <div class="card">
                     <div class="card-body">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <thead class="table-primary">
-                            <tr>
-                              <th scope="col" width="5%">#</th>
-                              <th scope="col" width="30%">
-                                Data Teknis Mekanikal, Elektrikal, dan Plambing
-                              </th>
-                              <th scope="col" width="30%">Keterangan</th>
-                              <th scope="col" width="10%">Berkas</th>
-                              <th scope="col" width="25%">Verifikasi</th>
-                            </tr>
-                          </thead>
-                          <tbody id="listmep"></tbody>
-                        </table>
-                      </div>
+                      <table class="table mb-0">
+                        <thead class="table-primary">
+                          <th scope="col" width="5%">#</th>
+                          <th scope="col" width="40%">Data Teknis MEP</th>
+                          <th scope="col" width="20%">Keterangan</th>
+                          <th scope="col" width="10%">Berkas</th>
+                          <th scope="col" width="15%">Verifikasi</th>
+                        </thead>
+                        <tbody id="listmep"></tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
@@ -415,7 +405,7 @@
                               </div>
                             </td>
                           </tr>
-                          <tr>
+                          <!-- <tr>
                             <td>No. Surat Pemberitahuan</td>
                             <td>
                               <input
@@ -440,7 +430,7 @@
                                 placeholder="choose"
                               />
                             </td>
-                          </tr>
+                          </tr> -->
                           <tr>
                             <td>Catatan</td>
                             <td>
@@ -455,7 +445,7 @@
                             </td>
                           </tr>
                         </table>
-                        <button type="submit" class="btn btn-primary fload-end">
+                        <button type="submit" class="btn btn-main fload-end">
                           Lanjut
                         </button>
                       </form>

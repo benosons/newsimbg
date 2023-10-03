@@ -167,6 +167,7 @@ $routes->post('getjsonkel2', 'Jsondata::getjsonkel2');
 
 $routes->post('getjsoncount', 'Jsondata::getjsoncount');
 $routes->get('getprofile', 'Jsondata::getprofile');
+$routes->post('savedatadiri', 'Jsondata::savedatadiri');
 
 $routes->post('getallDealerData', 'Jsondata::getallDealerData');
 $routes->post('getDealerData', 'Jsondata::getDealerData');
@@ -229,6 +230,7 @@ $routes->post('savePenugasanTpt', 'Jsondata::savePenugasanTpt');
 // PENJADWALAN
 $routes->post('getallpermohonanpenjadwalan', 'Jsondata::getallpermohonanpenjadwalan');
 $routes->post('getTpaTptPenugasan', 'Jsondata::getTpaTptPenugasan');
+$routes->post('savepenjadwalan', 'Jsondata::savepenjadwalan');
 /**
  * --------------------------------------------------------------------
  * Additional Routing

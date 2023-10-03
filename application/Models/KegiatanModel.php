@@ -50,4 +50,12 @@ class KegiatanModel extends Model
 
     return  $res;
   }
+
+  public function savedatajadwal($data)
+  {
+    $builder = $this->db->table('tmdatajadwal');
+    $query = $builder->insert($data);
+
+    return $query;
+  }
 }

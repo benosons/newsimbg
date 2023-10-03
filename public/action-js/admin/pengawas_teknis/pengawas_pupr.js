@@ -171,6 +171,24 @@ function loadpermohonanpenugasan() {
       return index;
     },
     lengthChange: false,
+    infoCallback: function (settings, start, end, max, total, pre) {
+      console.log(settings);
+      console.log(start + ":" + end + ":" + max + ":" + total);
+      return !isNaN(total)
+        ? "Showing " +
+            start +
+            " to " +
+            end +
+            " of " +
+            total +
+            " entries" +
+            (total !== max ? " (filtered from " + max + " total entries)" : "")
+        : "Showing " +
+            start +
+            " to " +
+            (start + this.api().data().length - 1) +
+            " entries";
+    },
   });
   // $.ajax({
   //   type: "post",
@@ -316,7 +334,7 @@ function loadpermohonanpenjadwalan() {
     aoColumnDefs: [
       {
         mRender: function (data, type, row) {
-          var elem = `<span class="badge bg-gradient-bloody text-white shadow-sm w-100">${data}</span>`;
+          var elem = `<span class="badge bg-main text-white shadow-sm w-100">${data}</span>`;
 
           return elem;
         },
@@ -362,6 +380,24 @@ function loadpermohonanpenjadwalan() {
       return index;
     },
     lengthChange: false,
+    infoCallback: function (settings, start, end, max, total, pre) {
+      console.log(settings);
+      console.log(start + ":" + end + ":" + max + ":" + total);
+      return !isNaN(total)
+        ? "Showing " +
+            start +
+            " to " +
+            end +
+            " of " +
+            total +
+            " entries" +
+            (total !== max ? " (filtered from " + max + " total entries)" : "")
+        : "Showing " +
+            start +
+            " to " +
+            (start + this.api().data().length - 1) +
+            " entries";
+    },
   });
   // $.ajax({
   //   type: "post",
@@ -675,15 +711,15 @@ function getdatapermohonanpenjadwalan(id) {
     url: "/getpermohonan",
     success: function (response) {
       if (response.code == 200) {
-        var data = response.data[0];
+        var data = response.data;
         $("#id_permohonan_penjadwalan").val(data.id);
-        $("#sum-data_pbg-penjadwalan").html(data.no_registrasi);
-        $("#sum-nama_pemilik-penjadwalan").html(data.nama_pemilik);
-        $("#sum-identitas_pemilik-penjadwalan").html(data.no_tanda_pengenal);
-        $("#sum-alamat_pemilik-penjadwalan").html(data.address);
-        $("#sum-kontak_pemilik-penjadwalan").html(data.no_telp_pemilik);
-        $("#sum-email_pemilik-penjadwalan").html(data.email_pemilik);
-        $("#sum-lokasi_bangunan-penjadwalan").html(data.alamat_bg);
+        $("#sum-data_pbg-penjadwalan").html(data.no_konsultasi);
+        $("#sum-nama_pemilik-penjadwalan").html(data.nm_pemilik);
+        $("#sum-identitas_pemilik-penjadwalan").html(data.no_ktp);
+        $("#sum-alamat_pemilik-penjadwalan").html(data.alamat);
+        $("#sum-kontak_pemilik-penjadwalan").html(data.no_hp);
+        $("#sum-email_pemilik-penjadwalan").html(data.email);
+        $("#sum-lokasi_bangunan-penjadwalan").html(data.almt_bgn);
 
         var statuskepemilikan = "";
         if (data.id_stat_kepemilikan == 1) {
@@ -741,7 +777,7 @@ function gettpatpt(id, no_konsultasi) {
           html += `
             <tr>
               <td> ${nomor} </td>
-              <td> ${item.nama_petugas} </td>
+              <td> ${item.glr_depan}${item.nama_personal}${item.glr_belakang} </td>
               <td> - </td>
               <td> - </td>
             </tr>
