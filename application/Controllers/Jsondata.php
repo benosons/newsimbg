@@ -565,6 +565,159 @@ class Jsondata extends \CodeIgniter\Controller
 		}
 	}
 
+	public function getjsonkabkot2()
+	{
+		try {
+			$request		= $this->request;
+			$method			= $request->getMethod();
+			$komunikasi 	= new \App\Models\GlobalModel();
+
+			$data = $komunikasi->getkabkot($request->getVar('id'));
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getjsonkec2()
+	{
+		try {
+			$request		= $this->request;
+			$method			= $request->getMethod();
+			$komunikasi 	= new \App\Models\GlobalModel();
+
+			$data = $komunikasi->getkecamatan($request->getVar('id'));
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getjsonkel2()
+	{
+		try {
+			$request		= $this->request;
+			$method			= $request->getMethod();
+			$komunikasi 	= new \App\Models\GlobalModel();
+
+			$data = $komunikasi->getkelurahan($request->getVar('id'));
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getprofile()
+	{
+		try {
+			$request		= $this->request;
+			$method			= $request->getMethod();
+			$profile = new \App\Models\ProfileModel();
+
+			$data = $profile->getDataUserProfile('a.*', $this->data['id']);
+
+			if ($data && $data->id_role == 10) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => 0,
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getjsonkabkot()
+	{
+		try {
+			$request		= $this->request;
+			$method			= $request->getMethod();
+			$komunikasi 	= new \App\Models\KegiatanModel();
+
+			$data = $komunikasi->getkecamatan($request->getVar('id'));
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
 	public function getjsonkec()
 	{
 		try {

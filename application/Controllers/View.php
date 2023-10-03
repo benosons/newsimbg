@@ -154,7 +154,9 @@ class View extends \CodeIgniter\Controller
 
 		if ($this->logged) {
 			helper('form');
+			$global = new \App\Models\GlobalModel();
 			$this->data['active'] = 'dashboard';
+			$this->data['provinsi'] = $global->getprov();
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/index.js';
 			return \Twig::instance()->display('admin/index.html', $this->data);
 		} else {

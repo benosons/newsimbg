@@ -161,8 +161,12 @@ $routes->post('addpermohonan', 'Jsondata::addpermohonan');
 $routes->post('getjsonkabkot', 'Jsondata::getjsonkabkot');
 $routes->post('getjsonkec', 'Jsondata::getjsonkec');
 $routes->post('getjsonkel', 'Jsondata::getjsonkel');
+$routes->post('getjsonkabkot2', 'Jsondata::getjsonkabkot2');
+$routes->post('getjsonkec2', 'Jsondata::getjsonkec2');
+$routes->post('getjsonkel2', 'Jsondata::getjsonkel2');
 
 $routes->post('getjsoncount', 'Jsondata::getjsoncount');
+$routes->get('getprofile', 'Jsondata::getprofile');
 
 $routes->post('getallDealerData', 'Jsondata::getallDealerData');
 $routes->post('getDealerData', 'Jsondata::getDealerData');
