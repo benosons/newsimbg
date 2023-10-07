@@ -99,6 +99,7 @@ $routes->add('register', 'View::register');
 // BACKEND
 $routes->add('dashboard', 'View::dashboard');
 $routes->add('permohonan', 'View::permohonan');
+$routes->add('permohonanpbg', 'View::permohonanpbg');
 $routes->add('verifikasi_dokumen', 'View::verifikasi_dokumen');
 $routes->add('bangunan_bertahap', 'View::bangunan_bertahap');
 $routes->add('profil_pu', 'View::profil_pu');
@@ -157,6 +158,7 @@ $routes->post('getallpermohonan', 'Jsondata::getallpermohonan');
 $routes->post('getjsonjbg', 'Jsondata::getjsonjbg');
 
 $routes->post('addpermohonan', 'Jsondata::addpermohonan');
+$routes->post('updatepermohonan', 'Jsondata::updatepermohonan');
 
 $routes->post('getjsonkabkot', 'Jsondata::getjsonkabkot');
 $routes->post('getjsonkec', 'Jsondata::getjsonkec');
@@ -231,6 +233,10 @@ $routes->post('savePenugasanTpt', 'Jsondata::savePenugasanTpt');
 $routes->post('getallpermohonanpenjadwalan', 'Jsondata::getallpermohonanpenjadwalan');
 $routes->post('getTpaTptPenugasan', 'Jsondata::getTpaTptPenugasan');
 $routes->post('savepenjadwalan', 'Jsondata::savepenjadwalan');
+
+
+$routes->post('getallpermohonanretribusi', 'Jsondata::getallpermohonanretribusi');
+
 /**
  * --------------------------------------------------------------------
  * Additional Routing

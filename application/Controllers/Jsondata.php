@@ -2695,4 +2695,73 @@ class Jsondata extends \CodeIgniter\Controller
 
 		echo json_encode($response);
 	}
+
+	public function updatepermohonan()
+	{
+		$request = $this->request;
+		$globalmodel = new \App\Models\GlobalModel();
+		$kegiatan = new \App\Models\KegiatanModel();
+		// $user_id		= 1;
+		// $id_kabkot		= 3207;
+		// // $user_id		= $this->Outh_model->Encryptor('decrypt', $user_id);
+		// $tipe			= $request->getVar('tipe_konsultasi');
+		// $tanggal_konsultasi			= $request->getVar('tanggal_konsultasi');
+		// $jam_konsultasi			= $request->getVar('jam_konsultasi');
+		$id_permohonan			= $request->getVar('id');
+		// $status			= $request->getVar('status_syarat');
+		// $tgl_skrg 		= date('Y-m-d');
+		$data = array(
+			'status' => $request->getVar('status')
+		);
+		$updatepermohonan = $globalmodel->setData('tmdatabangunan', $data, 'id', $id_permohonan);
+
+		if ($updatepermohonan) {
+			$response = array(
+				'code' => 200,
+				'msg' => 'Berhasil'
+			);
+		} else {
+			$response = array(
+				'code' => 200,
+				'msg' => 'Gagal'
+			);
+		}
+
+		echo json_encode($response);
+	}
+
+	public function getallpermohonanretribusi()
+	{
+		try {
+			$request	= $this->request;
+			$param	= $request->getVar('param');
+			$konsultasi = new \App\Models\KonsultasiModel();
+			$user_id				= '';
+			$filterQuery			= 'a.*, b.no_konsultasi,b.pernyataan,b.status, b.almt_bgn,c.nm_konsultasi,d.status_pemohon';
+
+			$data = $konsultasi->getDataKonsultasi($filterQuery, '', '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'), array('b.status' => 9));
+			$count = $konsultasi->getDataKonsultasiCount($user_id, '', $request->getVar('search'), array('b.status' => 9));
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'recordsTotal' => $count,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => [],
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
 }

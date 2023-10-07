@@ -1,36 +1,38 @@
 {% extends "admin/layout.html" %} {% block content %}
 <div class="page-content">
-  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 row-cols-xxl-4">
+  <div class="row">
+    <h5>Rekap Permohonan</h5>
+    <hr />
     <div class="col">
-      <div class="card radius-10 bg-gradient-cosmic">
+      <div class="card radius-10 bg-main">
         <div class="card-body">
           <div class="d-flex align-items-center">
             <div class="me-auto">
-              <p class="mb-0 text-white">total permohonan</p>
-              <h4 class="my-1 text-white">0</h4>
-              <p class="mb-0 font-13 text-white"></p>
+              <p class="mb-0 text-third">Total permohonan</p>
+              <h4 class="my-1 text-third">0</h4>
+              <p class="mb-0 font-13 text-third"></p>
             </div>
-            <div id="chart1"></div>
+            <span class="display-6 text-white"><i class="bx bx-file"></i></span>
           </div>
         </div>
       </div>
     </div>
     <div class="col">
-      <div class="card radius-10 bg-gradient-ibiza">
+      <div class="card radius-10 bg-third">
         <div class="card-body">
           <div class="d-flex align-items-center">
             <div class="me-auto">
-              <p class="mb-0 text-white">total PBG Terbit</p>
-              <h4 class="my-1 text-white">0</h4>
-              <p class="mb-0 font-13 text-white"></p>
+              <p class="mb-0 text-main">Total PBG Terbit</p>
+              <h4 class="my-1 text-main">0</h4>
+              <p class="mb-0 font-13 text-main"></p>
             </div>
-            <div id="chart2"></div>
+            <span class="display-6 text-main"><i class="bx bx-file"></i></span>
           </div>
         </div>
       </div>
     </div>
     <div class="col">
-      <div class="card radius-10 bg-gradient-ohhappiness">
+      <div class="card radius-10 bg-forth">
         <div class="card-body">
           <div class="d-flex align-items-center">
             <div class="me-auto">
@@ -38,27 +40,125 @@
               <h4 class="my-1 text-white">0</h4>
               <p class="mb-0 font-13 text-white"></p>
             </div>
-            <div id="chart3"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card radius-10 bg-gradient-kyoto">
-        <div class="card-body">
-          <div class="d-flex align-items-center">
-            <div class="me-auto">
-              <p class="mb-0 text-dark">Total ditolak</p>
-              <h4 class="my-1 text-dark">0</h4>
-              <p class="mb-0 font-13 text-dark"></p>
-            </div>
-            <div id="chart4"></div>
+            <span class="display-6 text-white"><i class="bx bx-file"></i></span>
           </div>
         </div>
       </div>
     </div>
   </div>
   <!--end row-->
+  {% if role == 10 %}
+  <h5 class="mb-0 text-uppercase">Permohonan Yang Bisa Anda Lakukan</h5>
+  <hr />
+  <div class="pricing-table">
+    <div class="row row-cols-1 row-cols-lg-3">
+      <div class="col">
+        <div class="card mb-5 mb-lg-0">
+          <div class="card-header bg-main py-3">
+            <h5 class="card-title text-third text-uppercase text-center">
+              PBG
+            </h5>
+            <h6
+              class="card-price text-third text-center"
+              style="font-size: 18px"
+            >
+              Persetujuan Bangunan Gedung
+            </h6>
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung Baru
+              </li>
+              <li class="list-group-item">
+                <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung
+                Perubahan
+              </li>
+              <li class="list-group-item">
+                <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung Kolektif
+              </li>
+              <li class="list-group-item">
+                <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung
+                Prasarana
+              </li>
+              <li class="list-group-item">
+                <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung Cagar
+                Budaya
+              </li>
+              <li class="list-group-item">
+                <i class="bx bx-check me-2 font-18"></i>SPBU Mikro 3 Kilo Liter
+              </li>
+              <li class="list-group-item">
+                <i class="bx bx-check me-2 font-18"></i>Bangunan Bertahap
+              </li>
+            </ul>
+            <div class="d-grid">
+              <a href="permohonan" class="btn btn-main my-2 radius-30"
+                >Ajukan Sekarang</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mb-5 mb-lg-0">
+          <div class="card-header bg-third py-3">
+            <h5 class="card-title text-main text-uppercase text-center">SLF</h5>
+            <h6
+              class="card-price text-main text-center"
+              style="font-size: 18px"
+            >
+              Sertifikat Laik Fungsi
+            </h6>
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung
+                Eksisting
+              </li>
+            </ul>
+            <div class="d-grid">
+              <a
+                href="permohonan"
+                class="btn btn-third my-2 radius-30"
+                style="color: #0d3b66"
+                >Ajukan Sekarang</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mb-5 mb-lg-0">
+          <div class="card-header bg-forth py-3">
+            <h5 class="card-title text-white text-uppercase text-center">
+              SBKBG
+            </h5>
+            <h6
+              class="card-price text-white text-center"
+              style="font-size: 18px"
+            >
+              Surat Bukti Kepemilikan Bangunan Gedung
+            </h6>
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <i class="bx bx-check me-2 font-18"></i> -
+              </li>
+            </ul>
+            <div class="d-grid">
+              <a href="permohonan" class="btn btn-forth my-2 radius-30"
+                >Ajukan Sekarang</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
 </div>
 <div
   class="modal fade"

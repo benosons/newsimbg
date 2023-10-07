@@ -310,7 +310,39 @@ class View extends \CodeIgniter\Controller
 
 		if ($this->logged && ($this->data['role'] == 30 || $this->data['role'] == 200)) {
 			helper('form');
+			$globalmodel = new \App\Models\GlobalModel();
 			$this->data['active'] = 'penilaian_konsultasi';
+			$this->data['provinsi'] = $globalmodel->getprov();
+			$this->data['jenis'] = $globalmodel->getjenis();
+			$this->data['fungsi'] = $globalmodel->getfungsi();
+			$this->data['resiko'] = '<h5>Panduan Untuk Mengisi Tingkat Resiko Bahaya : </h5>
+			<ol>
+			<li>Tingkat Risiko Bahaya Kebakaran Tinggi </br>
+			  Klasifikasi bangunan tingkat risiko kebakaran tinggi adalah bangunan gedung yang karena fungsinya, desain penggunaan bahan dan komponen unsur pembentukannya, serta kuantitas dan kualitas bahan yang ada di dalamnya tingkat mudah terbakarnya sangat tinggi.Termasuk klasifikasi bangunan dengan tingkat risiko bahaya kebakaran tinggi adalah:
+			  <ol type="a">
+				<li> bangunan fungsi khusus </li>
+				<li> bangunan dengan ketinggian melebihi 8 (delapan) lantai </li>
+				<li> bangunan umum dengan luas lebih dari 5000 m2 </li>
+				<li> bangunan umum dengan jumlah pengguna di atas 500 orang </li>
+			  </ol>
+			</li>
+			<li> Tingkat Risiko Bahaya Kebakaran Sedang </br>
+			  Klasifikasi bangunan tingkat risiko kebakaran sedang adalah bangunan gedung yang karena fungsinya, desain penggunaan bahan dan komponen unsur pembentukannya, serta kuantitas dan kualitas bahan yang ada di dalamnya tingkat mudah terbakarnya sedang. Termasuk klasifikasi bangunan dengan tingkat risiko bahaya kebakaran sedang adalah:
+			  <ol type="a">
+				<li> hunian tunggal dengan luas melebihi 250 m2, hunian tunggal bertingkat dan hunian deret dengan panjang lebih dari 45 m </li>
+				<li> bangunan dengan ketinggian 4-8 lantai </li>
+				<li> bangunan umum dengan luas antara 500 m2 hingga 5000 m2, atau</li>
+				<li> bangunan umum dengan jumlah pengguna kurang dari 500 orang </li>
+			  </ol>
+			</li>
+			<li> Tingkat Risiko Bahaya Kebakaran Rendah </br>
+			Klasifikasi bangunan tingkat risiko kebakaran rendah adalah bangunan gedung yang karena fungsinya, desain penggunaan bahan dan komponen unsur pembentukannya, serta kuantitas dan kualitas bahan yang ada di dalamnya tingkat mudah terbakarnya rendah.Termasuk klasifikasi bangunan dengan tingkat risiko bahaya kebakaran rendah adalah:
+			  <ol type="a">
+				<li> hunian tunggal tidak bertingkat dengan luas maksimal 250 m2 dan hunian deret tidak bertingkat dengan panjang tidak lebih dari 45 m </li>
+				<li> bangunan dengan ketinggian di bawah 4 (empat) lantai, atau </li>
+				<li> bangunan umum dengan luas maksimal 500 m2 </li>
+			  </ol>
+			</li>';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/penilaian_konsultasi.js';
 			return \Twig::instance()->display('admin/pengawas_teknis/penilaian_konsultasi.html', $this->data);
 		} else {

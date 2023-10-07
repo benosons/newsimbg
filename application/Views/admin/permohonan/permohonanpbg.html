@@ -1296,7 +1296,9 @@
             <select class="form-select" id="id_izin" required>
               <option value="0" selected="">Pilih...</option>
               {% for dajen in data_jenis %}
+                {% if dajen.id_jns_permohonan != 2 %}
               <option value="{{dajen.id_jns_permohonan}}">{{dajen.nm_jns_permohonan}}</option>
+                {% endif %}
               {% endfor %}
               </select>
           </div>

@@ -142,7 +142,6 @@ function loadpermohonan() {
           } else {
             var elem = `<div class="btn-group" role="group" aria-label="First group">
                           <button type="button" class="btn btn-fifth btn-sm btn-icon" onclick="actionlanjutkan('${row.id}')"><i class="bx bx-file me-0 fs-6"></i></button>
-                          <button type="button" class="btn btn-second btn-sm btn-icon" onclick="action('update', ${row.id_permohonan_slf})"><i class="bx bx-edit me-0 fs-6"></i></button>
                         </div>`;
           }
           return elem;
@@ -1359,7 +1358,7 @@ function getDataJnsKonsultasi(ids) {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                  <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                  <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
                   <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
             "#is_id"
           ).val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${
@@ -1551,7 +1550,7 @@ function nextdokumen() {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                      <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                      <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
                       <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
             "#is_id"
           ).val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${
@@ -1595,7 +1594,7 @@ function nextdokumen() {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                      <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                      <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
                       <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
             "#is_id"
           ).val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${
@@ -1640,7 +1639,7 @@ function nextdokumen() {
 
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                      <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                      <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
                       <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
             "#is_id"
           ).val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${
@@ -1683,7 +1682,7 @@ function nextdokumen() {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                      <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                      <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
                       <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
             "#is_id"
           ).val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${
@@ -1725,7 +1724,7 @@ function nextdokumen() {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                      <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                      <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
                       <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
             "#is_id"
           ).val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${
@@ -1779,7 +1778,7 @@ function savedok(isthis, idutama, kategori, id_detail, teknis, nm) {
       data.forEach((element) => {
         // let btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, ${$("#is_id").val()}, ${element.id_persyaratan}, '${element.id_persyaratan_detail}', '')">`
         let btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                         <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${
+                         <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${
                            element.dir_file
                          }" target="_blank"><i class="bx bx-show"></i></a>
                          <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${
@@ -1940,12 +1939,12 @@ function actionlanjutkan(id) {
                             <td align="center"> ${element.luas_tanah}</td>
                             <td align="center"> ${element.atas_nama_dok}d>
                             <td align="center">
-                              <a type="button" class="btn btn-icon btn-info btn-sm" target="_blank" href="./object-storage/dekill/Earth/${
+                              <a type="button" class="btn btn-icon btn-main btn-sm" target="_blank" href="./object-storage/dekill/Earth/${
                                 element.dir_file
                               }" class="btn default btn-xs blue-stripe"><i class="bx bx-show"></i></a>
                             </td>
                             <td align="center">
-                              <a type="button" class="btn btn-icon btn-info btn-sm" target="_blank" href="./object-storage/dekill/Earth/${
+                              <a type="button" class="btn btn-icon btn-main btn-sm" target="_blank" href="./object-storage/dekill/Earth/${
                                 element.dir_file_phat
                               }" class="btn default btn-xs blue-stripe"><i class="bx bx-show"></i></a>
                             </td>
@@ -1968,7 +1967,7 @@ function actionlanjutkan(id) {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                    <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                    <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
                   </div>`;
         } else {
           btn = `Tidak Ada Dokumen`;
@@ -2001,7 +2000,7 @@ function actionlanjutkan(id) {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                    <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                    <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
                   </div>`;
         } else {
           btn = `Tidak Ada Dokumen`;
@@ -2034,7 +2033,7 @@ function actionlanjutkan(id) {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                    <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                    <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
                   </div>`;
         } else {
           btn = `Tidak Ada Dokumen`;
@@ -2067,7 +2066,7 @@ function actionlanjutkan(id) {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                    <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                    <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
                   </div>`;
         } else {
           btn = `Tidak Ada Dokumen`;
@@ -2100,7 +2099,7 @@ function actionlanjutkan(id) {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                    <a type="button" class="btn btn-icon btn-info btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                    <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
                   </div>`;
         } else {
           btn = `Tidak Ada Dokumen`;
