@@ -1,6 +1,8 @@
 $(() => {
   $("#menu-dinas_teknis").addClass("active");
   $("#submenu-verifikasi_dokumen").addClass("active");
+
+  loadcount();
 });
 
 $(document).ready(function () {
@@ -41,6 +43,7 @@ $(document).ready(function () {
             $("#exampleExtraLargeModal2").modal("hide");
 
             loadpermohonan();
+            loadcount();
           });
         }
       },
@@ -238,6 +241,19 @@ function loadpermohonan() {
   //     });
   //   },
   // });
+}
+
+function loadcount() {
+  $.ajax({
+    type: "get",
+    dataType: "json",
+    url: "getcountallpermohonanadm",
+    success: function (response) {
+      $("#countbelum").html(response.all);
+      $("#countsudah").html(response.sudah);
+      $("#countslf").html(response.slfterbit);
+    },
+  });
 }
 
 function action(mode, id, username) {

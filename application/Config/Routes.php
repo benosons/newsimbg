@@ -154,6 +154,10 @@ $routes->post('adduser', 'Jsondata::adduser');
 $routes->post('addrole', 'Jsondata::addrole');
 $routes->post('deleteuser', 'Jsondata::deleteuser');
 
+$routes->get('getcountallpermohonan', 'Jsondata::getcountallpermohonan');
+$routes->get('getcountallpermohonanadm', 'Jsondata::getcountallpermohonanadm');
+$routes->post('getcountallpermohonanadmglob', 'Jsondata::getcountallpermohonanadmglob');
+$routes->get('getcountallpermohonanadm2', 'Jsondata::getcountallpermohonanadm2');
 $routes->post('getallpermohonan', 'Jsondata::getallpermohonan');
 $routes->post('getjsonjbg', 'Jsondata::getjsonjbg');
 
@@ -235,6 +239,7 @@ $routes->post('getTpaTptPenugasan', 'Jsondata::getTpaTptPenugasan');
 $routes->post('savepenjadwalan', 'Jsondata::savepenjadwalan');
 
 
+$routes->post('getallpermohonanpenilaian', 'Jsondata::getallpermohonanpenilaian');
 $routes->post('getallpermohonanretribusi', 'Jsondata::getallpermohonanretribusi');
 
 /**

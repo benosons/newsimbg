@@ -5,6 +5,9 @@ $(() => {
   loadpermohonanpenugasan();
   loadpermohonanpenjadwalan();
 
+  loadcount();
+  loadcount2();
+
   $("#savepenugasan").click(function () {
     var val = [];
     $("input[name='terpilih']:checked").each(function (i) {
@@ -90,6 +93,30 @@ $(document).ready(function () {
     .appendTo("#table-penjadwalan_konsultasi_wrapper .col-md-6:eq(0)");
 });
 
+function loadcount() {
+  $.ajax({
+    type: "get",
+    dataType: "json",
+    url: "getcountallpermohonanadm",
+    success: function (response) {
+      $("#menunggu").html(response.all);
+      $("#sudahtugas").html(response.sudah);
+    },
+  });
+}
+
+function loadcount2() {
+  $.ajax({
+    type: "get",
+    dataType: "json",
+    url: "getcountallpermohonanadm2",
+    success: function (response) {
+      $("#tunggujadwal").html(response.all);
+      $("#sudahjadwal").html(response.sudah);
+    },
+  });
+}
+
 function loadpermohonanpenugasan() {
   $("#permohonan-penugasan").DataTable({
     processing: true,
@@ -144,7 +171,7 @@ function loadpermohonanpenugasan() {
             //             </div>`;
           } else if (row.status == 4) {
             var elem = `<div class="btn-group" role="group" aria-label="First group">
-            <button type="button" class="btn btn-second btn-sm btn-icon" onclick="action('penugasan', ${row.id}, '${row.no_konsultasi}')"><i class="bx bxs-user-detail me-0 fs-6" title="Penugasan TPA/TPT"></i></button>
+            <button type="button" class="btn btn-forth btn-sm btn-icon" onclick="action('penugasan', ${row.id}, '${row.no_konsultasi}')"><i class="bx bxs-user-detail me-0 fs-6" title="Penugasan TPA/TPT"></i></button>
                         </div>`;
             // var elem = "";
           } else {
@@ -171,24 +198,6 @@ function loadpermohonanpenugasan() {
       return index;
     },
     lengthChange: false,
-    infoCallback: function (settings, start, end, max, total, pre) {
-      console.log(settings);
-      console.log(start + ":" + end + ":" + max + ":" + total);
-      return !isNaN(total)
-        ? "Showing " +
-            start +
-            " to " +
-            end +
-            " of " +
-            total +
-            " entries" +
-            (total !== max ? " (filtered from " + max + " total entries)" : "")
-        : "Showing " +
-            start +
-            " to " +
-            (start + this.api().data().length - 1) +
-            " entries";
-    },
   });
   // $.ajax({
   //   type: "post",
@@ -353,7 +362,7 @@ function loadpermohonanpenjadwalan() {
                         </div>`;
           } else if (row.status == 5) {
             var elem = `<div class="btn-group" role="group" aria-label="First group">
-            <button type="button" class="btn btn-warning btn-sm btn-icon" onclick="action('penjadwalan', ${row.id})"><i class="bx bxs-user-detail me-0 fs-6" title="Jadwalkan Konsultasi"></i></button>
+            <button type="button" class="btn btn-forth btn-sm btn-icon" onclick="action('penjadwalan', ${row.id})"><i class="bx bxs-user-detail me-0 fs-6" title="Jadwalkan Konsultasi"></i></button>
           </div>`;
             // var elem = "";
           } else {
@@ -380,24 +389,6 @@ function loadpermohonanpenjadwalan() {
       return index;
     },
     lengthChange: false,
-    infoCallback: function (settings, start, end, max, total, pre) {
-      console.log(settings);
-      console.log(start + ":" + end + ":" + max + ":" + total);
-      return !isNaN(total)
-        ? "Showing " +
-            start +
-            " to " +
-            end +
-            " of " +
-            total +
-            " entries" +
-            (total !== max ? " (filtered from " + max + " total entries)" : "")
-        : "Showing " +
-            start +
-            " to " +
-            (start + this.api().data().length - 1) +
-            " entries";
-    },
   });
   // $.ajax({
   //   type: "post",
@@ -818,6 +809,8 @@ function savepenugasan(val, id_permohonan, urlpenugasan, no_konsultasi) {
           $("#exampleExtraLargeModal2").modal("hide");
           loadpermohonanpenugasan();
           loadpermohonanpenjadwalan();
+          loadcount();
+          loadcount2();
         });
       }
     },
@@ -865,6 +858,8 @@ function savepenjadwalan(
           $("#exampleExtraLargeModal3").modal("toggle");
           $("#exampleExtraLargeModal3").modal("hide");
           loadpermohonanpenjadwalan();
+          loadcount();
+          loadcount2();
         });
       }
     },

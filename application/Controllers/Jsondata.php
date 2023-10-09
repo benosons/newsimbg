@@ -478,6 +478,7 @@ class Jsondata extends \CodeIgniter\Controller
 					'status'   => 'sukses',
 					'code'     => 200,
 					'recordsTotal' => $count,
+					'recordsFiltered' => $count,
 					'data' 	 => $data
 				];
 			} else {
@@ -487,6 +488,197 @@ class Jsondata extends \CodeIgniter\Controller
 					'data'     => [],
 				];
 			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getcountallpermohonan()
+	{
+		try {
+			// $request	= $this->request;
+			// $param	= $request->getVar('param');
+			$konsultasi = new \App\Models\KonsultasiModel();
+			$filterQuery			= 'a.*, b.no_konsultasi,b.pernyataan,b.status, b.almt_bgn,c.nm_konsultasi,d.status_pemohon';
+
+			// $data = $konsultasi->getDataKonsultasi($filterQuery, $user_id, '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'));
+			if ($this->data['role'] == 10) {
+				$user_id				= $this->session->get('id');
+				$where = array(
+					'a.user_id' => $user_id
+				);
+				$wherepbg = array(
+					'a.user_id' => $user_id,
+					'b.status' => 16
+				);
+				$whereslf = array(
+					'a.user_id' => $user_id,
+					'b.status' => 20
+				);
+			} else {
+				$user_id = null;
+				$where = null;
+				$wherepbg = array(
+					'b.status' => 16
+				);
+				$whereslf = array(
+					'b.status' => 20
+				);
+			}
+			$countall = $konsultasi->getDataKonsultasiCount($user_id, '', null, $where);
+			$countpbg = $konsultasi->getDataKonsultasiCount($user_id, '', null, $wherepbg, 'PBG');
+			$countslf = $konsultasi->getDataKonsultasiCount($user_id, '', null, $whereslf, 'SLF');
+
+			$response = [
+				'status'   => 'sukses',
+				'code'     => 200,
+				'all' => $countall,
+				'pbgterbit' => $countpbg,
+				'slfterbit' => $countslf,
+				// 'data' 	 => $data
+			];
+
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getcountallpermohonanadmglob()
+	{
+		try {
+			$request	= $this->request;
+			$param	= $request->getVar('param');
+			$konsultasi = new \App\Models\KonsultasiModel();
+			$filterQuery			= 'a.*, b.no_konsultasi,b.pernyataan,b.status, b.almt_bgn,c.nm_konsultasi,d.status_pemohon';
+
+			// $data = $konsultasi->getDataKonsultasi($filterQuery, $user_id, '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'));
+			if ($this->data['role'] == 30) {
+				$user_id = null;
+				if ($param == "hasil") {
+					$where = array(
+						'b.status' => 6
+					);
+					$wheresudah = array(
+						'b.status' => 9
+					);
+				} else if ($param == "retribusi") {
+					$where = array(
+						'b.status' => 9
+					);
+					$wheresudah = array(
+						'b.status' => 10
+					);
+				}
+			}
+			$countall = $konsultasi->getDataKonsultasiCount($user_id, '', null, $where);
+			$countsudah = $konsultasi->getDataKonsultasiCount($user_id, '', null, $wheresudah);
+
+			$response = [
+				'status'   => 'sukses',
+				'code'     => 200,
+				'all' => $countall,
+				'sudah' => $countsudah,
+				// 'data' 	 => $data
+			];
+
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+	public function getcountallpermohonanadm()
+	{
+		try {
+			// $request	= $this->request;
+			// $param	= $request->getVar('param');
+			$konsultasi = new \App\Models\KonsultasiModel();
+			$filterQuery			= 'a.*, b.no_konsultasi,b.pernyataan,b.status, b.almt_bgn,c.nm_konsultasi,d.status_pemohon';
+
+			// $data = $konsultasi->getDataKonsultasi($filterQuery, $user_id, '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'));
+			if ($this->data['role'] == 20) {
+				$user_id				= null;
+				$where = array(
+					'b.status' => 1,
+				);
+				$wheresudah = array(
+					'b.status >=' => 4
+				);
+			} else if ($this->data['role'] == 30) {
+				$user_id = null;
+				$where = array(
+					'b.status' => 4
+				);
+				$wheresudah = array(
+					'b.status >' => 5
+				);
+			}
+			$countall = $konsultasi->getDataKonsultasiCount($user_id, '', null, $where);
+			$countsudah = $konsultasi->getDataKonsultasiCount($user_id, '', null, $wheresudah);
+
+			$response = [
+				'status'   => 'sukses',
+				'code'     => 200,
+				'all' => $countall,
+				'sudah' => $countsudah,
+				// 'data' 	 => $data
+			];
+
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+	public function getcountallpermohonanadm2()
+	{
+		try {
+			// $request	= $this->request;
+			// $param	= $request->getVar('param');
+			$konsultasi = new \App\Models\KonsultasiModel();
+			$filterQuery			= 'a.*, b.no_konsultasi,b.pernyataan,b.status, b.almt_bgn,c.nm_konsultasi,d.status_pemohon';
+
+			// $data = $konsultasi->getDataKonsultasi($filterQuery, $user_id, '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'));
+			if ($this->data['role'] == 20) {
+				$user_id				= null;
+				$where = array(
+					'b.status' => 1,
+				);
+				$wheresudah = array(
+					'b.status >=' => 4
+				);
+			} else if ($this->data['role'] == 30) {
+				$user_id = null;
+				$where = array(
+					'b.status' => 5
+				);
+				$wheresudah = array(
+					'b.status >=' => 6
+				);
+			}
+			$countall = $konsultasi->getDataKonsultasiCount($user_id, '', null, $where);
+			$countsudah = $konsultasi->getDataKonsultasiCount($user_id, '', null, $wheresudah);
+
+			$response = [
+				'status'   => 'sukses',
+				'code'     => 200,
+				'all' => $countall,
+				'sudah' => $countsudah,
+				// 'data' 	 => $data
+			];
+
 
 			header('Content-Type: application/json');
 			echo json_encode($response);
@@ -1793,14 +1985,51 @@ class Jsondata extends \CodeIgniter\Controller
 			$user_id				= '';
 			$filterQuery			= 'a.*, b.no_konsultasi,b.pernyataan,b.status, b.almt_bgn,c.nm_konsultasi,d.status_pemohon';
 
-			$data = $konsultasi->getDataKonsultasi($filterQuery, $user_id, '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'));
-			$count = $konsultasi->getDataKonsultasiCount($user_id, '', $request->getVar('search'));
+			$data = $konsultasi->getDataKonsultasi($filterQuery, $user_id, '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'), array('b.status <=' => 3));
+			$count = $konsultasi->getDataKonsultasiCount($user_id, '', $request->getVar('search'), array('b.status <=' => 3));
 
 			if ($data) {
 				$response = [
 					'status'   => 'sukses',
 					'code'     => 200,
 					'recordsTotal' => $count,
+					'recordsFiltered' => $count,
+					'data' 	 => $data
+				];
+			} else {
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => [],
+				];
+			}
+
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public function getallpermohonanpenilaian()
+	{
+		try {
+			$request	= $this->request;
+			$param	= $request->getVar('param');
+			$konsultasi = new \App\Models\KonsultasiModel();
+			$user_id				= '';
+			$filterQuery			= 'a.*, b.no_konsultasi,b.pernyataan,b.status, b.almt_bgn,c.nm_konsultasi,d.status_pemohon';
+
+			$data = $konsultasi->getDataKonsultasi($filterQuery, $user_id, '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'), array('b.status' => 6));
+			$count = $konsultasi->getDataKonsultasiCount($user_id, '', $request->getVar('search'), array('b.status' => 6));
+
+			if ($data) {
+				$response = [
+					'status'   => 'sukses',
+					'code'     => 200,
+					'recordsTotal' => $count,
+					'recordsFiltered' => $count,
 					'data' 	 => $data
 				];
 			} else {
@@ -2398,14 +2627,15 @@ class Jsondata extends \CodeIgniter\Controller
 			$user_id				= '';
 			$filterQuery			= 'a.*, b.no_konsultasi,b.pernyataan,b.status, b.almt_bgn,c.nm_konsultasi,d.status_pemohon';
 
-			$data = $konsultasi->getDataKonsultasi($filterQuery, '', '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'));
-			$count = $konsultasi->getDataKonsultasiCount($user_id, '', $request->getVar('search'));
+			$data = $konsultasi->getDataKonsultasi($filterQuery, '', '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'), array('status' => 4));
+			$count = $konsultasi->getDataKonsultasiCount($user_id, '', $request->getVar('search'), array('status' => 4));
 
 			if ($data) {
 				$response = [
 					'status'   => 'sukses',
 					'code'     => 200,
 					'recordsTotal' => $count,
+					'recordsFiltered' => $count,
 					'data' 	 => $data
 				];
 			} else {
@@ -2544,8 +2774,8 @@ class Jsondata extends \CodeIgniter\Controller
 			$user_id				= '';
 			$filterQuery			= 'a.*, b.no_konsultasi,b.pernyataan,b.status, b.almt_bgn,c.nm_konsultasi,d.status_pemohon';
 
-			$data = $konsultasi->getDataKonsultasi($filterQuery, '', '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'));
-			$count = $konsultasi->getDataKonsultasiCount($user_id, '', $request->getVar('search'));
+			$data = $konsultasi->getDataKonsultasi($filterQuery, '', '', $request->getVar('length'), $request->getVar('start'), $request->getVar('search'), array("b.status" => 5));
+			$count = $konsultasi->getDataKonsultasiCount($user_id, '', $request->getVar('search'), array("b.status" => 5));
 
 			if ($data) {
 				$response = [
@@ -2747,6 +2977,7 @@ class Jsondata extends \CodeIgniter\Controller
 					'status'   => 'sukses',
 					'code'     => 200,
 					'recordsTotal' => $count,
+					'recordsFiltered' => $count,
 					'data' 	 => $data
 				];
 			} else {
@@ -2754,6 +2985,8 @@ class Jsondata extends \CodeIgniter\Controller
 					'status'   => 'gagal',
 					'code'     => '0',
 					'data'     => [],
+					'recordsTotal' => $count,
+					'recordsFiltered' => $count,
 				];
 			}
 

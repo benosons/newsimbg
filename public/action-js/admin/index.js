@@ -2,6 +2,7 @@ $(() => {
   $("#menu-dashboard").addClass("active");
 
   cekprofile();
+  loadcount();
 
   $("#id_provinsi").change(function () {
     let prov = $(this).val();
@@ -23,6 +24,19 @@ $(() => {
     savedatadiri(fd);
   });
 });
+
+function loadcount() {
+  $.ajax({
+    type: "get",
+    dataType: "json",
+    url: "getcountallpermohonan",
+    success: function (response) {
+      $("#countall").html(response.all);
+      $("#countpbg").html(response.pbgterbit);
+      $("#countslf").html(response.slfterbit);
+    },
+  });
+}
 
 function cekprofile() {
   $.ajax({

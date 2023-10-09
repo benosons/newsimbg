@@ -1,7 +1,10 @@
 {% extends "admin/layout.html" %} {% block content %}
+<script>
+  const role = "{{ role }}";
+</script>
 <div class="page-content">
   <div class="row">
-    <h5>Rekap Permohonan</h5>
+    <h5 class="text-uppercase">Rekap Permohonan</h5>
     <hr />
     <div class="col">
       <div class="card radius-10 bg-main">
@@ -9,7 +12,7 @@
           <div class="d-flex align-items-center">
             <div class="me-auto">
               <p class="mb-0 text-third">Total permohonan</p>
-              <h4 class="my-1 text-third">0</h4>
+              <h4 class="my-1 text-third" id="countall">0</h4>
               <p class="mb-0 font-13 text-third"></p>
             </div>
             <span class="display-6 text-white"><i class="bx bx-file"></i></span>
@@ -23,7 +26,7 @@
           <div class="d-flex align-items-center">
             <div class="me-auto">
               <p class="mb-0 text-main">Total PBG Terbit</p>
-              <h4 class="my-1 text-main">0</h4>
+              <h4 class="my-1 text-main" id="countpbg">0</h4>
               <p class="mb-0 font-13 text-main"></p>
             </div>
             <span class="display-6 text-main"><i class="bx bx-file"></i></span>
@@ -37,7 +40,7 @@
           <div class="d-flex align-items-center">
             <div class="me-auto">
               <p class="mb-0 text-white">Total SLF Terbit</p>
-              <h4 class="my-1 text-white">0</h4>
+              <h4 class="my-1 text-white" id="countslf">0</h4>
               <p class="mb-0 font-13 text-white"></p>
             </div>
             <span class="display-6 text-white"><i class="bx bx-file"></i></span>
@@ -66,37 +69,120 @@
             </h6>
           </div>
           <div class="card-body">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung Baru
-              </li>
-              <li class="list-group-item">
-                <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung
-                Perubahan
-              </li>
-              <li class="list-group-item">
-                <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung Kolektif
-              </li>
-              <li class="list-group-item">
-                <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung
-                Prasarana
-              </li>
-              <li class="list-group-item">
-                <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung Cagar
-                Budaya
-              </li>
-              <li class="list-group-item">
-                <i class="bx bx-check me-2 font-18"></i>SPBU Mikro 3 Kilo Liter
-              </li>
-              <li class="list-group-item">
-                <i class="bx bx-check me-2 font-18"></i>Bangunan Bertahap
-              </li>
-            </ul>
-            <div class="d-grid">
+            <table class="table table-borderless">
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung Baru
+                </td>
+                <td>
+                  <a href="permohonanpbg?now=now&jns=1" title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-main me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung
+                  Perubahan
+                </td>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="text-secondary"
+                    title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-secondary me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung
+                  Kolektif
+                </td>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="text-secondary"
+                    title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-secondary me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung
+                  Prasarana
+                </td>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="text-secondary"
+                    title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-secondary me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung Cagar
+                  Budaya
+                </td>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="text-secondary"
+                    title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-secondary me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>SPBU Mikro 3 Kilo
+                  Liter
+                </td>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="text-secondary"
+                    title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-secondary me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>Bangunan Bertahap
+                </td>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="text-secondary"
+                    title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-secondary me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+            </table>
+            <!-- <div class="d-grid">
               <a href="permohonan" class="btn btn-main my-2 radius-30"
                 >Ajukan Sekarang</a
               >
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -112,20 +198,30 @@
             </h6>
           </div>
           <div class="card-body">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung
-                Eksisting
-              </li>
-            </ul>
-            <div class="d-grid">
+            <table class="table table-borderless">
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung
+                  Eksisting
+                </td>
+                <td>
+                  <a href="javascript:void(0)" title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-secondary me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+            </table>
+
+            <!-- <div class="d-grid">
               <a
                 href="permohonan"
                 class="btn btn-third my-2 radius-30"
                 style="color: #0d3b66"
                 >Ajukan Sekarang</a
               >
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -143,16 +239,26 @@
             </h6>
           </div>
           <div class="card-body">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                <i class="bx bx-check me-2 font-18"></i> -
-              </li>
-            </ul>
-            <div class="d-grid">
+            <table class="table table-borderless">
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>Surat Bukti
+                  Kepemilikan Bangunan Gedung
+                </td>
+                <td>
+                  <a href="javascript:void(0)" title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-secondary me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+            </table>
+            <!-- <div class="d-grid">
               <a href="permohonan" class="btn btn-forth my-2 radius-30"
                 >Ajukan Sekarang</a
               >
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

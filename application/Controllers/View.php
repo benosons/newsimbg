@@ -187,6 +187,36 @@ class View extends \CodeIgniter\Controller
 			return redirect('login');
 		}
 	}
+	public function permohonanpbg()
+	{
+
+		if ($this->logged && ($this->data['role'] == 10 || $this->data['role'] == 200)) {
+			helper('form');
+			$global = new \App\Models\GlobalModel();
+			$konsultasi = new \App\Models\KonsultasiModel();
+
+			$this->data['active'] = 'permohonan';
+			$this->data['data_jenis']		= $global->getjenis();
+			$this->data['data_fungsi']		= $global->getfungsi();
+			// $this->data['data_jbg']		= $perm->getjbg();
+			$this->data['data_prov']		= $global->getprov();
+			$this->data['prof'] 			= json_decode(json_encode($konsultasi->getDataUserProfil('a.*', $this->session->get('id'))), true);
+			if (isset($_GET['now'])) {
+				$this->data['now'] = $_GET['now'];
+				$this->data['jns'] = $_GET['jns'];
+			} else {
+				$this->data['now'] = 'notnow';
+				$this->data['jns'] = 0;
+			}
+			// echo '<pre>';
+			// print_r($this->data['prof']);
+			// die;
+			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/permohonan/permohonanpbg.js';
+			return \Twig::instance()->display('admin/permohonan/permohonanpbg.html', $this->data);
+		} else {
+			return redirect('login');
+		}
+	}
 
 	public function verifikasi_dokumen()
 	{

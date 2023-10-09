@@ -37,19 +37,38 @@
 
     <div class="tab-content py-3">
       <div class="tab-pane fade show active" id="primaryhome" role="tabpanel">
-        <div
-          class="card radius-10 border-start border-0 border-4 border-success"
-        >
-          <div class="card-body">
-            <div class="d-flex align-items-center">
-              <div>
-                <p class="mb-0 text-secondary">Selesai Pemeriksaan</p>
-                <h4 class="my-1 text-success">0</h4>
+        <div class="row">
+          <div class="col">
+            <div class="card radius-10 bg-forth">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <p class="mb-0 text-white">Belum Pemeriksaan</p>
+                    <h4 class="my-1 text-white" id="belumhasil">0</h4>
+                  </div>
+                  <div
+                    class="widgets-icons-2 rounded-circle bg-white text-forth ms-auto"
+                  >
+                    <i class="bx bxs-error-alt"></i>
+                  </div>
+                </div>
               </div>
-              <div
-                class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"
-              >
-                <i class="bx bxs-bar-chart-alt-2"></i>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card radius-10 bg-main">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <p class="mb-0 text-white">Selesai Pemeriksaan</p>
+                    <h4 class="my-1 text-white" id="sudahhasil">0</h4>
+                  </div>
+                  <div
+                    class="widgets-icons-2 rounded-circle bg-white text-main ms-auto"
+                  >
+                    <i class="bx bx-check-double"></i>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -78,41 +97,37 @@
       </div>
     </div>
     <div class="tab-pane fade" id="primaryprofile" role="tabpanel">
-      <div class="col">
-        <div
-          class="card radius-10 border-start border-0 border-4 border-danger"
-        >
-          <div class="card-body">
-            <div class="d-flex align-items-center">
-              <div>
-                <p class="mb-0 text-secondary">
-                  Menunggu Perhitungan Retribusi
-                </p>
-                <h4 class="my-1 text-danger">24</h4>
-              </div>
-              <div
-                class="widgets-icons-2 rounded-circle bg-gradient-burning text-white ms-auto"
-              >
-                <i class="bx bxs-bar-chart-alt-2"></i>
+      <div class="row">
+        <div class="col">
+          <div class="card radius-10 bg-forth">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="mb-0 text-white">Menunggu Perhitungan Retribusi</p>
+                  <h4 class="my-1 text-white" id="belumretribusi">0</h4>
+                </div>
+                <div
+                  class="widgets-icons-2 rounded-circle bg-white text-forth ms-auto"
+                >
+                  <i class="bx bxs-error-alt"></i>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col">
-        <div
-          class="card radius-10 border-start border-0 border-4 border-success"
-        >
-          <div class="card-body">
-            <div class="d-flex align-items-center">
-              <div>
-                <p class="mb-0 text-secondary">Selesai Perhitungan Retribusi</p>
-                <h4 class="my-1 text-success">36</h4>
-              </div>
-              <div
-                class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"
-              >
-                <i class="bx bxs-bar-chart-alt-2"></i>
+        <div class="col">
+          <div class="card radius-10 bg-main">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="mb-0 text-white">Selesai Perhitungan Retribusi</p>
+                  <h4 class="my-1 text-white" id="sudahretribusi">0</h4>
+                </div>
+                <div
+                  class="widgets-icons-2 rounded-circle bg-white text-main ms-auto"
+                >
+                  <i class="bx bx-check-double"></i>
+                </div>
               </div>
             </div>
           </div>

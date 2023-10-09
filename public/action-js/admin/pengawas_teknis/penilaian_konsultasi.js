@@ -5,6 +5,8 @@ $(() => {
   $(".datepicker").flatpickr();
   loadpermohonanpenugasan();
   loadpermohonanretribusi();
+  loadcount();
+  loadcount2();
 
   $("#info-resiko").click(function () {
     showinfo("resiko");
@@ -30,6 +32,31 @@ $(() => {
   });
 });
 
+function loadcount() {
+  $.ajax({
+    type: "post",
+    data: { param: "hasil" },
+    dataType: "json",
+    url: "getcountallpermohonanadmglob",
+    success: function (response) {
+      $("#belumhasil").html(response.all);
+      $("#sudahhasil").html(response.sudah);
+    },
+  });
+}
+function loadcount2() {
+  $.ajax({
+    type: "post",
+    data: { param: "retribusi" },
+    dataType: "json",
+    url: "getcountallpermohonanadmglob",
+    success: function (response) {
+      $("#belumretribusi").html(response.all);
+      $("#sudahretribusi").html(response.sudah);
+    },
+  });
+}
+
 function loadpermohonanpenugasan() {
   $("#permohonan-konsultasi").DataTable({
     processing: true,
@@ -46,7 +73,7 @@ function loadpermohonanpenugasan() {
       "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
       ">",
     ajax: {
-      url: "getallpermohonanpenugasan",
+      url: "getallpermohonanpenilaian",
       type: "POST",
     },
     order: [[0, "ASC"]],
@@ -111,22 +138,6 @@ function loadpermohonanpenugasan() {
       return index;
     },
     lengthChange: false,
-    infoCallback: function (settings, start, end, max, total, pre) {
-      return !isNaN(total)
-        ? "Showing " +
-            start +
-            " to " +
-            end +
-            " of " +
-            total +
-            " entries" +
-            (total !== max ? " (filtered from " + max + " total entries)" : "")
-        : "Showing " +
-            start +
-            " to " +
-            (start + this.api().data().length - 1) +
-            " entries";
-    },
   });
 }
 
@@ -208,23 +219,6 @@ function loadpermohonanretribusi() {
       var index = iDisplayIndexFull + 1;
       $("td:eq(0)", nRow).html("#" + index);
       return index;
-    },
-    lengthChange: false,
-    infoCallback: function (settings, start, end, max, total, pre) {
-      return !isNaN(total)
-        ? "Showing " +
-            start +
-            " to " +
-            end +
-            " of " +
-            total +
-            " entries" +
-            (total !== max ? " (filtered from " + max + " total entries)" : "")
-        : "Showing " +
-            start +
-            " to " +
-            (start + this.api().data().length - 1) +
-            " entries";
     },
   });
 }
@@ -680,10 +674,14 @@ function updatepermohonan(stat, tipe) {
               $("#exampleExtraLargeModal").modal("toggle");
               $("#exampleExtraLargeModal").modal("show");
               loadpermohonanpenugasan();
+              loadcount();
+              loadcount2();
             } else if (tipe == 2) {
               $("#exampleExtraLargeModal4").modal("toggle");
               $("#exampleExtraLargeModal4").modal("show");
               loadpermohonanretribusi();
+              loadcount();
+              loadcount2();
             }
           }
         });

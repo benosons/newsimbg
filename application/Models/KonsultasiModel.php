@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class KonsultasiModel extends Model
 {
 
-	public function getDataKonsultasi($select = "a.*,c.*", $user_id = null, $id_permohonan = null, $length = null, $start = null, $search = null, $where = null)
+	public function getDataKonsultasi($select = "a.*,c.*", $user_id = null, $id_permohonan = null, $length = null, $start = null, $search = null, $where = null, $like = null)
 	{
 		$builder = $this->db->table('tmdatapemilik a');
 		$builder->select($select, FALSE);
@@ -18,19 +18,22 @@ class KonsultasiModel extends Model
 		$builder->join('tmdatabangunan b', 'a.id = b.id', 'LEFT');
 		$builder->join('tr_konsultasi c', 'b.id_jenis_permohonan = c.id', 'LEFT');
 		$builder->join('status_sistem d', 'b.status = d.status_progress', 'LEFT');
+		if ($like != null) {
+			$builder->havingLike('b.no_konsultasi', $like);
+		}
 		if ($where != null) {
 			$builder->where($where);
 		}
-		$builder->orderBy('a.id', 'desc');
 		if ($length) {
 			$builder->limit($length, $start);
 		}
+		$builder->orderBy('a.id', 'desc');
 		$query   = $builder->get();
 		// echo $this->db->getLastQuery();die;
 		return $query->getResult();
 	}
 
-	public function getDataKonsultasiCount($user_id = null, $id_permohonan = null, $search = null, $where = null)
+	public function getDataKonsultasiCount($user_id = null, $id_permohonan = null, $search = null, $where = null, $like = null)
 	{
 		$builder = $this->db->table('tmdatapemilik a');
 		$builder->select("COUNT(a.id) AS `count`", FALSE);
@@ -42,6 +45,9 @@ class KonsultasiModel extends Model
 		$builder->join('tmdatabangunan b', 'a.id = b.id', 'LEFT');
 		$builder->join('tr_konsultasi c', 'b.id_jenis_permohonan = c.id', 'LEFT');
 		$builder->join('status_sistem d', 'b.status = d.status_progress', 'LEFT');
+		if ($like != null) {
+			$builder->like('b.no_konsultasi', $like);
+		}
 		if ($where != null) {
 			$builder->where($where);
 		}
