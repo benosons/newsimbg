@@ -12,29 +12,17 @@
   <body onload="info_noti()">
     <div class="wrapper">
       <div class="header-wrapper">
-        {% include "admin/layout/header.html" %} 
-        {% if role == 100 %} 
-        {% include "admin/layout/menu/superadmin.html" %} 
-        {% endif %}
-        {% if role == 10 %}
-        {% include "admin/layout/menu/pemohon.html" %}
-        {% endif %}
-        {% if role == 20 %}
-        {% include "admin/layout/menu/operatorteknis.html" %}
-        {% endif %}
-        {% if role == 30 %}
-        {% include "admin/layout/menu/pengawasteknis.html" %}
-        {% endif %}
-        {% if role == 40 %}
-        {% include "admin/layout/menu/kadintek.html" %}
-        {% endif %} {% if role == 50 %}
-        {% include "admin/layout/menu/operatorperizinan.html" %} {% endif %}
-        {% if role == 60 %}
-        {% include "admin/layout/menu/pengawasperizinan.html" %}
-        {% endif %}
-        {% if role == 70 %}
-        {% include "admin/layout/menu/kadinperizinan.html" %}
-        {% endif %}
+        {% include "admin/layout/header.html" %} {% if role == 100 %} {% include
+        "admin/layout/menu/superadmin.html" %} {% endif %} {% if role == 10 %}
+        {% include "admin/layout/menu/pemohon.html" %} {% endif %} {% if role ==
+        20 %} {% include "admin/layout/menu/operatorteknis.html" %} {% endif %}
+        {% if role == 30 %} {% include "admin/layout/menu/pengawasteknis.html"
+        %} {% endif %} {% if role == 40 %} {% include
+        "admin/layout/menu/kadintek.html" %} {% endif %} {% if role == 50 %} {%
+        include "admin/layout/menu/operatorperizinan.html" %} {% endif %} {% if
+        role == 60 %} {% include "admin/layout/menu/pengawasperizinan.html" %}
+        {% endif %} {% if role == 70 %} {% include
+        "admin/layout/menu/kadinperizinan.html" %} {% endif %}
       </div>
       <div class="page-wrapper">{% block content %} {% endblock %}</div>
       <div class="overlay toggle-icon"></div>

@@ -1,63 +1,452 @@
 {% extends "admin/layout.html" %} {% block content %}
+<script>
+  const role = "{{ role }}";
+</script>
 <div class="page-content">
-  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 row-cols-xxl-4">
-             <div class="col">
-     <div class="card radius-10 bg-gradient-cosmic">
-      <div class="card-body">
-        <div class="d-flex align-items-center">
-          <div class="me-auto">
-            <p class="mb-0 text-white">total permohonan</p>
-            <h4 class="my-1 text-white">48</h4>
-            <p class="mb-0 font-13 text-white"></p>
+  <div class="row">
+    <h5 class="text-uppercase">Rekap Permohonan</h5>
+    <hr />
+    <div class="col">
+      <div class="card radius-10 bg-main">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="me-auto">
+              <p class="mb-0 text-third">Total permohonan</p>
+              <h4 class="my-1 text-third" id="countall">0</h4>
+              <p class="mb-0 font-13 text-third"></p>
+            </div>
+            <span class="display-6 text-white"><i class="bx bx-file"></i></span>
           </div>
-          <div id="chart1"></div>
         </div>
       </div>
-     </div>
-     </div>
-     <div class="col">
-    <div class="card radius-10 bg-gradient-ibiza">
-       <div class="card-body">
-         <div class="d-flex align-items-center">
-           <div class="me-auto">
-             <p class="mb-0 text-white">total PBG Terbit</p>
-             <h4 class="my-1 text-white">84</h4>
-             <p class="mb-0 font-13 text-white"></p>
-           </div>
-           <div id="chart2"></div>
-         </div>
-       </div>
-    </div>
     </div>
     <div class="col">
-    <div class="card radius-10 bg-gradient-ohhappiness">
-       <div class="card-body">
-         <div class="d-flex align-items-center">
-           <div class="me-auto">
-             <p class="mb-0 text-white">Total SLF Terbit</p>
-             <h4 class="my-1 text-white">34</h4>
-             <p class="mb-0 font-13 text-white"></p>
-           </div>
-           <div id="chart3"></div>
-         </div>
-       </div>
-    </div>
+      <div class="card radius-10 bg-third">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="me-auto">
+              <p class="mb-0 text-main">Total PBG Terbit</p>
+              <h4 class="my-1 text-main" id="countpbg">0</h4>
+              <p class="mb-0 font-13 text-main"></p>
+            </div>
+            <span class="display-6 text-main"><i class="bx bx-file"></i></span>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col">
-    <div class="card radius-10 bg-gradient-kyoto">
-       <div class="card-body">
-         <div class="d-flex align-items-center">
-           <div class="me-auto">
-             <p class="mb-0 text-dark">Total ditolak</p>
-             <h4 class="my-1 text-dark">8</h4>
-             <p class="mb-0 font-13 text-dark"></p>
-           </div>
-           <div id="chart4"></div>
-         </div>
-       </div>
+      <div class="card radius-10 bg-forth">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="me-auto">
+              <p class="mb-0 text-white">Total SLF Terbit</p>
+              <h4 class="my-1 text-white" id="countslf">0</h4>
+              <p class="mb-0 font-13 text-white"></p>
+            </div>
+            <span class="display-6 text-white"><i class="bx bx-file"></i></span>
+          </div>
+        </div>
+      </div>
     </div>
-    </div> 
-  </div><!--end row-->
-  
+  </div>
+  <!--end row-->
+  {% if role == 10 %}
+  <h5 class="mb-0 text-uppercase">Permohonan Yang Bisa Anda Lakukan</h5>
+  <hr />
+  <div class="pricing-table">
+    <div class="row row-cols-1 row-cols-lg-3">
+      <div class="col">
+        <div class="card mb-5 mb-lg-0">
+          <div class="card-header bg-main py-3">
+            <h5 class="card-title text-third text-uppercase text-center">
+              PBG
+            </h5>
+            <h6
+              class="card-price text-third text-center"
+              style="font-size: 18px"
+            >
+              Persetujuan Bangunan Gedung
+            </h6>
+          </div>
+          <div class="card-body">
+            <table class="table table-borderless">
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung Baru
+                </td>
+                <td>
+                  <a href="permohonanpbg?now=now&jns=1" title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-main me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung
+                  Perubahan
+                </td>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="text-secondary"
+                    title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-secondary me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung
+                  Kolektif
+                </td>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="text-secondary"
+                    title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-secondary me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung
+                  Prasarana
+                </td>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="text-secondary"
+                    title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-secondary me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung Cagar
+                  Budaya
+                </td>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="text-secondary"
+                    title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-secondary me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>SPBU Mikro 3 Kilo
+                  Liter
+                </td>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="text-secondary"
+                    title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-secondary me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>Bangunan Bertahap
+                </td>
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    class="text-secondary"
+                    title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-secondary me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+            </table>
+            <!-- <div class="d-grid">
+              <a href="permohonan" class="btn btn-main my-2 radius-30"
+                >Ajukan Sekarang</a
+              >
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mb-5 mb-lg-0">
+          <div class="card-header bg-third py-3">
+            <h5 class="card-title text-main text-uppercase text-center">SLF</h5>
+            <h6
+              class="card-price text-main text-center"
+              style="font-size: 18px"
+            >
+              Sertifikat Laik Fungsi
+            </h6>
+          </div>
+          <div class="card-body">
+            <table class="table table-borderless">
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>Bangunan Gedung
+                  Eksisting
+                </td>
+                <td>
+                  <a href="javascript:void(0)" title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-secondary me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+            </table>
+
+            <!-- <div class="d-grid">
+              <a
+                href="permohonan"
+                class="btn btn-third my-2 radius-30"
+                style="color: #0d3b66"
+                >Ajukan Sekarang</a
+              >
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mb-5 mb-lg-0">
+          <div class="card-header bg-forth py-3">
+            <h5 class="card-title text-white text-uppercase text-center">
+              SBKBG
+            </h5>
+            <h6
+              class="card-price text-white text-center"
+              style="font-size: 18px"
+            >
+              Surat Bukti Kepemilikan Bangunan Gedung
+            </h6>
+          </div>
+          <div class="card-body">
+            <table class="table table-borderless">
+              <tr>
+                <td>
+                  <i class="bx bx-check me-2 font-18"></i>Surat Bukti
+                  Kepemilikan Bangunan Gedung
+                </td>
+                <td>
+                  <a href="javascript:void(0)" title="Ajukan Sekarang"
+                    ><i
+                      class="bx bx-right-arrow-circle text-secondary me-2 font-18"
+                    ></i
+                  ></a>
+                </td>
+              </tr>
+            </table>
+            <!-- <div class="d-grid">
+              <a href="permohonan" class="btn btn-forth my-2 radius-30"
+                >Ajukan Sekarang</a
+              >
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+<div
+  class="modal fade"
+  id="exampleExtraLargeModal2"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Lengkapi Data Diri</h5>
+        <!-- <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button> -->
+      </div>
+      <form id="formDatadiri">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-3 mb-3">
+              <div class="form-group">
+                <label for="" class="form-control-label">Gelar Depan</label>
+                <input
+                  type="text"
+                  id="glr_depan"
+                  name="glr_depan"
+                  class="form-control"
+                  placeholder="Masukan Gelar Depan"
+                />
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="form-group">
+                <label for="" class="form-control-label">Nama Lengkap</label>
+                <input
+                  type="text"
+                  id="nama_lengkap"
+                  name="nama_lengkap"
+                  class="form-control"
+                  placeholder="Masukan Nama Lengkap"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <div class="form-group">
+                <label for="" class="form-control-label">Gelar Belakang</label>
+                <input
+                  type="text"
+                  id="glr_belakang"
+                  name="glr_belakang"
+                  class="form-control"
+                  placeholder="Masukan Gelar Depan"
+                />
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="form-group">
+                <label for="" class="form-control-label">Nomor KTP</label>
+                <input
+                  type="text"
+                  id="no_ktp"
+                  name="no_ktp"
+                  maxlength="16"
+                  class="form-control"
+                  placeholder="Masukan Nomor KTP"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="form-group">
+                <label for="" class="form-control-label">Nomor Handphone</label>
+                <input
+                  type="text"
+                  id="no_hp"
+                  maxlength="12"
+                  name="no_hp"
+                  class="form-control"
+                  placeholder="Masukan Nomor Handphone"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="form-group">
+                <label for="" class="form-control-label">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-control"
+                  placeholder="Masukan Email"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-md-12 mb-3">
+              <div class="form-group">
+                <label for="" class="form-control-label">Alamat</label>
+                <textarea
+                  name="alamat"
+                  id="alamat"
+                  cols="30"
+                  rows="3"
+                  class="form-control"
+                  placeholder="Masukan Alamat"
+                  required
+                ></textarea>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="form-group">
+                <label for="" class="form-control-label">Provinsi</label>
+                <select
+                  name="id_provinsi"
+                  id="id_provinsi"
+                  class="form-control"
+                  required
+                >
+                  <option value="">PILIH</option>
+                  {% for p in provinsi %}
+                  <option value="{{ p.id_provinsi }}">
+                    {{ p.nama_provinsi }}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="form-group">
+                <label for="" class="form-control-label"
+                  >Kota / Kabupaten</label
+                >
+                <select
+                  name="id_kabkot"
+                  id="id_kabkot"
+                  class="form-control"
+                  required
+                >
+                  <option value="">PILIH</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="form-group">
+                <label for="" class="form-control-label">Kecamatan</label>
+                <select
+                  name="id_kecamatan"
+                  id="id_kecamatan"
+                  class="form-control"
+                  required
+                >
+                  <option value="">PILIH</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="form-group">
+                <label for="" class="form-control-label">Kelurahan</label>
+                <select
+                  name="id_kelurahan"
+                  id="id_kelurahan"
+                  class="form-control"
+                  required
+                >
+                  <option value="">PILIH</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-main">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 {% endblock %}

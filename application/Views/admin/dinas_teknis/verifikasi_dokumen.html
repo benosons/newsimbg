@@ -3,119 +3,497 @@
   <div class="card">
     <div class="card-body">
       <h4 class="mb-0">Verifikasi Dokumen</h4>
-      <hr>
+      <hr />
       <div class="col">
-        <div class="card radius-10 border-start border-0 border-4 border-danger">
-           <div class="card-body">
-             <div class="d-flex align-items-center">
-               <div>
-                 <p class="mb-0 text-secondary">Belum Diverifikasi</p>
-                 <h4 class="my-1 text-danger">24</h4>
-               </div>
-               <div class="widgets-icons-2 rounded-circle bg-gradient-burning text-white ms-auto"><i class='bx bxs-bar-chart-alt-2'></i>
-               </div>
-             </div>
-           </div>
+        <div class="card radius-10 bg-forth">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div>
+                <p class="mb-0 text-white">Belum Diverifikasi</p>
+                <h4 class="my-1 text-white" id="countbelum">0</h4>
+              </div>
+              <div
+                class="widgets-icons-2 rounded-circle bg-white text-forth ms-auto"
+              >
+                <i class="bx bxs-error-alt"></i>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="col">
+        <div class="card radius-10 bg-main">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div>
+                <p class="mb-0 text-white">Sudah Diverifikasi</p>
+                <h4 class="my-1 text-white" id="countsudah">0</h4>
+              </div>
+              <div
+                class="widgets-icons-2 rounded-circle bg-white text-main ms-auto"
+              >
+                <i class="bx bx-check-double"></i>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col">
-        <div class="card radius-10 border-start border-0 border-4 border-success">
-           <div class="card-body">
-             <div class="d-flex align-items-center">
-               <div>
-                 <p class="mb-0 text-secondary">Sudah Diverifikasi</p>
-                 <h4 class="my-1 text-success">36</h4>
-               </div>
-               <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i class='bx bxs-bar-chart-alt-2' ></i>
-               </div>
-             </div>
-           </div>
-        </div>
-        </div>
+      </div>
 
       <div class="card">
         <div class="card-body">
           <div class="table-responsive">
-            <table id="example2" class="table table-striped table-bordered">
+            <table
+              id="permohonan-verifikasi"
+              class="table table-striped table-bordered"
+            >
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Jenis Konsultasi</th>
                   <th>No. Registrasi</th>
                   <th>Nama Pemilik</th>
                   <th>Lokasi BG</th>
-                  <th>Fungsi BG</th>
+                  <!-- <th>Fungsi BG</th> -->
                   <th>Tanggal Permohonan</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      Prasarana Bangunan Gedung
-                    </div>
-                  </td>
-                  <td>BLA/123135432563/87967857</td>
-                  <td>John Doe</td>
-                  <td>Jl. Jakarta 10, Kota Bandung</td>
-                  <td>Hunian</td>
-                  <td>5-8-2023</td>
-                  <td><span class="badge bg-danger">Belum Diverifikasi</span></td>
-                  <td style="text-align: center;"><button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-secondary"><i class="bx bx-edit me-0"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      </div>Bangunan Gedung Kepentingan Umum
-                    </div>
-                  </td>
-                  <td>BLA/123135432563/87967857</td>
-                  <td>Jane Doe</td>
-                  <td>Jl. Jakarta 10, Kota Bandung</td>
-                  <td>Sosial & Budaya</td>
-                  <td>5-8-2023</td>
-                  <td><span class="badge bg-success">Sudah Diverifikasi</span></td>
-                  <td style="text-align: center;"><button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-secondary"><i class="bx bx-edit me-0"></i></button>
-                  </td>
-                </tr>
-                <!-- <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div><i class='bx bxs-file me-2 font-24 text-warning'></i>
-                      </div>Bangunan Fungsi Hunian
-                    </div>
-                  </td>
-                  <td>Lorem Ipsum</td>
-                  <td>BLA/123135432563/87967857</td>
-                  <td>Jl. Jakarta 10, Kota Bandung</td>
-                  <td><div class="font-weight-bold text-primary">Diproses</div></td>
-                  <td style="text-align: center;"><button type="button" class="btn btn-outline-secondary"><i class="bx bx-edit me-0"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <div><i class='bx bxs-file-doc me-2 font-24 text-success'></i>
-                      </div>Prasarana Bangunan Gedung
-                    </div>
-                  </td>
-                  <td>Quick Brown Fox</td>
-                  <td>BLA/123135432563/87967857</td>
-                  <td>Jl. Jakarta 10, Kota Bandung</td>
-                  <td><div class="font-weight-bold text-success">Terbit/Selesai</div></td>
-                  <td style="text-align: center;"><button type="button" class="btn btn-outline-secondary"><i class="bx bx-edit me-0"></i></button>
-                  </td>
-                </tr> -->
-                
-              </tbody>
+              <tbody></tbody>
             </table>
           </div>
         </div>
       </div>
-      
-      
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="exampleExtraLargeModal2"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Data Summary Permohonan</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <div class="card radius-10 bg-main">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <h4 class="mb-0 text-third" id="sum-data_pbg"></h4>
+                    </div>
+                    <div class="widgets-icons bg-third text-main ms-auto">
+                      <i class="bx bxs-file"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-1">
+                <div class="col-1"></div>
+                <div class="col-4">Nama Lengkap Pemilik</div>
+                <div class="col-7" id="sum-nama_pemilik"></div>
+              </div>
+              <div class="row mb-1">
+                <div class="col-1"></div>
+                <div class="col-4">No Identitas Pemilik</div>
+                <div class="col-7" id="sum-identitas_pemilik"></div>
+              </div>
+              <div class="row mb-1">
+                <div class="col-1"></div>
+                <div class="col-4">Alamat Pemilik Bangunan</div>
+                <div class="col-7" id="sum-alamat_pemilik"></div>
+              </div>
+              <div class="row mb-1">
+                <div class="col-1"></div>
+                <div class="col-4">No Telepon</div>
+                <div class="col-7" id="sum-kontak_pemilik"></div>
+              </div>
+              <div class="row mb-1">
+                <div class="col-1"></div>
+                <div class="col-4">E-mail</div>
+                <div class="col-7" id="sum-email_pemilik"></div>
+              </div>
+              <div class="row mb-1">
+                <div class="col-1"></div>
+                <div class="col-4">Lokasi Bangunan Gedung</div>
+                <div class="col-7" id="sum-lokasi_bangunan"></div>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="card">
+            <div class="card-body">
+              <ul class="nav nav-pills mb-3" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <a
+                    class="nav-link active"
+                    data-bs-toggle="pill"
+                    href="component-navs-tabs.html#primary-pills-one"
+                    role="tab"
+                    aria-selected="true"
+                  >
+                    <div class="d-flex align-items-center">
+                      <div class="tab-icon">
+                        <i class="bx bx-check-double font-18 me-1"></i>
+                      </div>
+                      <div class="tab-title">Data Bangunan</div>
+                    </div>
+                  </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a
+                    class="nav-link"
+                    data-bs-toggle="pill"
+                    href="component-navs-tabs.html#primary-pills-home"
+                    role="tab"
+                    aria-selected="true"
+                  >
+                    <div class="d-flex align-items-center">
+                      <div class="tab-icon">
+                        <i class="bx bx-check-double font-18 me-1"></i>
+                      </div>
+                      <div class="tab-title">Data Teknis Tanah</div>
+                    </div>
+                  </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a
+                    class="nav-link"
+                    data-bs-toggle="pill"
+                    href="component-navs-tabs.html#primary-pills-profile"
+                    role="tab"
+                    aria-selected="false"
+                  >
+                    <div class="d-flex align-items-center">
+                      <div class="tab-icon">
+                        <i class="bx bx-check-double font-18 me-1"></i>
+                      </div>
+                      <div class="tab-title">Data Umum</div>
+                    </div>
+                  </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a
+                    class="nav-link"
+                    data-bs-toggle="pill"
+                    href="component-navs-tabs.html#primary-pills-contact"
+                    role="tab"
+                    aria-selected="false"
+                  >
+                    <div class="d-flex align-items-center">
+                      <div class="tab-icon">
+                        <i class="bx bx-check-double font-18 me-1"></i>
+                      </div>
+                      <div class="tab-title">Ketentuan Teknis</div>
+                    </div>
+                  </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a
+                    class="nav-link"
+                    data-bs-toggle="pill"
+                    href="component-navs-tabs.html#primary-pills-four"
+                    role="tab"
+                    aria-selected="false"
+                  >
+                    <div class="d-flex align-items-center">
+                      <div class="tab-icon">
+                        <i class="bx bx-check-double font-18 me-1"></i>
+                      </div>
+                      <div class="tab-title">Status</div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+              <div class="tab-content" id="pills-tabContent">
+                <div
+                  class="tab-pane fade show active"
+                  id="primary-pills-one"
+                  role="tabpanel"
+                >
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="fw-bolder mb-2">Data Lengkap Pemilik</h5>
+                      <table
+                        class="table table-borderless"
+                        id="data_lengkap_pemilik"
+                      ></table>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="fw-bolder mb-2">Data Umum Bangunan Gedung</h5>
+                      <table
+                        class="table table-borderless mb-2"
+                        id="data_umum_bg"
+                      ></table>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade show"
+                  id="primary-pills-home"
+                  role="tabpanel"
+                >
+                  <div class="card">
+                    <div class="card-body">
+                      <table class="table">
+                        <thead class="table-primary">
+                          <th>No</th>
+                          <th>Jenis Dokumen</th>
+                          <th>No. dan Tanggal Dokumen</th>
+                          <th>Luas Tanah (m<sup>2</sup>)</th>
+                          <th>Atas Nama</th>
+                          <th>Berkas</th>
+                          <th>Izin Pemanfaatan</th>
+                          <th>Aksi</th>
+                        </thead>
+                        <tbody id="doktanah"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-body">
+                      <table class="table">
+                        <thead class="table-primary">
+                          <th>No</th>
+                          <th>Ketentuan Teknis Tanah</th>
+                          <th>Keterangan</th>
+                          <th>Berkas</th>
+                          <th>Verifikasi</th>
+                        </thead>
+                        <tbody id="listtanah"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="primary-pills-profile"
+                  role="tabpanel"
+                >
+                  <div class="card">
+                    <div class="card-body">
+                      <table class="table mb-0">
+                        <thead class="table-primary">
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Dokumen Umum</th>
+                            <th scope="col">Keterangan</th>
+                            <th scope="col">Berkas</th>
+                            <th scope="col">Verifikasi</th>
+                          </tr>
+                        </thead>
+                        <tbody id="listumum"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-body">
+                      <table class="table mb-0">
+                        <thead class="table-primary">
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Dokumen Arsitektur</th>
+                            <th scope="col">Keterangan</th>
+                            <th scope="col">Berkas</th>
+                            <th scope="col">Verifikasi</th>
+                          </tr>
+                        </thead>
+                        <tbody id="listars"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="primary-pills-contact"
+                  role="tabpanel"
+                >
+                  <div class="card">
+                    <div class="card-body">
+                      <table class="table mb-0">
+                        <thead class="table-primary">
+                          <th scope="col">#</th>
+                          <th scope="col">Dokumen Struktur</th>
+                          <th scope="col">Keterangan</th>
+                          <th scope="col">Berkas</th>
+                          <th scope="col">Verifikasi</th>
+                        </thead>
+                        <tbody id="liststruk"></tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="card-body">
+                      <table class="table mb-0">
+                        <thead class="table-primary">
+                          <th scope="col" width="5%">#</th>
+                          <th scope="col" width="40%">Data Teknis MEP</th>
+                          <th scope="col" width="20%">Keterangan</th>
+                          <th scope="col" width="10%">Berkas</th>
+                          <th scope="col" width="15%">Verifikasi</th>
+                        </thead>
+                        <tbody id="listmep"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="primary-pills-four"
+                  role="tabpanel"
+                >
+                  <div class="card">
+                    <div class="card-body">
+                      <form id="formverifikasi" enctype="multipart/form-data">
+                        <input
+                          type="hidden"
+                          name="id_pemilik"
+                          id="id_pemilik"
+                        />
+                        <table class="table table-borderless mb-0">
+                          <tr>
+                            <td>Kelengkapan Ketentuan Teknis</td>
+                            <td>
+                              <div class="form-check">
+                                <input
+                                  class="form-check-input"
+                                  type="radio"
+                                  name="status_syarat"
+                                  id="flexRadioDefault1"
+                                  value="1"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  for="flexRadioDefault1"
+                                >
+                                  Sesuai
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input
+                                  class="form-check-input"
+                                  type="radio"
+                                  name="statussyarat"
+                                  id="flexRadioDefault2"
+                                  value="2"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  for="flexRadioDefault2"
+                                >
+                                  Tidak Sesuai
+                                </label>
+                              </div>
+                            </td>
+                          </tr>
+                          <!-- <tr>
+                            <td>No. Surat Pemberitahuan</td>
+                            <td>
+                              <input
+                                type="text"
+                                class="form-control"
+                                name="no_surat"
+                                id="no_surat"
+                                placeholder="Nomor Surat"
+                              />
+                            </td>
+                          </tr>
+
+                          <tr></tr>
+                          <tr>
+                            <td>Surat Pemberitahuan</td>
+                            <td>
+                              <input
+                                type="file"
+                                name="file"
+                                id="file"
+                                class="form-control"
+                                placeholder="choose"
+                              />
+                            </td>
+                          </tr> -->
+                          <tr>
+                            <td>Catatan</td>
+                            <td>
+                              <textarea
+                                name="catatan"
+                                id="catatan"
+                                cols="30"
+                                rows="5"
+                                class="form-control"
+                                placeholder="Keteragan"
+                              ></textarea>
+                            </td>
+                          </tr>
+                        </table>
+                        <button type="submit" class="btn btn-main fload-end">
+                          Simpan
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="card-body">
+                      <table class="table">
+                        <thead class="table-primary">
+                          <th>No</th>
+                          <th>No. Surat</th>
+                          <th>Tanggal Surat</th>
+                          <th>Catatan</th>
+                          <th>Berkas</th>
+                          <th>Verifikator</th>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal modal-blur fade"
+  id="pdfModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="pdfModalLabel"
+>
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="pdfModalLabel">File Viewer</h5>
+        <button
+          type="button"
+          class="close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="bodyview"></div>
     </div>
   </div>
 </div>

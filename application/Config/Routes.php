@@ -99,6 +99,7 @@ $routes->add('register', 'View::register');
 // BACKEND
 $routes->add('dashboard', 'View::dashboard');
 $routes->add('permohonan', 'View::permohonan');
+$routes->add('permohonanpbg', 'View::permohonanpbg');
 $routes->add('verifikasi_dokumen', 'View::verifikasi_dokumen');
 $routes->add('bangunan_bertahap', 'View::bangunan_bertahap');
 $routes->add('profil_pu', 'View::profil_pu');
@@ -141,7 +142,7 @@ $routes->add('tokenData', 'View::tokenData');
 // $routes->add('login', 'View::login');
 // $routes->add('dashboard', 'View::dashboard');
 $routes->add('users', 'View::user');
- 
+
 $routes->add('auth', 'Auth::auth');
 $routes->add('reg', 'Auth::reg');
 $routes->add('logout', 'Auth::logout');
@@ -153,16 +154,26 @@ $routes->post('adduser', 'Jsondata::adduser');
 $routes->post('addrole', 'Jsondata::addrole');
 $routes->post('deleteuser', 'Jsondata::deleteuser');
 
+$routes->get('getcountallpermohonan', 'Jsondata::getcountallpermohonan');
+$routes->get('getcountallpermohonanadm', 'Jsondata::getcountallpermohonanadm');
+$routes->post('getcountallpermohonanadmglob', 'Jsondata::getcountallpermohonanadmglob');
+$routes->get('getcountallpermohonanadm2', 'Jsondata::getcountallpermohonanadm2');
 $routes->post('getallpermohonan', 'Jsondata::getallpermohonan');
 $routes->post('getjsonjbg', 'Jsondata::getjsonjbg');
 
 $routes->post('addpermohonan', 'Jsondata::addpermohonan');
+$routes->post('updatepermohonan', 'Jsondata::updatepermohonan');
 
 $routes->post('getjsonkabkot', 'Jsondata::getjsonkabkot');
 $routes->post('getjsonkec', 'Jsondata::getjsonkec');
 $routes->post('getjsonkel', 'Jsondata::getjsonkel');
+$routes->post('getjsonkabkot2', 'Jsondata::getjsonkabkot2');
+$routes->post('getjsonkec2', 'Jsondata::getjsonkec2');
+$routes->post('getjsonkel2', 'Jsondata::getjsonkel2');
 
 $routes->post('getjsoncount', 'Jsondata::getjsoncount');
+$routes->get('getprofile', 'Jsondata::getprofile');
+$routes->post('savedatadiri', 'Jsondata::savedatadiri');
 
 $routes->post('getallDealerData', 'Jsondata::getallDealerData');
 $routes->post('getDealerData', 'Jsondata::getDealerData');
@@ -206,6 +217,31 @@ $routes->post('getdatadokumen', 'Jsondata::getdatadokumen');
 $routes->post('SaveDokumen', 'Jsondata::SaveDokumen');
 $routes->post('deleteDokumen', 'Jsondata::deleteDokumen');
 $routes->post('saveDataPernyataan', 'Jsondata::saveDataPernyataan');
+
+// VERIFIKASI
+$routes->post('getallpermohonanverifikasi', 'Jsondata::getallpermohonanverifikasi');
+$routes->post('getverifikasipermohonan', 'Jsondata::getverifikasipermohonan');
+$routes->post('check_status_tanah', 'Jsondata::check_status_tanah');
+$routes->post('check_status', 'Jsondata::check_status');
+$routes->post('status_dt_teknis', 'Jsondata::status_dt_teknis');
+
+// ONLY PERMOHONAN
+$routes->post('getpermohonan', 'Jsondata::getpermohonan');
+
+// PENUGASAN
+$routes->post('getallpermohonanpenugasan', 'Jsondata::getallpermohonanpenugasan');
+$routes->post('listDataPersonilAsn', 'Jsondata::listDataPersonilAsn');
+$routes->post('savePenugasanTpt', 'Jsondata::savePenugasanTpt');
+
+// PENJADWALAN
+$routes->post('getallpermohonanpenjadwalan', 'Jsondata::getallpermohonanpenjadwalan');
+$routes->post('getTpaTptPenugasan', 'Jsondata::getTpaTptPenugasan');
+$routes->post('savepenjadwalan', 'Jsondata::savepenjadwalan');
+
+
+$routes->post('getallpermohonanpenilaian', 'Jsondata::getallpermohonanpenilaian');
+$routes->post('getallpermohonanretribusi', 'Jsondata::getallpermohonanretribusi');
+
 /**
  * --------------------------------------------------------------------
  * Additional Routing

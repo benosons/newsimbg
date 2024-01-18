@@ -2,21 +2,32 @@
 
 <div class="card">
   <div class="card-body">
-
     <ul class="nav nav-tabs nav-primary mt-3 mb-2" role="tablist">
       <li class="nav-item" role="presentation">
-        <a class="nav-link active" data-bs-toggle="tab" href="#primaryhome" role="tab" aria-selected="true">
+        <a
+          class="nav-link active"
+          data-bs-toggle="tab"
+          href="#primaryhome"
+          role="tab"
+          aria-selected="true"
+        >
           <div class="d-flex align-items-center">
-            <div class="tab-icon"><i class='bx bx-home font-18 me-1'></i>
-            </div>
+            <div class="tab-icon"><i class="bx bx-home font-18 me-1"></i></div>
             <div class="tab-title">Data Hasil Konsultasi</div>
           </div>
         </a>
       </li>
       <li class="nav-item" role="presentation">
-        <a class="nav-link" data-bs-toggle="tab" href="#primaryprofile" role="tab" aria-selected="false">
+        <a
+          class="nav-link"
+          data-bs-toggle="tab"
+          href="#primaryprofile"
+          role="tab"
+          aria-selected="false"
+        >
           <div class="d-flex align-items-center">
-            <div class="tab-icon"><i class='bx bx-user-pin font-18 me-1'></i>
+            <div class="tab-icon">
+              <i class="bx bx-user-pin font-18 me-1"></i>
             </div>
             <div class="tab-title">Perhitungan Retribusi</div>
           </div>
@@ -25,230 +36,872 @@
     </ul>
 
     <div class="tab-content py-3">
-
       <div class="tab-pane fade show active" id="primaryhome" role="tabpanel">
-      
-            <div class="row mt-3">
-              <div class="col-12 col-lg-4">
-                <div class="card shadow-none border radius-15">
-                  <div class="card-body">
-                    <div class="d-flex align-items-center">
-                      <div class="font-30 text-primary"><i class='bx bxs-folder'></i>
-                      </div>
-                      <!-- <div class="user-groups ms-auto">
-                        <img src="assets/images/avatars/avatar-1.png" width="35" height="35" class="rounded-circle" alt="" />
-                        <img src="assets/images/avatars/avatar-2.png" width="35" height="35" class="rounded-circle" alt="" />
-                      </div>
-                      <div class="user-plus">+</div> -->
-                    </div>
-                    <h6 class="mb-0 text-primary">Pemeriksaan Tahap Arsitektur</h6>
-                    <small>15 files</small>
+        <div class="row">
+          <div class="col">
+            <div class="card radius-10 bg-forth">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <p class="mb-0 text-white">Belum Pemeriksaan</p>
+                    <h4 class="my-1 text-white" id="belumhasil">0</h4>
                   </div>
-                </div>
-              </div>
-              <div class="col-12 col-lg-4">
-                <div class="card shadow-none border radius-15">
-                  <div class="card-body">
-                    <div class="d-flex align-items-center">
-                      <div class="font-30 text-primary"><i class='bx bxs-folder'></i>
-                      </div>
-                      <!-- <div class="user-groups ms-auto">
-                        <img src="assets/images/avatars/avatar-4.png" width="35" height="35" class="rounded-circle" alt="" />
-                      </div> -->
-                    </div>
-                    <h6 class="mb-0 text-primary">Finalisasi Bangunan</h6>
-                    <small>345 files</small>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-lg-4">
-                <div class="card shadow-none border radius-15">
-                  <div class="card-body">
-                    <div class="d-flex align-items-center">
-                      <div class="font-30 text-primary"><i class='bx bxs-folder'></i>
-                      </div>
-                      <!-- <div class="user-groups ms-auto">
-                        <img src="assets/images/avatars/avatar-7.png" width="35" height="35" class="rounded-circle" alt="" />
-                        <img src="assets/images/avatars/avatar-8.png" width="35" height="35" class="rounded-circle" alt="" />
-                      </div> -->
-                    </div>
-                    <h6 class="mb-0 text-primary">Pemeriksaan Tahap Akhir</h6>
-                    <small>143 files</small>
+                  <div
+                    class="widgets-icons-2 rounded-circle bg-white text-forth ms-auto"
+                  >
+                    <i class="bx bxs-error-alt"></i>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="card radius-10 border-start border-0 border-4 border-success">
+          </div>
+          <div class="col">
+            <div class="card radius-10 bg-main">
               <div class="card-body">
                 <div class="d-flex align-items-center">
                   <div>
-                    <p class="mb-0 text-secondary">Selesai Pemeriksaan</p>
-                    <h4 class="my-1 text-success">36</h4>
+                    <p class="mb-0 text-white">Selesai Pemeriksaan</p>
+                    <h4 class="my-1 text-white" id="sudahhasil">0</h4>
                   </div>
-                  <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i class='bx bxs-bar-chart-alt-2' ></i>
+                  <div
+                    class="widgets-icons-2 rounded-circle bg-white text-main ms-auto"
+                  >
+                    <i class="bx bx-check-double"></i>
                   </div>
                 </div>
               </div>
-           </div>
-      
-          <div class="table-responsive">
-            <table id="table-hasil_konsultasi" class="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th>Jenis Permohonan</th>
-                  <th>No. Registrasi</th>
-                  <th>Nama Pemilik</th>
-                  <th>Lokasi BG</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      Prasarana Bangunan Gedung
-                    </div>
-                  </td>
-                  <td>BLA/123135432563/87967857</td>
-                  <td>John Doe</td>
-                  <td>Jl. Jakarta 10, Kota Bandung</td>
-                  <td><span class="badge bg-secondary">Finalisasi Bangunan</span></td>
-                  <td style="text-align: center;">
-                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-primary"><i class="bx bx-edit me-0"></i>
-                    </button>
-                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-warning"><i class="bx bx-left-arrow me-0"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      Bangunan Gedung Kepentingan Umum
-                    </div>
-                  </td>
-                  <td>BLA/123135432563/87967857</td>
-                  <td>Jane Doe</td>
-                  <td>Jl. Jakarta 10, Kota Bandung</td>
-                  <td><span class="badge bg-secondary">Tahap Akhir</span></td>
-                  <td style="text-align: center;">
-                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-primary"><i class="bx bx-edit me-0"></i>
-                    </button>
-                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-warning"><i class="bx bx-left-arrow me-0"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      Bangunan Gedung Kepentingan Umum
-                    </div>
-                  </td>
-                  <td>BLA/123135432563/87967857</td>
-                  <td>Jane Doe</td>
-                  <td>Jl. Jakarta 10, Kota Bandung</td>
-                  <td><span class="badge bg-secondary">Tahap Arsitektur</span></td>
-                  <td style="text-align: center;">
-                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-primary"><i class="bx bx-edit me-0"></i>
-                    </button>
-                    <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-warning"><i class="bx bx-left-arrow me-0"></i>
-                    </button>
-                  </td>
-                </tr>
-                
-              </tbody>
-            </table>
+            </div>
           </div>
-
+        </div>
+        <!-- <div class="table-responsive"> -->
+        <table
+          id="permohonan-konsultasi"
+          class="table table-striped table-bordered"
+        >
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Jenis Konsultasi</th>
+              <th>Nama Pemilik</th>
+              <th>No. Registrasi</th>
+              <th>Lokasi BG</th>
+              <!-- <th>Fungsi BG</th> -->
+              <th>Tanggal Permohonan</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <!-- </div> -->
       </div>
-
-      <div class="tab-pane fade" id="primaryprofile" role="tabpanel">
-        
-        <div class="col">
-          <div class="card radius-10 border-start border-0 border-4 border-danger">
-             <div class="card-body">
-               <div class="d-flex align-items-center">
-                 <div>
-                   <p class="mb-0 text-secondary">Menunggu Perhitungan Retribusi</p>
-                   <h4 class="my-1 text-danger">24</h4>
-                 </div>
-                 <div class="widgets-icons-2 rounded-circle bg-gradient-burning text-white ms-auto"><i class='bx bxs-bar-chart-alt-2'></i>
-                 </div>
-               </div>
-             </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card radius-10 border-start border-0 border-4 border-success">
-             <div class="card-body">
-               <div class="d-flex align-items-center">
-                 <div>
-                   <p class="mb-0 text-secondary">Selesai Perhitungan Retribusi</p>
-                   <h4 class="my-1 text-success">36</h4>
-                 </div>
-                 <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i class='bx bxs-bar-chart-alt-2' ></i>
-                 </div>
-               </div>
-             </div>
-          </div>
-        </div>
-  
-        <div class="table-responsive">
-          <table id="table-perhitungan_retribusi" class="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th>Jenis Konsultasi</th>
-                <th>No. Registrasi</th>
-                <th>Nama Pemilik</th>
-                <th>Lokasi BG</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <div class="d-flex align-items-center">
-                    Prasarana Bangunan Gedung
-                  </div>
-                </td>
-                <td>BLA/123135432563/87967857</td>
-                <td>John Doe</td>
-                <td>Jl. Jakarta 10, Kota Bandung</td>
-                <td><span class="badge bg-danger">Menunggu Perhitungan Retribusi</span></td>
-                <td style="text-align: center;">
-                  <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-primary"><i class="bx bx-edit me-0"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="d-flex align-items-center">
-                    </div>Bangunan Gedung Kepentingan Umum
-                  
-                </td>
-                <td>BLA/123135432563/87967857</td>
-                <td>Jane Doe</td>
-                <td>Jl. Jakarta 10, Kota Bandung</td>
-                <td><span class="badge bg-success">Selesai Perhitungan Retribusi</span></td>
-                <td style="text-align: center;">
-                  <button type="button" style="height: 30px; font-size: 10px;" class="btn btn-outline-primary"><i class="bx bx-edit me-0"></i>
-                  </button>
-                </td>
-              </tr>
-              
-            </tbody>
-          </table>
-        </div>
-
-      </div>
-
     </div>
+    <div class="tab-pane fade" id="primaryprofile" role="tabpanel">
+      <div class="row">
+        <div class="col">
+          <div class="card radius-10 bg-forth">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="mb-0 text-white">Menunggu Perhitungan Retribusi</p>
+                  <h4 class="my-1 text-white" id="belumretribusi">0</h4>
+                </div>
+                <div
+                  class="widgets-icons-2 rounded-circle bg-white text-forth ms-auto"
+                >
+                  <i class="bx bxs-error-alt"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card radius-10 bg-main">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="mb-0 text-white">Selesai Perhitungan Retribusi</p>
+                  <h4 class="my-1 text-white" id="sudahretribusi">0</h4>
+                </div>
+                <div
+                  class="widgets-icons-2 rounded-circle bg-white text-main ms-auto"
+                >
+                  <i class="bx bx-check-double"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <div class="table-responsive">
+        <table
+          id="permohonan-retribusi"
+          class="table table-striped table-bordered"
+        >
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Jenis Konsultasi</th>
+              <th>Nama Pemilik</th>
+              <th>No. Registrasi</th>
+              <th>Lokasi BG</th>
+              <!-- <th>Fungsi BG</th> -->
+              <th>Tanggal Permohonan</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
   </div>
-      
 </div>
+<!-- PENJADWALAN KONSULTASI -->
+<div
+  class="modal fade"
+  id="exampleExtraLargeModal"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Input Hasil Konsultasi</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div id="stepper1" class="bs-stepper">
+          <div class="card">
+            <div class="card-header">
+              <div
+                class="d-lg-flex flex-lg-row align-items-lg-center justify-content-lg-between"
+                role="tablist"
+              >
+                <div class="step" data-target="#test-l-1">
+                  <div
+                    class="step-trigger"
+                    role="tab"
+                    id="stepper1trigger1"
+                    aria-controls="test-l-1"
+                  >
+                    <div class="bs-stepper-circle">1</div>
+                    <div class="">
+                      <h5 class="mb-0 steper-title">Arsitektur</h5>
+                      <p class="mb-0 steper-sub-title">Pemeriksaan</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bs-stepper-line"></div>
+                <div class="step" data-target="#test-l-2">
+                  <div
+                    class="step-trigger"
+                    role="tab"
+                    id="stepper1trigger2"
+                    aria-controls="test-l-2"
+                  >
+                    <div class="bs-stepper-circle">2</div>
+                    <div class="">
+                      <h5 class="mb-0 steper-title">Struktur</h5>
+                      <p class="mb-0 steper-sub-title">Pemeriksaan</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bs-stepper-line"></div>
+                <div class="step" data-target="#test-l-3">
+                  <div
+                    class="step-trigger"
+                    role="tab"
+                    id="stepper1trigger3"
+                    aria-controls="test-l-3"
+                  >
+                    <div class="bs-stepper-circle">3</div>
+                    <div class="">
+                      <h5 class="mb-0 steper-title">MEP</h5>
+                      <p class="mb-0 steper-sub-title">Pemeriksaan</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bs-stepper-line"></div>
+                <div class="step" data-target="#test-l-4">
+                  <div
+                    class="step-trigger"
+                    role="tab"
+                    id="stepper1trigger4"
+                    aria-controls="test-l-4"
+                  >
+                    <div class="bs-stepper-circle">4</div>
+                    <div class="">
+                      <h5 class="mb-0 steper-title">Finalisasi</h5>
+                      <p class="mb-0 steper-sub-title">Data Bangunan</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bs-stepper-line"></div>
+                <div class="step" data-target="#test-l-5">
+                  <div
+                    class="step-trigger"
+                    role="tab"
+                    id="stepper1trigger5"
+                    aria-controls="test-l-5"
+                  >
+                    <div class="bs-stepper-circle">5</div>
+                    <div class="">
+                      <h5 class="mb-0 steper-title">Tahap Akhir</h5>
+                      <!-- <p class="mb-0 steper-sub-title">Experience Details</p> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="bs-stepper-content">
+                <form onSubmit="return false">
+                  <div
+                    id="test-l-1"
+                    role="tabpanel"
+                    class="bs-stepper-pane"
+                    aria-labelledby="stepper1trigger1"
+                  >
+                    <h5 class="mb-1">Pemeriksaan Arsitektur</h5>
+                    <!-- <p class="mb-4">
+                      Enter your personal information to get closer to copanies
+                    </p> -->
 
+                    <div class="row g-3">
+                      <table class="table mb-3">
+                        <thead>
+                          <th>No.</th>
+                          <th>Detail Persyaratan</th>
+                          <th>Kesesuaian</th>
+                          <th>Catatan & Dokumen</th>
+                          <th>Aksi</th>
+                        </thead>
+                        <tbody id="listars"></tbody>
+                      </table>
+                      <div class="col-12 col-lg-6">
+                        <button
+                          class="btn btn-main px-4"
+                          onclick="stepper1.next()"
+                        >
+                          Next<i class="bx bx-right-arrow-alt ms-2"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <!---end row-->
+                  </div>
 
+                  <div
+                    id="test-l-2"
+                    role="tabpanel"
+                    class="bs-stepper-pane"
+                    aria-labelledby="stepper1trigger2"
+                  >
+                    <h5 class="mb-1">Pemeriksaan Struktur</h5>
+                    <!-- <p class="mb-4">Enter Your Account Details.</p> -->
 
+                    <div class="row g-3">
+                      <table class="table mb-3">
+                        <thead>
+                          <th>No.</th>
+                          <th>Detail Persyaratan</th>
+                          <th>Kesesuaian</th>
+                          <th>Catatan & Dokumen</th>
+                          <th>Aksi</th>
+                        </thead>
+                        <tbody id="liststruk"></tbody>
+                      </table>
+                      <div class="col-12 col-lg-6">
+                        <button
+                          class="btn btn-main px-4"
+                          onclick="stepper1.previous()"
+                        >
+                          <i class="bx bx-left-arrow-alt me-2"></i>Previous
+                        </button>
+                        <button
+                          class="btn btn-main px-4"
+                          onclick="stepper1.next()"
+                        >
+                          Next<i class="bx bx-right-arrow-alt ms-2"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <!---end row-->
+                    <!---end row-->
+                  </div>
+
+                  <div
+                    id="test-l-3"
+                    role="tabpanel"
+                    class="bs-stepper-pane"
+                    aria-labelledby="stepper1trigger3"
+                  >
+                    <h5 class="mb-1">Pemeriksaan MEP</h5>
+                    <!-- <p class="mb-4">
+                      Inform companies about your education life
+                    </p> -->
+
+                    <div class="row g-3">
+                      <table class="table mb-3">
+                        <thead>
+                          <th>No.</th>
+                          <th>Detail Persyaratan</th>
+                          <th>Kesesuaian</th>
+                          <th>Catatan & Dokumen</th>
+                          <th>Aksi</th>
+                        </thead>
+                        <tbody id="listmep"></tbody>
+                      </table>
+                      <div class="col-12 col-lg-6">
+                        <button
+                          class="btn btn-main px-4"
+                          onclick="stepper1.previous()"
+                        >
+                          <i class="bx bx-left-arrow-alt me-2"></i>Previous
+                        </button>
+                        <button
+                          class="btn btn-main px-4"
+                          onclick="stepper1.next()"
+                        >
+                          Next<i class="bx bx-right-arrow-alt ms-2"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <!---end row-->
+                    <!---end row-->
+                  </div>
+
+                  <div
+                    id="test-l-4"
+                    role="tabpanel"
+                    class="bs-stepper-pane"
+                    aria-labelledby="stepper1trigger4"
+                  >
+                    <h5 class="mb-1">Finalisasi Data Bangunan</h5>
+                    <!-- <p class="mb-4">
+                      Can you talk about your past work experience?
+                    </p> -->
+
+                    <div class="row g-3">
+                      <hr />
+                      <h5>Data Kepemilikan Bangunan</h5>
+                      <div class="col-12 col-lg-6">
+                        <label for="jns_pemilik" class="form-label"
+                          >Jenis Kepemilikan</label
+                        >
+                        <select
+                          name="jns_pemilik"
+                          class="form-control"
+                          id="jns_pemilik"
+                        >
+                          <option value="1">Pemerintah</option>
+                          <option value="2">Badan Usaha</option>
+                          <option value="3">Perorangan</option>
+                        </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="nm_pemilik" class="form-label"
+                          >Nama Pemilik</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="nm_pemilik"
+                          placeholder="Nama Pemilik"
+                        />
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="jenis_id" class="form-label"
+                          >Jenis ID</label
+                        >
+                        <select
+                          name="jenis_id"
+                          id="jenis_id"
+                          class="form-control"
+                        >
+                          <option value="1">KTP</option>
+                          <option value="1">Kitas</option>
+                        </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="no_ktp" class="form-label">Nomor KTP</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="no_ktp"
+                          placeholder="Nomor KTP"
+                        />
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="id_provinsi" class="form-label"
+                          >Provinsi</label
+                        >
+                        <select
+                          name="id_provinsi"
+                          id="id_provinsi"
+                          class="form-control"
+                        >
+                          <option value="">PILIH</option>
+                          {% for p in provinsi %}
+                          <option value="{{p.id_provinsi}}">
+                            {{ p.nama_provinsi }}
+                          </option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="id_kabkot" class="form-label"
+                          >Kota / Kabupaten</label
+                        >
+                        <select
+                          name="id_kabkot"
+                          id="id_kabkot"
+                          class="form-control"
+                        ></select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="id_kecamatan" class="form-label"
+                          >Kecamatan</label
+                        >
+                        <select
+                          name="id_kecamatan"
+                          id="id_kecamatan"
+                          class="form-control"
+                        ></select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="id_kelurahan" class="form-label"
+                          >Kelurahan</label
+                        >
+                        <select
+                          name="id_kelurahan"
+                          id="id_kelurahan"
+                          class="form-control"
+                        ></select>
+                      </div>
+                      <div class="col-12 col-lg-12">
+                        <label for="alamat" class="form-label"
+                          >Alamat Pemilik</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="alamat"
+                          placeholder="alamat"
+                        />
+                      </div>
+                      <h5>Data Bangunan Gedung</h5>
+                      <div class="col-12 col-lg-6">
+                        <label for="id_provinsi" class="form-label"
+                          >Provinsi</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="prov_bgn"
+                          readonly
+                        />
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="kabkot_bgn" class="form-label"
+                          >Kota / Kabupaten</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="kabkot_bgn"
+                          readonly
+                        />
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="id_kecamatan_bgn" class="form-label"
+                          >Kecamatan</label
+                        >
+                        <select
+                          name="id_kecamatan_bgn"
+                          id="id_kecamatan_bgn"
+                          class="form-control"
+                        ></select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="id_kelurahan_bgn" class="form-label"
+                          >Kelurahan</label
+                        >
+                        <select
+                          name="id_kelurahan_bgn"
+                          id="id_kelurahan_bgn"
+                          class="form-control"
+                        ></select>
+                      </div>
+                      <div class="col-12 col-lg-12">
+                        <label for="alamat_bgn" class="form-label"
+                          >Alamat Bangunan</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="alamat_bgn"
+                          placeholder="alamat_bgn"
+                        />
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="jenis_permohonan" class="form-label"
+                          >Jenis Permohonan</label
+                        >
+                        <select
+                          name="jenis_permohonan"
+                          id="jenis_permohonan"
+                          class="form-control"
+                        >
+                          {% for j in jenis %}
+                          <option value="{{j.id}}">
+                            {{ j.nm_jns_permohonan }}
+                          </option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="fungsi_bg" class="form-label"
+                          >Fungsi Bangunan</label
+                        >
+                        <select
+                          name="fungsi_bg"
+                          id="fungsi_bg"
+                          class="form-control"
+                        >
+                          {% for f in fungsi %}
+                          <option value="{{f.id_fungsi_bg}}">
+                            {{ f.fungsi_bg }}
+                          </option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="col-12 col-lg-12">
+                        <label for="nama_bgn" class="form-label"
+                          >Nama Bangunan</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="nama_bgn"
+                          value="Uji Coba"
+                          placeholder="nama_bgn"
+                        />
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="luas_bgn" class="form-label"
+                          >Luas Bangunan</label
+                        >
+                        <div class="input-group mb-3">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="luas_bgn"
+                          />
+                          <span class="input-group-text">m<sup>2</sup></span>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="lantai_bg" class="form-label"
+                          >Jumlah Lantai Bangunan</label
+                        >
+                        <select
+                          name="lantai_bg"
+                          id="lantai_bg"
+                          class="form-control"
+                        >
+                          {% for i in 0..100 %}
+                          <option value="{{i}}">{{ i }} Lantai</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="luas_basement" class="form-label"
+                          >Luas Basemen Bangunan</label
+                        >
+                        <div class="input-group mb-3">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="luas_basement"
+                          />
+                          <span class="input-group-text">m<sup>2</sup></span>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="lantai_basemen" class="form-label"
+                          >Jumlah Lapis Basemen</label
+                        >
+                        <select
+                          name="lantai_basemen"
+                          id="lantai_basemen"
+                          class="form-control"
+                        >
+                          {% for i in 0..100 %}
+                          <option value="{{i}}">{{ i }} Lapis</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="col-12 col-lg-4">
+                        <label for="resiko" class="form-label"
+                          >Tingkat Resiko Bahaya
+                          <span
+                            style="font-size: 12px; cursor: pointer"
+                            id="info-resiko"
+                          >
+                            <i class="bx bx-info-circle"></i> </span
+                        ></label>
+                        <select name="resiko" id="resiko" class="form-control">
+                          <option value="">PILIH</option>
+                          <option value="Rendah">Rendah</option>
+                          <option value="Sedang">Sedang</option>
+                          <option value="Tinggi">Tinggi</option>
+                        </select>
+                      </div>
+                      <div class="col-12 col-lg-4">
+                        <label for="lokasi" class="form-label"
+                          >Lokasi
+                          <span
+                            style="font-size: 12px; cursor: pointer"
+                            id="info-lokasi"
+                          >
+                            <i class="bx bx-info-circle"></i> </span
+                        ></label>
+                        <select name="lokasi" id="lokasi" class="form-control">
+                          <option value="">PILIH</option>
+                          <option value="Renggang">Renggang</option>
+                          <option value="Sedang">Sedang</option>
+                          <option value="Padat">Padat</option>
+                        </select>
+                      </div>
+                      <div class="col-12 col-lg-4">
+                        <label for="klas" class="form-label"
+                          >Klas Bangunan
+                          <span
+                            style="font-size: 12px; cursor: pointer"
+                            id="info-klas"
+                          >
+                            <i class="bx bx-info-circle"></i>
+                          </span>
+                        </label>
+                        <select name="klas" id="klas" class="form-control">
+                          <option value="">PILIH</option>
+                          <option value="1a">Klas 1a</option>
+                          <option value="1b">Klas 1b</option>
+                          <option value="2">Klas 2</option>
+                          <option value="3">Klas 3</option>
+                          <option value="4">Klas 4</option>
+                          <option value="5">Klas 5</option>
+                          <option value="6">Klas 6</option>
+                          <option value="7">Klas 7</option>
+                          <option value="8">Klas 8</option>
+                          <option value="9a">Klas 9a</option>
+                          <option value="9b">Klas 9b</option>
+                          <option value="10a">Klas 10a</option>
+                          <option value="10b">Klas 10b</option>
+                        </select>
+                      </div>
+                      <input type="hidden" id="idGlobal" />
+                      <div class="col-12">
+                        <div class="d-flex align-items-center gap-3">
+                          <button
+                            class="btn btn-outline-secondary px-4"
+                            onclick="stepper1.previous()"
+                          >
+                            <i class="bx bx-left-arrow-alt me-2"></i>Previous
+                          </button>
+                          <button
+                            class="btn btn-main px-4"
+                            onclick="stepper1.next()"
+                          >
+                            Next<i class="bx bx-right-arrow-alt ms-2"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <!---end row-->
+                  </div>
+
+                  <div
+                    id="test-l-5"
+                    role="tabpanel"
+                    class="bs-stepper-pane"
+                    aria-labelledby="stepper1trigger4"
+                  >
+                    <h5 class="mb-1">Tahap Akhir</h5>
+                    <!-- <p class="mb-4">
+                    Can you talk about your past work experience?
+                  </p> -->
+
+                    <div class="row g-3">
+                      <div class="col-12 col-lg-6">
+                        <label for="no_berita" class="form-label"
+                          >Nomor Berita Acara</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="no_berita"
+                          placeholder="Nomor Berita Acara"
+                        />
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <label for="tgl_berita" class="form-label"
+                          >Tanggal Berita Acara</label
+                        >
+                        <input type="text" class="form-control datepicker" />
+                      </div>
+                      <div class="col-12 col-lg-12">
+                        <label for="jenis_id" class="form-label"
+                          >Berita Acara / Rekomendasi Hasil Konsultasi</label
+                        >
+                        <input type="file" class="form-control" />
+                      </div>
+                      <div class="col-12">
+                        <div class="d-flex align-items-center gap-3">
+                          <button
+                            class="btn btn-main px-4"
+                            onclick="stepper1.previous()"
+                          >
+                            <i class="bx bx-left-arrow-alt me-2"></i>Previous
+                          </button>
+                          <button class="btn btn-success px-4" id="submitform">
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <!---end row-->
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="exampleExtraLargeModal2"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header bg-main text-third">
+        <h4 class="modal-title text-third" id="title-info">Informasi</h4>
+        <button
+          type="button"
+          class="btn-close bg-main"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body" id="body-info"></div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="exampleExtraLargeModal3"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-main text-third">
+        <h4 class="modal-title text-third" id="title-info">
+          Pilih Perhitungan Retribusi
+        </h4>
+        <button
+          type="button"
+          class="btn-close bg-main"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body" id="body-info">
+        <a href="#" class="btn btn-main text-third d-block" id="btn-manual"
+          >Perhitungan Manual</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="exampleExtraLargeModal4"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-main text-third">
+        <h4 class="modal-title text-third" id="title-info">
+          Perhitungan Retribusi
+        </h4>
+        <button
+          type="button"
+          class="btn-close bg-main"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body" id="body-info">
+        <form id="formretribusi">
+          <div class="form-group mb-3">
+            <label for="" class="form-control-label"
+              >Jumlah Retribusi Bangunan</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="jumlah_bgn"
+              id="jumlah_bgn"
+              onkeypress="return onlyNumberKey(event)"
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="" class="form-control-label"
+              >Jumlah Retribusi Prasarana</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="jumlah_prasarana"
+              id="jumlah_prasarana"
+              onkeypress="return onlyNumberKey(event)"
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="" class="form-control-label">Lampiran</label>
+            <input
+              type="file"
+              class="form-control"
+              name="lampiran"
+              id="lampiran"
+            />
+          </div>
+          <button type="submit" class="btn btn-main">Simpan</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

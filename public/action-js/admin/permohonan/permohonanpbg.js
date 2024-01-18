@@ -1,5 +1,10 @@
 $(() => {
   $("#menu-permohonan").addClass("active");
+  $("#submenu-permohonan_pbg").addClass("active");
+
+  if (now == "now") {
+    $("#btn-ajukan").click();
+  }
 });
 
 $(document).ready(function () {
@@ -88,16 +93,21 @@ function loadpermohonan() {
   $("#all-permohonan").DataTable({
     processing: true,
     serverSide: true,
-    dom:
-      "<'row'" +
-      "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
-      "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
-      ">" +
-      "<'table-responsive'tr>" +
-      "<'row'" +
-      "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
-      "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
-      ">",
+    lengthMenu: [
+      [10, 25, 50, 100, -1],
+      [10, 25, 50, 100, "All"],
+    ],
+    pageLength: 10,
+    // dom:
+    //   "<'row'" +
+    //   "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
+    //   "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
+    //   ">" +
+    //   "<'table-responsive'tr>" +
+    //   "<'row'" +
+    //   "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
+    //   "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
+    //   ">",
     ajax: {
       url: "getallpermohonan",
       type: "POST",
@@ -125,24 +135,24 @@ function loadpermohonan() {
         mRender: function (data, type, row) {
           if (row.status == 1) {
             var elem = `<div class="btn-group" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-fifth btn-sm btn-icon" onclick="actionlanjutkan(${row.id})"><i class="bx bx-file me-0 fs-6"></i></button>
-                          <button type="button" class="btn btn-second btn-sm btn-icon"><i class="bx bx-edit me-0 fs-6"></i></button>
-                          <button type="button" class="btn btn-danger btn-sm btn-icon" onclick="action('delete', ${row.id_permohonan_slf})"><i class="bx bx-trash me-0 fs-6"></i></button>
-                        </div>`;
+                            <button type="button" class="btn btn-fifth btn-sm btn-icon" onclick="actionlanjutkan(${row.id})"><i class="bx bx-file me-0 fs-6"></i></button>
+                            <button type="button" class="btn btn-second btn-sm btn-icon"><i class="bx bx-edit me-0 fs-6"></i></button>
+                            <button type="button" class="btn btn-danger btn-sm btn-icon" onclick="action('delete', ${row.id_permohonan_slf})"><i class="bx bx-trash me-0 fs-6"></i></button>
+                          </div>`;
           } else if (row.status == 3) {
             var elem = `<div class="btn-group" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-fifth btn-sm btn-icon" onclick="action('detail', ${row.id_permohonan_slf})"><i class="bx bx-file me-0 fs-6"></i></button>
-                          
-                        </div>`;
+                            <button type="button" class="btn btn-fifth btn-sm btn-icon" onclick="action('detail', ${row.id_permohonan_slf})"><i class="bx bx-file me-0 fs-6"></i></button>
+                            
+                          </div>`;
           } else if (row.status == 4) {
             var elem = `<div class="btn-group" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-fifth btn-sm btn-icon" onclick="action('detail', ${row.id_permohonan_slf})"><i class="bx bx-file me-0 fs-6"></i></button>
-                          
-                        </div>`;
+                            <button type="button" class="btn btn-fifth btn-sm btn-icon" onclick="action('detail', ${row.id_permohonan_slf})"><i class="bx bx-file me-0 fs-6"></i></button>
+                            
+                          </div>`;
           } else {
             var elem = `<div class="btn-group" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-fifth btn-sm btn-icon" onclick="actionlanjutkan('${row.id}')"><i class="bx bx-file me-0 fs-6"></i></button>
-                        </div>`;
+                            <button type="button" class="btn btn-fifth btn-sm btn-icon" onclick="actionlanjutkan('${row.id}')"><i class="bx bx-file me-0 fs-6"></i></button>
+                          </div>`;
           }
           return elem;
         },
@@ -161,24 +171,24 @@ function loadpermohonan() {
       return index;
     },
     lengthChange: false,
-    infoCallback: function (settings, start, end, max, total, pre) {
-      console.log(settings);
-      console.log(start + ":" + end + ":" + max + ":" + total);
-      return !isNaN(total)
-        ? "Showing " +
-            start +
-            " to " +
-            end +
-            " of " +
-            total +
-            " entries" +
-            (total !== max ? " (filtered from " + max + " total entries)" : "")
-        : "Showing " +
-            start +
-            " to " +
-            (start + this.api().data().length - 1) +
-            " entries";
-    },
+    // infoCallback: function (settings, start, end, max, total, pre) {
+    //   console.log(settings);
+    //   console.log(start + ":" + end + ":" + max + ":" + total);
+    //   return !isNaN(total)
+    //     ? "Showing " +
+    //         start +
+    //         " to " +
+    //         end +
+    //         " of " +
+    //         total +
+    //         " entries" +
+    //         (total !== max ? " (filtered from " + max + " total entries)" : "")
+    //     : "Showing " +
+    //         start +
+    //         " to " +
+    //         (start + this.api().data().length - 1) +
+    //         " entries";
+    // },
   });
   // $.ajax({
   //   type: "post",
@@ -1358,13 +1368,13 @@ function getDataJnsKonsultasi(ids) {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                  <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                  <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
+                    <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                    <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
             "#is_id"
           ).val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${
             element.id_detail
           }, 1)"><i class="bx bx-trash"></i></button>
-                </div>`;
+                  </div>`;
         } else {
           btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${$(
             "#is_id"
@@ -1373,36 +1383,36 @@ function getDataJnsKonsultasi(ids) {
           }')">`;
         }
         bdy += `<tr class="">
-                <td align="center">${no++}</td>
-                <td align="left">${element.nm_dokumen}</td>
-                <td align="left">${element.keterangan}</td>
-                <td align="center" id="upload_${element.id_detail}">
-                ${btn}
-                </td>
-              </tr>`;
+                  <td align="center">${no++}</td>
+                  <td align="left">${element.nm_dokumen}</td>
+                  <td align="left">${element.keterangan}</td>
+                  <td align="center" id="upload_${element.id_detail}">
+                  ${btn}
+                  </td>
+                </tr>`;
       });
 
       $("#tk-bdy").html(bdy);
 
       DataTanah.forEach((element) => {
         $bodytnh += `<tr class="">
-                      <td align="center">${no++}</td>
-                      <td align="left">${element.id_dokumen}</td>
-                      <td align="left">${element.no_dok}${
+                        <td align="center">${no++}</td>
+                        <td align="left">${element.id_dokumen}</td>
+                        <td align="left">${element.no_dok}${
           element.tanggal_dok
         }</td>
-                      <td align="left">${element.luas_tanah}</td>
-                      <td align="left">${element.atas_nama_dok}</td>
-                      <td align="left"><a href="javascript:void(0);" onclick="javascript:popWin('./object-storage/dekill/Earth/${
-                        element.dir_file
-                      }')" class="btn default btn-xs blue-stripe">Lihat</a></td>
-                      <td align="left"><a href="javascript:void(0);" onclick="javascript:popWin('./object-storage/dekill/Earth/${
-                        element.dir_file_phat
-                      }')" class="btn default btn-xs blue-stripe">Lihat</a></td>
-                      <td align="center">
-                      <a href="./Konsultasi/removeDataTanah/element.id_detail/element.id" class="btn btn-danger btn-sm" onclick="return confirm('Yakin Hapus Data ini?')" title="Hapus Data"><span class="glyphicon glyphicon-trash"></span></a>
-                      </td>
-                    </tr>`;
+                        <td align="left">${element.luas_tanah}</td>
+                        <td align="left">${element.atas_nama_dok}</td>
+                        <td align="left"><a href="javascript:void(0);" onclick="javascript:popWin('./object-storage/dekill/Earth/${
+                          element.dir_file
+                        }')" class="btn default btn-xs blue-stripe">Lihat</a></td>
+                        <td align="left"><a href="javascript:void(0);" onclick="javascript:popWin('./object-storage/dekill/Earth/${
+                          element.dir_file_phat
+                        }')" class="btn default btn-xs blue-stripe">Lihat</a></td>
+                        <td align="center">
+                        <a href="./Konsultasi/removeDataTanah/element.id_detail/element.id" class="btn btn-danger btn-sm" onclick="return confirm('Yakin Hapus Data ini?')" title="Hapus Data"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                      </tr>`;
       });
 
       $("#dt-tanah-bdy").html(bodytnh);
@@ -1475,23 +1485,23 @@ function savedatatanah() {
       ];
       data.forEach((element) => {
         bodytnh += `<tr class="">
-                          <td align="center">${no++}</td>
-                          <td align="left">${dok[element.id_dokumen]}</td>
-                          <td align="left">${element.no_dok} || ${
+                            <td align="center">${no++}</td>
+                            <td align="left">${dok[element.id_dokumen]}</td>
+                            <td align="left">${element.no_dok} || ${
           element.tanggal_dok
         }</td>
-                          <td align="left">${element.luas_tanah}</td>
-                          <td align="left">${element.atas_nama_dok}</td>
-                          <td align="left"><a href="./object-storage/dekill/Earth/${
-                            element.dir_file
-                          }" target="_blank" class="btn btn-default btn-sm blue-stripe">Lihat</a></td>
-                          <td align="left"><a href="./object-storage/dekill/Earth/${
-                            element.dir_file_phat
-                          }" target="_blank" class="btn btn-default btn-sm blue-stripe">Lihat</a></td>
-                          <td align="center">
-                          <a href="./Konsultasi/removeDataTanah/element.id_detail/element.id" class="btn btn-danger btn-sm" onclick="return confirm('Yakin Hapus Data ini?')" title="Hapus Data"><span class="bx bx-trash"></span></a>
-                          </td>
-                        </tr>`;
+                            <td align="left">${element.luas_tanah}</td>
+                            <td align="left">${element.atas_nama_dok}</td>
+                            <td align="left"><a href="./object-storage/dekill/Earth/${
+                              element.dir_file
+                            }" target="_blank" class="btn btn-default btn-sm blue-stripe">Lihat</a></td>
+                            <td align="left"><a href="./object-storage/dekill/Earth/${
+                              element.dir_file_phat
+                            }" target="_blank" class="btn btn-default btn-sm blue-stripe">Lihat</a></td>
+                            <td align="center">
+                            <a href="./Konsultasi/removeDataTanah/element.id_detail/element.id" class="btn btn-danger btn-sm" onclick="return confirm('Yakin Hapus Data ini?')" title="Hapus Data"><span class="bx bx-trash"></span></a>
+                            </td>
+                          </tr>`;
       });
 
       $("#dt-tanah-bdy").html(bodytnh);
@@ -1550,13 +1560,13 @@ function nextdokumen() {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                      <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
+                        <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                        <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
             "#is_id"
           ).val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${
             element.id_detail
           })"><i class="bx bx-trash"></i></button>
-                    </div>`;
+                      </div>`;
         } else {
           btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${$(
             "#is_id"
@@ -1565,15 +1575,15 @@ function nextdokumen() {
           }')">`;
         }
         opt_tanah += `<tr class="<?= $clss ?>">
-                      <td align="center">${no++}</td>
-                      <td align="left">${element.nm_dokumen}</td>
-                      <td align="left">${
-                        element.keterangan ? element.keterangan : ""
-                      }</td>
-                      <td align="center" id="upload_${element.id_detail}">
-                        ${btn}
-                      </td>
-                    </tr>`;
+                        <td align="center">${no++}</td>
+                        <td align="left">${element.nm_dokumen}</td>
+                        <td align="left">${
+                          element.keterangan ? element.keterangan : ""
+                        }</td>
+                        <td align="center" id="upload_${element.id_detail}">
+                          ${btn}
+                        </td>
+                      </tr>`;
       });
 
       DokumenUmum.forEach((element) => {
@@ -1594,13 +1604,13 @@ function nextdokumen() {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                      <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
+                        <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                        <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
             "#is_id"
           ).val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${
             element.id_detail
           })"><i class="bx bx-trash"></i></button>
-                    </div>`;
+                      </div>`;
         } else {
           btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${$(
             "#is_id"
@@ -1609,15 +1619,15 @@ function nextdokumen() {
           }')">`;
         }
         opt_umum += `<tr class="<?= $clss ?>">
-                      <td align="center">${no1++}</td>
-                      <td align="left">${element.nm_dokumen}</td>
-                      <td align="left">${
-                        element.keterangan ? element.keterangan : ""
-                      }</td>
-                      <td align="center" id="upload_${element.id_detail}">
-                        ${btn}
-                      </td>
-                    </tr>`;
+                        <td align="center">${no1++}</td>
+                        <td align="left">${element.nm_dokumen}</td>
+                        <td align="left">${
+                          element.keterangan ? element.keterangan : ""
+                        }</td>
+                        <td align="center" id="upload_${element.id_detail}">
+                          ${btn}
+                        </td>
+                      </tr>`;
       });
 
       DataArsitektur.forEach((element) => {
@@ -1639,13 +1649,13 @@ function nextdokumen() {
 
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                      <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
+                        <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                        <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
             "#is_id"
           ).val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${
             element.id_detail
           })"><i class="bx bx-trash"></i></button>
-                    </div>`;
+                      </div>`;
         } else {
           btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${$(
             "#is_id"
@@ -1653,15 +1663,15 @@ function nextdokumen() {
         }
 
         opt_arsi += `<tr class="<?= $clss ?>">
-                      <td align="center">${no2++}</td>
-                      <td align="left">${element.nm_dokumen}</td>
-                      <td align="left">${
-                        element.keterangan ? element.keterangan : ""
-                      }</td>
-                      <td align="center" id="upload_${element.id_detail}">
-                      ${btn}
-                      </td>
-                    </tr>`;
+                        <td align="center">${no2++}</td>
+                        <td align="left">${element.nm_dokumen}</td>
+                        <td align="left">${
+                          element.keterangan ? element.keterangan : ""
+                        }</td>
+                        <td align="center" id="upload_${element.id_detail}">
+                        ${btn}
+                        </td>
+                      </tr>`;
       });
 
       DataStruktur.forEach((element) => {
@@ -1682,28 +1692,28 @@ function nextdokumen() {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                      <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
+                        <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                        <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
             "#is_id"
           ).val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${
             element.id_detail
           })"><i class="bx bx-trash"></i></button>
-                    </div>`;
+                      </div>`;
         } else {
           btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${$(
             "#is_id"
           ).val()}', '3', '${element.id_detail}', '${id_teknis}')">`;
         }
         opt_struk += `<tr class="<?= $clss ?>">
-                      <td align="center">${no3++}</td>
-                      <td align="left">${element.nm_dokumen}</td>
-                      <td align="left">${
-                        element.keterangan ? element.keterangan : ""
-                      }</td>
-                      <td align="center" id="upload_${element.id_detail}">
-                      ${btn}
-                      </td>
-                    </tr>`;
+                        <td align="center">${no3++}</td>
+                        <td align="left">${element.nm_dokumen}</td>
+                        <td align="left">${
+                          element.keterangan ? element.keterangan : ""
+                        }</td>
+                        <td align="center" id="upload_${element.id_detail}">
+                        ${btn}
+                        </td>
+                      </tr>`;
       });
 
       DataMPE.forEach((element) => {
@@ -1724,28 +1734,28 @@ function nextdokumen() {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                      <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                      <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
+                        <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                        <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${dir_file}', '${$(
             "#is_id"
           ).val()}', '${element.id_detail}', ${id_detail_persyaratan} , ${
             element.id_detail
           })"><i class="bx bx-trash"></i></button>
-                    </div>`;
+                      </div>`;
         } else {
           btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, '${$(
             "#is_id"
           ).val()}', '4', '${element.id_detail}', '${id_teknis}')">`;
         }
         opt_mep += `<tr class="<?= $clss ?>">
-                      <td align="center">${no4++}</td>
-                      <td align="left">${element.nm_dokumen}</td>
-                      <td align="left">${
-                        element.keterangan ? element.keterangan : ""
-                      }</td>
-                      <td align="center" id="upload_${element.id_detail}">
-                      ${btn}
-                      </td>
-                    </tr>`;
+                        <td align="center">${no4++}</td>
+                        <td align="left">${element.nm_dokumen}</td>
+                        <td align="left">${
+                          element.keterangan ? element.keterangan : ""
+                        }</td>
+                        <td align="center" id="upload_${element.id_detail}">
+                        ${btn}
+                        </td>
+                      </tr>`;
       });
 
       $("#body-tanah").html(opt_tanah);
@@ -1778,17 +1788,17 @@ function savedok(isthis, idutama, kategori, id_detail, teknis, nm) {
       data.forEach((element) => {
         // let btn = `<input type="file" class="form-control" name="d_file" placeholder="Unggah Berkas Disini" accept="application/pdf" onchange="savedok(this, ${$("#is_id").val()}, ${element.id_persyaratan}, '${element.id_persyaratan_detail}', '')">`
         let btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                         <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${
-                           element.dir_file
-                         }" target="_blank"><i class="bx bx-show"></i></a>
-                         <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${
-                           element.dir_file
-                         }', ${$("#is_id").val()}, '${
+                           <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${
+                             element.dir_file
+                           }" target="_blank"><i class="bx bx-show"></i></a>
+                           <button type="button" class="btn btn-icon btn-danger btn-sm" onclick="deletedoc('object-storage/dekill/Requirement/${
+                             element.dir_file
+                           }', ${$("#is_id").val()}, '${
           element.id_persyaratan
         }', '${element.id_detail}', '${
           element.id_persyaratan_detail
         }')"><i class="bx bx-trash"></i></button>
-                       </div>`;
+                         </div>`;
         $(`#upload_${element.id_persyaratan_detail}`).html(btn);
       });
     },
@@ -1931,24 +1941,24 @@ function actionlanjutkan(id) {
       let noeltanah = 1;
       DataTanah.forEach((element) => {
         eltanah += `<tr>
-                            <td align="center"> ${noeltanah++} </td>
-                            <td align="center"> ${element.Jns_dok}</td>
-                            <td align="center"> ${element.no_dok} | ${
+                              <td align="center"> ${noeltanah++} </td>
+                              <td align="center"> ${element.Jns_dok}</td>
+                              <td align="center"> ${element.no_dok} | ${
           element.tanggal_dok
         }</td>
-                            <td align="center"> ${element.luas_tanah}</td>
-                            <td align="center"> ${element.atas_nama_dok}d>
-                            <td align="center">
-                              <a type="button" class="btn btn-icon btn-main btn-sm" target="_blank" href="./object-storage/dekill/Earth/${
-                                element.dir_file
-                              }" class="btn default btn-xs blue-stripe"><i class="bx bx-show"></i></a>
-                            </td>
-                            <td align="center">
-                              <a type="button" class="btn btn-icon btn-main btn-sm" target="_blank" href="./object-storage/dekill/Earth/${
-                                element.dir_file_phat
-                              }" class="btn default btn-xs blue-stripe"><i class="bx bx-show"></i></a>
-                            </td>
-                        </tr>`;
+                              <td align="center"> ${element.luas_tanah}</td>
+                              <td align="center"> ${element.atas_nama_dok}d>
+                              <td align="center">
+                                <a type="button" class="btn btn-icon btn-main btn-sm" target="_blank" href="./object-storage/dekill/Earth/${
+                                  element.dir_file
+                                }" class="btn default btn-xs blue-stripe"><i class="bx bx-show"></i></a>
+                              </td>
+                              <td align="center">
+                                <a type="button" class="btn btn-icon btn-main btn-sm" target="_blank" href="./object-storage/dekill/Earth/${
+                                  element.dir_file_phat
+                                }" class="btn default btn-xs blue-stripe"><i class="bx bx-show"></i></a>
+                              </td>
+                          </tr>`;
       });
 
       $("#body-eltanah").html(eltanah);
@@ -1967,21 +1977,21 @@ function actionlanjutkan(id) {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                    <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                  </div>`;
+                      <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                    </div>`;
         } else {
           btn = `Tidak Ada Dokumen`;
         }
         opt_tanah += `<tr>
-                    <td align="center">${notanah++}</td>
-                    <td align="left">${element.nm_dokumen}</td>
-                    <td align="left">${
-                      element.keterangan ? element.keterangan : ""
-                    }</td>
-                    <td align="center" id="upload_${element.id_detail}">
-                      ${btn}
-                    </td>
-                  </tr>`;
+                      <td align="center">${notanah++}</td>
+                      <td align="left">${element.nm_dokumen}</td>
+                      <td align="left">${
+                        element.keterangan ? element.keterangan : ""
+                      }</td>
+                      <td align="center" id="upload_${element.id_detail}">
+                        ${btn}
+                      </td>
+                    </tr>`;
       });
 
       $("#data-teknis-tanah").html(opt_tanah);
@@ -2000,21 +2010,21 @@ function actionlanjutkan(id) {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                    <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                  </div>`;
+                      <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                    </div>`;
         } else {
           btn = `Tidak Ada Dokumen`;
         }
         opt_umum += `<tr>
-                    <td align="center">${noumum++}</td>
-                    <td align="left">${element.nm_dokumen}</td>
-                    <td align="left">${
-                      element.keterangan ? element.keterangan : ""
-                    }</td>
-                    <td align="center" id="upload_${element.id_detail}">
-                      ${btn}
-                    </td>
-                  </tr>`;
+                      <td align="center">${noumum++}</td>
+                      <td align="left">${element.nm_dokumen}</td>
+                      <td align="left">${
+                        element.keterangan ? element.keterangan : ""
+                      }</td>
+                      <td align="center" id="upload_${element.id_detail}">
+                        ${btn}
+                      </td>
+                    </tr>`;
       });
 
       $("#data-umum").html(opt_umum);
@@ -2033,21 +2043,21 @@ function actionlanjutkan(id) {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                    <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                  </div>`;
+                      <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                    </div>`;
         } else {
           btn = `Tidak Ada Dokumen`;
         }
         opt_arsitek += `<tr>
-                    <td align="center">${noarsitek++}</td>
-                    <td align="left">${element.nm_dokumen}</td>
-                    <td align="left">${
-                      element.keterangan ? element.keterangan : ""
-                    }</td>
-                    <td align="center" id="upload_${element.id_detail}">
-                      ${btn}
-                    </td>
-                  </tr>`;
+                      <td align="center">${noarsitek++}</td>
+                      <td align="left">${element.nm_dokumen}</td>
+                      <td align="left">${
+                        element.keterangan ? element.keterangan : ""
+                      }</td>
+                      <td align="center" id="upload_${element.id_detail}">
+                        ${btn}
+                      </td>
+                    </tr>`;
       });
 
       $("#data-arsitektur").html(opt_arsitek);
@@ -2066,21 +2076,21 @@ function actionlanjutkan(id) {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                    <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                  </div>`;
+                      <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                    </div>`;
         } else {
           btn = `Tidak Ada Dokumen`;
         }
         opt_struktur += `<tr>
-                    <td align="center">${nostruktur++}</td>
-                    <td align="left">${element.nm_dokumen}</td>
-                    <td align="left">${
-                      element.keterangan ? element.keterangan : ""
-                    }</td>
-                    <td align="center" id="upload_${element.id_detail}">
-                      ${btn}
-                    </td>
-                  </tr>`;
+                      <td align="center">${nostruktur++}</td>
+                      <td align="left">${element.nm_dokumen}</td>
+                      <td align="left">${
+                        element.keterangan ? element.keterangan : ""
+                      }</td>
+                      <td align="center" id="upload_${element.id_detail}">
+                        ${btn}
+                      </td>
+                    </tr>`;
       });
 
       $("#data-struktur").html(opt_struktur);
@@ -2099,21 +2109,21 @@ function actionlanjutkan(id) {
         });
         if (dir_file) {
           btn = `<div class="btn-group" role="group" aria-label="Basic example">
-                    <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
-                  </div>`;
+                      <a type="button" class="btn btn-icon btn-main btn-sm" href="object-storage/dekill/Requirement/${dir_file}" target="_blank"><i class="bx bx-show"></i></a>
+                    </div>`;
         } else {
           btn = `Tidak Ada Dokumen`;
         }
         opt_mep += `<tr>
-                    <td align="center">${nomep++}</td>
-                    <td align="left">${element.nm_dokumen}</td>
-                    <td align="left">${
-                      element.keterangan ? element.keterangan : ""
-                    }</td>
-                    <td align="center" id="upload_${element.id_detail}">
-                      ${btn}
-                    </td>
-                  </tr>`;
+                      <td align="center">${nomep++}</td>
+                      <td align="left">${element.nm_dokumen}</td>
+                      <td align="left">${
+                        element.keterangan ? element.keterangan : ""
+                      }</td>
+                      <td align="center" id="upload_${element.id_detail}">
+                        ${btn}
+                      </td>
+                    </tr>`;
       });
 
       $("#data-mep").html(opt_mep);

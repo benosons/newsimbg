@@ -154,7 +154,9 @@ class View extends \CodeIgniter\Controller
 
 		if ($this->logged) {
 			helper('form');
+			$global = new \App\Models\GlobalModel();
 			$this->data['active'] = 'dashboard';
+			$this->data['provinsi'] = $global->getprov();
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/index.js';
 			return \Twig::instance()->display('admin/index.html', $this->data);
 		} else {
@@ -175,11 +177,42 @@ class View extends \CodeIgniter\Controller
 			$this->data['data_fungsi']		= $global->getfungsi();
 			// $this->data['data_jbg']		= $perm->getjbg();
 			$this->data['data_prov']		= $global->getprov();
-			$this->data['prof'] 			= json_decode( json_encode($konsultasi->getDataUserProfil('a.*', $this->session->get('id'))), true);
+			$this->data['prof'] 			= json_decode(json_encode($konsultasi->getDataUserProfil('a.*', $this->session->get('id'))), true);
 			// echo '<pre>';
-			// print_r($this->data['prof'] );die;
+			// print_r($this->data['prof']);
+			// die;
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/permohonan/permohonan.js';
 			return \Twig::instance()->display('admin/permohonan/permohonan.html', $this->data);
+		} else {
+			return redirect('login');
+		}
+	}
+	public function permohonanpbg()
+	{
+
+		if ($this->logged && ($this->data['role'] == 10 || $this->data['role'] == 200)) {
+			helper('form');
+			$global = new \App\Models\GlobalModel();
+			$konsultasi = new \App\Models\KonsultasiModel();
+
+			$this->data['active'] = 'permohonan';
+			$this->data['data_jenis']		= $global->getjenis();
+			$this->data['data_fungsi']		= $global->getfungsi();
+			// $this->data['data_jbg']		= $perm->getjbg();
+			$this->data['data_prov']		= $global->getprov();
+			$this->data['prof'] 			= json_decode(json_encode($konsultasi->getDataUserProfil('a.*', $this->session->get('id'))), true);
+			if (isset($_GET['now'])) {
+				$this->data['now'] = $_GET['now'];
+				$this->data['jns'] = $_GET['jns'];
+			} else {
+				$this->data['now'] = 'notnow';
+				$this->data['jns'] = 0;
+			}
+			// echo '<pre>';
+			// print_r($this->data['prof']);
+			// die;
+			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/permohonan/permohonanpbg.js';
+			return \Twig::instance()->display('admin/permohonan/permohonanpbg.html', $this->data);
 		} else {
 			return redirect('login');
 		}
@@ -292,7 +325,7 @@ class View extends \CodeIgniter\Controller
 	public function pengawas_pupr()
 	{
 
-		if ($this->logged && ($this->data['role'] == 40 || $this->data['role'] == 200)) {
+		if ($this->logged && ($this->data['role'] == 30 || $this->data['role'] == 40 || $this->data['role'] == 200)) {
 			helper('form');
 			$this->data['active'] = 'pengawas_pupr';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/pengawas_pupr.js';
@@ -307,7 +340,39 @@ class View extends \CodeIgniter\Controller
 
 		if ($this->logged && ($this->data['role'] == 30 || $this->data['role'] == 200)) {
 			helper('form');
+			$globalmodel = new \App\Models\GlobalModel();
 			$this->data['active'] = 'penilaian_konsultasi';
+			$this->data['provinsi'] = $globalmodel->getprov();
+			$this->data['jenis'] = $globalmodel->getjenis();
+			$this->data['fungsi'] = $globalmodel->getfungsi();
+			$this->data['resiko'] = '<h5>Panduan Untuk Mengisi Tingkat Resiko Bahaya : </h5>
+			<ol>
+			<li>Tingkat Risiko Bahaya Kebakaran Tinggi </br>
+			  Klasifikasi bangunan tingkat risiko kebakaran tinggi adalah bangunan gedung yang karena fungsinya, desain penggunaan bahan dan komponen unsur pembentukannya, serta kuantitas dan kualitas bahan yang ada di dalamnya tingkat mudah terbakarnya sangat tinggi.Termasuk klasifikasi bangunan dengan tingkat risiko bahaya kebakaran tinggi adalah:
+			  <ol type="a">
+				<li> bangunan fungsi khusus </li>
+				<li> bangunan dengan ketinggian melebihi 8 (delapan) lantai </li>
+				<li> bangunan umum dengan luas lebih dari 5000 m2 </li>
+				<li> bangunan umum dengan jumlah pengguna di atas 500 orang </li>
+			  </ol>
+			</li>
+			<li> Tingkat Risiko Bahaya Kebakaran Sedang </br>
+			  Klasifikasi bangunan tingkat risiko kebakaran sedang adalah bangunan gedung yang karena fungsinya, desain penggunaan bahan dan komponen unsur pembentukannya, serta kuantitas dan kualitas bahan yang ada di dalamnya tingkat mudah terbakarnya sedang. Termasuk klasifikasi bangunan dengan tingkat risiko bahaya kebakaran sedang adalah:
+			  <ol type="a">
+				<li> hunian tunggal dengan luas melebihi 250 m2, hunian tunggal bertingkat dan hunian deret dengan panjang lebih dari 45 m </li>
+				<li> bangunan dengan ketinggian 4-8 lantai </li>
+				<li> bangunan umum dengan luas antara 500 m2 hingga 5000 m2, atau</li>
+				<li> bangunan umum dengan jumlah pengguna kurang dari 500 orang </li>
+			  </ol>
+			</li>
+			<li> Tingkat Risiko Bahaya Kebakaran Rendah </br>
+			Klasifikasi bangunan tingkat risiko kebakaran rendah adalah bangunan gedung yang karena fungsinya, desain penggunaan bahan dan komponen unsur pembentukannya, serta kuantitas dan kualitas bahan yang ada di dalamnya tingkat mudah terbakarnya rendah.Termasuk klasifikasi bangunan dengan tingkat risiko bahaya kebakaran rendah adalah:
+			  <ol type="a">
+				<li> hunian tunggal tidak bertingkat dengan luas maksimal 250 m2 dan hunian deret tidak bertingkat dengan panjang tidak lebih dari 45 m </li>
+				<li> bangunan dengan ketinggian di bawah 4 (empat) lantai, atau </li>
+				<li> bangunan umum dengan luas maksimal 500 m2 </li>
+			  </ol>
+			</li>';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/pengawas_teknis/penilaian_konsultasi.js';
 			return \Twig::instance()->display('admin/pengawas_teknis/penilaian_konsultasi.html', $this->data);
 		} else {
@@ -686,7 +751,7 @@ class View extends \CodeIgniter\Controller
 				$kabkot = $this->data['profile_user']->id_kabkota;
 				$this->data['daftar_kecamatan']	= $global->listDataKecamatan('a.id_kecamatan,a.nama_kecamatan', '', $kabkot);
 			}
-			
+
 			$this->data['active'] = '';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/user/profil.js';
 			return \Twig::instance()->display('admin/user/profil.html', $this->data);
@@ -698,7 +763,7 @@ class View extends \CodeIgniter\Controller
 	public function FormPendaftaran()
 	{
 
-		if ($this->logged ) {
+		if ($this->logged) {
 			helper('form');
 			$this->data['active'] = '';
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/konsultasi/formpendaftaran.js';
@@ -707,5 +772,4 @@ class View extends \CodeIgniter\Controller
 			return redirect('login');
 		}
 	}
-
 }
